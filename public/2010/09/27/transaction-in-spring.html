@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+
+    <title>nicholasren.github.io by nicholasren</title>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26893631-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>nicholasren.github.io</h1>
+        <h2>ruby, scala </h2>
+      </div>
+    </header>
+
+    <div class="container">
+    <div class="content">
+  <div class="row">
+    <div class="span16">
+      <div class="page-header">
+        <h1>spring中事务管理中的事务传播机制</h1>
+      </div>
+      <p><span style="font-family: Arial, sans-serif, Helvetica, Tahoma; line-height: 18px; font-size: 12px;">PROPAGATION_REQUIRES_NEW starts a new, independent "inner" transaction for the given scope. This transaction will be committed or rolled back completely independent from the outer transaction, having its own isolation scope, its own set of locks, etc. The outer transaction will get suspended at the beginning of the inner one, and resumed once the inner one has completed.&nbsp;<br /><br /><span style="color: red;">PROPAGATION_REQUIRES_NEW</span>会在当前运行的范围内创建一个全新的内部事务，这个的事务会独立地被提交或回滚（完全独立于外部事务），它拥有自己的隔离级别，以及锁等等。当内部事务被执行时，外部事务会被挂起，知道内部事务结束时才会继续执行。&nbsp;<br /><br />Such independent inner transactions are for example used for id generation through manual sequences, where the access to the sequence table should happen in its own transactions, to keep the lock there as short as possible. The goal there is to avoid tying the sequence locks to the (potentially much longer running) outer transaction, with the sequence lock not getting released before completion of the outer transaction.&nbsp;<br />这种独立的内部事务会被诸如从序列生成ID的应用中，从序列取得id的动作应该发生在自己的事务内部，并且保持对这个sequence表的锁的时间越短越好。这么做是为了避免在获得ID以后可能仍然在很长时间内持有这个sequence表的锁（外部事务仍在运行中）。&nbsp;<br /><br />PROPAGATION_NESTED on the other hand starts a "nested" transaction, which is a true subtransaction of the existing one. What will happen is that a savepoint will be taken at the start of the nested transaction. &iacute;f the nested transaction fails, we will roll back to that savepoint. The nested transaction is part of of the outer transaction, so it will only be committed at the end of of the outer transaction.&nbsp;<br /><span style="color: red;">PROPAGATION_NESTED</span>启动了一次嵌套的事务（一个当前事务的子事务），在内部嵌套事务开始时，会保留一个保存点（savepoint），如果内部嵌套事务失败，将会回滚到savepoint处，内部嵌套事务是外部事务的一部分，所以只有在外部事务完成时才会被提交。&nbsp;<br /><br />Nested transactions essentially allow to try some execution subpaths as subtransactions: rolling back to the state at the beginning of the failed subpath, continuing with another subpath or with the main execution path there -&nbsp;<strong style="font-weight: bold;"><span style="color: blue;">all within one isolated transaction</span></strong>, and not losing any previous work done within the outer transaction.&nbsp;<br />嵌套事务可以满足子事务&ldquo;多路执行&rdquo;的需求：回滚到失败的内部嵌套事务开始的地方，然后执行另外的一个内部嵌套事务，或者继续执行主事务-<strong style="font-weight: bold;"><span style="color: blue;">上面提及的事务都是独立的</span></strong>，不会丢失外部事务所作的修改。&nbsp;<br /><br />For example, consider parsing a very large input file consisting of account transfer blocks: The entire file should essentially be parsed within one transaction, with one single commit at the end. But if a block fails, its transfers need to be rolled back, writing a failure marker somewhere. You could either start over the entire transaction every time a block fails, remembering which blocks to skip - or you mark each block as a nested transaction, only rolling back that specific set of operations, keeping the previous work of the outer transaction. The latter is of course much more efficient, in particular when a block at the end of the file fails.&nbsp;<br /><br />例如，分块传输一个很大的文件，整个文件的传输应该放在一个事务内部，在文件传输完成后提交事务。如果一个文件块传输失败了，就需要在某个地方写一个失败标记，然后重新传这个文件块，你可以在每次传输一个文件块失败时重新开始事务，然后记住那些块已经成功传输了，忽略即可-或者你可以把每个文件块的传输作为一个内部嵌套事务，只回滚失败的事务，保存前面事务的更改结果，当然这种方法要有效得多，想像一个最后一个文件块出错的情形。</span></p>
+
+
+    </div>
+  </div>
+</div>
+
+<div id="disqus_thread" style="width:100%">
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'nicholasrensblog'; 
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+
+  </body>
+</html>

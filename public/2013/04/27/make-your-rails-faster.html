@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+
+    <title>nicholasren.github.io by nicholasren</title>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26893631-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>nicholasren.github.io</h1>
+        <h2>ruby, scala </h2>
+      </div>
+    </header>
+
+    <div class="container">
+    <div class="content">
+  <div class="row">
+    <div class="span16">
+      <div class="page-header">
+        <h1>使用spring提高rails开发效率</h1>
+      </div>
+      <h3>声明</h3>
+
+<p>目前spring只支持MRI 1.9.3, MRI 2.0.0, Rails 3.2，没有达到要求的人赶紧升级你们的ruby，rails版本吧</p>
+
+<h3>问题</h3>
+
+<p>想必采用TDD/BDD方式进行开发的rails开发者都有着这样类似的经历：</p>
+
+<ol>
+<li>pair写了一个测试</li>
+<li>运行测试</li>
+<li><strong>等待</strong></li>
+<li>该我来编写产品代码</li>
+<li>运行测试</li>
+<li><strong>等待</strong></li>
+<li>代码有bug</li>
+<li>测试失败</li>
+<li>修复测试</li>
+<li>运行测试</li>
+<li><strong>等待</strong></li>
+<li>测试通过，yeah！</li>
+</ol>
+
+
+<p>再回过头来想想，我享受这段pair的过程吗？</p>
+
+<ul>
+<li>pair很给力，很快就把一个taks实现成一个测试用例</li>
+<li>桌子上的水果也很好吃。</li>
+<li>。。。</li>
+</ul>
+
+
+<p>可是，我总觉得有点不爽快，原来是那么多的<strong>等待</strong>，每运行一次测试，就需要等待十几秒甚至几十秒，每天我会运行上千次测试，这是多大的浪费？做为一个有追求的程序员，我当然不愿意把宝贵的工作时间浪费在这无谓的<strong>等待</strong>中去 :-)。</p>
+
+<h3>现有方案</h3>
+
+<p>有追求的程序员还是大多数，google之后才发现已经有人尝试解决这个问题，如<a href="https://github.com/sporkrb/spork">spork</a>，<a href="https://github.com/burke/zeus">zeus</a>。他们的原理都是预先把rails环境启动起来，后面在运行测试，执行rake task时从这个启动好的进程fork一个进程，在这个进程中执行操作。然而，spork需要修改spec_helper.rb，并且需要单独启动一个server进程，zeus虽然不需要修改项目代码但仍然需要单独启动一个server进程，用起来还不是很爽快。 <a href="https://github.com/jonleighton/spring">spring</a>带来了更加易用的方案。</p>
+
+<h3>安装</h3>
+
+<p>建议把spring安装到rvm的global gemset中去，这样就可以在多个project使用spring</p>
+
+<p>安装命令非常简单：</p>
+
+<pre><code>gem install spring
+</code></pre>
+
+<h3>使用</h3>
+
+<p>执行测试的命令也非常简单：</p>
+
+<pre><code>spring rspec
+</code></pre>
+
+<p>当第一次使用spring运行测试，rake taks， db migration时，spring会<strong>自动</strong>在后台load rails 环境，因此执行速度也很慢，但是当再次执行时，spring会从先前的进程中fork出load好的rails环境，执行速度就变得飞快！</p>
+
+<h3>已知问题</h3>
+
+<p>把 <code>require 'rspec/autorun'</code>从spec_helper中删掉,否则，spec会被执行两次，而且第二次会由于找不到url helper method而失败。</p>
+
+<pre><code>Failure/Error: visit posts_path
+ NameError:
+   undefined local variable or method `posts_path' for #&lt;RSpec::Core::ExampleGroup::Nested_2:0x007fcf650718e0&gt;
+ # ./spec/integration/posts/posts_spec.rb:10:in `block (2 levels) in &lt;top (required)&gt;'
+ # -e:1:in `&lt;main&gt;'
+</code></pre>
+
+<p> 感谢<a href="http://stefanwienert.net/blog/2013/02/08/faster-rails-tests-with-spring-faster-than-spork-und-easier-to-setup/">Stefan Wienert</a>的分享。</p>
+
+<h3>总结</h3>
+
+<p>spring把对项目代码的影响减少到了没有，并且能够去掉加载rails环境的时间，极大地提升rails开发者的效率，是现有rails开发者必不可少的利器。enjoy coding!!!</p>
+
+    </div>
+  </div>
+</div>
+
+<div id="disqus_thread" style="width:100%">
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'nicholasrensblog'; 
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+
+  </body>
+</html>

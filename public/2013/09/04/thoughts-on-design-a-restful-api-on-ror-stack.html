@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+
+    <title>nicholasren.github.io by nicholasren</title>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26893631-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>nicholasren.github.io</h1>
+        <h2>ruby, scala </h2>
+      </div>
+    </header>
+
+    <div class="container">
+    <div class="content">
+  <div class="row">
+    <div class="span16">
+      <div class="page-header">
+        <h1>Thoughts on design a RESTful API on RoR stack</h1>
+      </div>
+      <p>Recently I'm working a RoR stack RESTful API project, I was involved in proposing tech stack, architecture, deployment pipeline. There was many thoughts in this progress, so I wrote down our thoughts here, in case it may help you when you met a similar question.</p>
+
+<h3>Tech Stack</h3>
+
+<p>There're bunch of api framework out there in ruby stack, such as <a href="https://github.com/intridea/grape">Grape</a>, <a href="https://github.com/rails-api/rails-api">rails-api</a>, <a href="https://github.com/bmizerany/sinatra">Sinatra</a>. I'll share my understanding here:</p>
+
+<h4>Sinatra</h4>
+
+<p>Sinatra providing a lightweight, simple DSL to creating web application. we can create a web/api application with sinatra within 15 seconds! the downside is, it is not a full stack framework, it requires us to combine sinatra with other frameworks. for example, we have a backend database for storing and retrieving information, you need to interating sinatra with a orm framework(e.g. ActivateRecrod or DataMapper).if we want to render info on a web page, we need to integrate a view template engine.</p>
+
+<h4>Grape</h4>
+
+<p>Grape is a ruby framework, which is designed for creating RESTful api service. it have sevural great features for creating RESTFul api. for example, api verisoning, automatic api doc generation, etc. Similar to sinatra, it is not a full stack framework, it requires some integration work. BTW, Grape can be easily integrated into any Rack application(e.g. sinatra, rails).</p>
+
+<h4>Rails::API</h4>
+
+<p>Rails::API is a subset of a normal Rails application, created for applications that don't require all functionality that a complete Rails application provides. It is a bit more lightweight, and consequently a bit faster than a normal Rails application.</p>
+
+<p>In the end, we choose <strong>Rails::API</strong> as our tech stack for the following reason:</p>
+
+<ul>
+<li>it is a fullstack framework, including ORM, db migration, validation, etc all in one place.</li>
+<li>we can leveage some rails's feature, e.g. generator, db migration.</li>
+<li>it is a subset of rails, is designed for creating a API application.</li>
+<li>rails's REST conversion.</li>
+</ul>
+
+
+<p>If I had a chance to make this decision again, I would think <strong>combining Grape with Rails::API</strong>, then we can both Grape's great support on API and Rails::API's fullstack framework.</p>
+
+<h3>API Design</h3>
+
+<h4>Content Type Negotiation</h4>
+
+<p>A most important part of designing RESTful API is content-type negotiation. the content type negotiation can be both in request/response header and url suffix:</p>
+
+<p>in request header, <code>Content-Type</code> indicating content type of data in request body, <code>Accept</code> telling server what kind of content type the client expected to accept.</p>
+
+<p>in response header, <code>Content-Type</code> indicating content type of data in the response body.</p>
+
+<p>Also, request to <code>/users/2.json</code> expecting the server return user info in JSON format, but request to <code>/users/2.xml</code> expecting get a XML response.</p>
+
+<p>there're several kind of standard content type, e.g. <code>application/json</code>, <code>application/xml</code>.
+People can define their own content type, e.g. <code>application/vnd.google-apps.script+json</code><br/>
+My feeling is, if your api is a public endpoint, you'd better define your own content type.</p>
+
+<p>let's take a example, a authentication api expecting get the following request data:</p>
+
+<pre><code>{
+  email: "sample@gmail.com",
+ password: "my_password"
+}
+</code></pre>
+
+<p>you have two content type choices: <code>application/json</code> and <code>application/vnd.mycompany.credential+json</code>, if this is a public api, I'll chose the customized content type - <code>application/vnd.mycompany.credential+json</code>, or this is an internal api, I'll chose the standard content type - <code>application/json</code>. I made this choice by considering the following reasons:</p>
+
+<table>
+<thead>
+<tr>
+<th></th>
+<th>                               </th>
+<th> Pros                                                                                                                                    </th>
+<th> Cons                                                                           </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td> Customized content type       </td>
+<td> Could define a <a href="http://json-schema.org/">json schema</a>, api server and client could use this json schema ensure request is processable.  </td>
+<td> adding complexity                                                              </td>
+</tr>
+<tr>
+<td></td>
+<td> Standard content type         </td>
+<td> Simple and straightforward                                                                                                              </td>
+<td> no validation to request data, any unexpected message could be send to server  </td>
+</tr>
+</tbody>
+</table>
+
+
+<h4>Code conversion</h4>
+
+<p>I struggled with workflow management when I play the very first story in this project, the problem is, it is very common and business workflow have more then two exit points. e.g. a login workflow, the possiable exit points are:</p>
+
+<ol>
+<li>username password matched, login succeed</li>
+<li>username password mimatched, login failed</li>
+<li>user is inactived, login failed</li>
+<li>user is locked because of too many login failures, login failed.</li>
+<li>…</li>
+</ol>
+
+
+<p>in a rails project, it is very important to keep your controllers clean, controller's only responsibility is passing parameters and routating, so it is better is to put these business logic into <strong>Model</strong> or <strong>Service</strong>. here comes the problem: how can we let the controller konw the extact reason of failure without put the business logic in controller? return value can not fufill this requirement, so here come out our solution: modeling these exception exit point with ruby exception, handing different exceptions in controller with different exception handler. and we found it makes the controller and model much more cleaner. let's have a look at this example:</p>
+
+<p>Before, the controller was messy:</p>
+
+<pre><code>  #in controller
+  def create
+    user = User.authorize(params[:email], params[:password])
+    if user.nil?
+      render :status =&gt; 401, :json =&gt; {:error =&gt; "Unauthorized"}
+    elsif !user.activated?
+      render :status =&gt; 403, :json =&gt; {:error =&gt; "user hasn't been activated"}
+    else
+      response.headers["Token"]= Session.generate_token(user)
+      render :status =&gt; 201, :nothing =&gt; true
+    end
+  end
+</code></pre>
+
+<p>After, controller is much cleaner</p>
+
+<pre><code>  #in controller
+  rescue_from InactiveUserException, with: :user_is_inactive
+  rescue_from InvalidCredentialException, with: :invaild_credential
+  rescue_from UserNotFoundException, with: :user_not_found
+
+  def create
+    login_session = User.login(params[:email], params[:password])
+    response.headers["Token"]= login_session.token
+    render :status =&gt; :created, :nothing =&gt; true
+  end
+</code></pre>
+
+<h4>Error code</h4>
+
+<p>It is very common to return failure reason when API call failed. Even we can return failure reason in plian english, as an API provider, we shouldn't assume that API client will use error message we provided, it's better to return a structured failure reason which can be <em>parsed</em> by API client. let's take a look at example from Github API:</p>
+
+<pre><code>{
+  "message": "Validation Failed",
+    "errors": [
+    {
+      "resource": "Issue",
+      "field": "title",
+      "code": "missing_field"
+    }
+  ]
+}
+</code></pre>
+
+<p>failure reason was returned as an JSON object, <code>resource</code> representing what kind of resource is requested, <code>field</code> indicates which field fails api call, <code>code</code> indicating the exact faliure reason.</p>
+
+<p>Another thing I want to highlight is - <strong>do not define numeric error code</strong>, it will be a nightmare for you and your client. a better solution is define meanningful error code, like <code>missing_field</code>, <code>too_long</code>, etc.</p>
+
+<h4>Documentation</h4>
+
+<p>RESTful api don't have frontend, so it is very important to make your document friendly. Aslo, it is very common that a developer changing code but forgot to change api doc, so it would be great if we can generating api document automaticly. considering we have a well formed test suite(or spec) for the api, why cann't we just extract information from these tests/specs and generating document automaticly. Acturally there're some gems trying to solve this problem: <a href="https://github.com/Pajk/apipie-rails">apipie-rails</a>, <a href="https://github.com/wordnik/swagger-ui">swagger-ui</a>.
+we're using apipie-rails, but we've found some missing features in apipie-rails. e.g. it can not record extract request and response headers, while headers play a important rule in a RESTful api.</p>
+
+<h4>Testing</h4>
+
+<p>We have two kind of tests in this project: integration test and unit test.</p>
+
+<p>integration tests test the api from end point, it is a end to end test. we use <a href="https://github.com/rspec/rspec-rails#request-specs">requesting rspec</a> define this test.</p>
+
+<p>unit tests test different layer. hints: only stub method on the boundary of each layer.</p>
+
+<h4>Versioning</h4>
+
+<p>we could specify api version in either url or http request header. In theory, verion number in url is not restful, any thoughts, please let me know</p>
+
+<h4>Deployment</h4>
+
+<p>We deploy our api on amazon <a href="http://en.wikipedia.org/wiki/Amazon_Elastic_Compute_Cloud">EC2</a>.</p>
+
+<ul>
+<li><p>Provision:
+creating new node from a customized <a href="http://en.wikipedia.org/wiki/Amazon_Machine_Image">AMI</a> (with many required dependence installed).</p></li>
+<li><p>Build pipeline:</p>
+
+<p>the CI will build a rpm package one all test passed, then this package will be pushed to <a href="http://en.wikipedia.org/wiki/Amazon_S3">S3</a>, after that, this package will be installed on the provisioned node.</p></li>
+</ul>
+
+
+    </div>
+  </div>
+</div>
+
+<div id="disqus_thread" style="width:100%">
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'nicholasrensblog'; 
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+
+  </body>
+</html>

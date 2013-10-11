@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+
+    <title>nicholasren.github.io by nicholasren</title>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26893631-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>nicholasren.github.io</h1>
+        <h2>ruby, scala </h2>
+      </div>
+    </header>
+
+    <div class="container">
+    <div class="content">
+  <div class="row">
+    <div class="span16">
+      <div class="page-header">
+        <h1>prototype based 继承机制</h1>
+      </div>
+      <p>与Java，C#，Ruby中"class-based"继承机制不同，javascript是一种"prototype-based"的继承机制。 关于prototype-based和class-based的区别，我想通过一个例子来描述下： <br/>
+你是一个陶艺师，我给你一个图纸，说："照着这个图纸的样子帮我做5个罐子"，于是你照着图纸上描述的形状，颜色，材质做出5个，这就是class-based 的模式</p>
+
+<p>我拿给你一个罐子，说："照着这个样子帮我做个罐子"，于是你参照这个罐子的形状，颜色，材质做出5个，你就是采用了prototype-based 的模式。</p>
+
+<h4>class based OO</h4>
+
+<p>我们再来看一段class-based 面向对象语言的代码示例：</p>
+
+<div class="highlight"><pre><code class="javascript"><span class="kr">class</span> <span class="nx">Animal</span>
+  <span class="kr">private</span> <span class="nb">String</span> <span class="nx">name</span>
+  <span class="kr">public</span> <span class="nx">Animal</span><span class="p">(</span><span class="nb">String</span> <span class="nx">name</span><span class="p">)</span>
+  <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="kr">public</span> <span class="k">void</span> <span class="nx">run</span><span class="p">(){</span>
+    <span class="p">...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+  <span class="kr">class</span> <span class="nx">Wolf</span> <span class="kr">extends</span> <span class="nx">Animal</span>
+<span class="p">{</span>
+  <span class="kr">public</span> <span class="k">void</span> <span class="nx">hunt</span> <span class="p">()</span>
+  <span class="p">{</span>
+    <span class="p">...</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+
+
+<p>class Wolf继承自class Animal拥有了run技能，并且扩展了自己的hunt技能。</p>
+
+<h4>prototype based OO</h4>
+
+<p>下面我们来看看一段prototype-based面向对象语言的代码示例:</p>
+
+<div class="highlight"><pre><code class="javascript">    <span class="kd">function</span> <span class="nx">Animal</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">run</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot; is runing&quot;</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+
+    <span class="kd">function</span> <span class="nx">Wolf</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+    <span class="p">{</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="nx">name</span><span class="p">;</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">hunt</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">+</span> <span class="s2">&quot; is hunting&quot;</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="c1">//继承的魔法在这里显现</span>
+    <span class="nx">Wolf</span><span class="p">.</span><span class="nx">prototype</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animal</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">someone</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Animal</span><span class="p">(</span><span class="s2">&quot;Some one&quot;</span><span class="p">);</span>
+    <span class="kd">var</span> <span class="nx">wolf</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Wolf</span><span class="p">(</span><span class="s2">&quot;Wolf&quot;</span><span class="p">);</span>
+    <span class="nx">someone</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+    <span class="nx">wolf</span><span class="p">.</span><span class="nx">run</span><span class="p">();</span>
+    <span class="nx">wolf</span><span class="p">.</span><span class="nx">hunt</span><span class="p">();</span>
+    <span class="c1">//should got exception here</span>
+    <span class="nx">someone</span><span class="p">.</span><span class="nx">hunt</span><span class="p">();</span>
+</code></pre></div>
+
+
+<p>在这里，把function Wolf的prototype设置为一个Animal的实例，当尝试调用wolf上的run方法时，由于Wolf中没有run方法，于是javascript解释器会查找Wolf的prototype（一个Animal的实例）是否有run方法，如果有，则调用此方法，如果没有，则尝试调用此实例的prototype上的run方法，如此持续下去，直到找到这个run方法或者到达继承顶部 - Object.prototype。这就是基于"prototype-chain"的继承机制。</p>
+
+<p>再附上同事Sheldon画的javascript中常见对象的关系图: <br/>
+<img src='http://winsonwq.github.com/ppt/resources/images/JavaScriptObjectsRelation.jpg' width='800', heigth='600'></img>
+点击<a href='http://winsonwq.github.com/ppt/resources/images/JavaScriptObjectsRelation.jpg'>这里</a>看大图.</p>
+
+    </div>
+  </div>
+</div>
+
+<div id="disqus_thread" style="width:100%">
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'nicholasrensblog'; 
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+
+  </body>
+</html>

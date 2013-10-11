@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+
+    <title>nicholasren.github.io by nicholasren</title>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26893631-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>nicholasren.github.io</h1>
+        <h2>ruby, scala </h2>
+      </div>
+    </header>
+
+    <div class="container">
+    <div class="content">
+  <div class="row">
+    <div class="span16">
+      <div class="page-header">
+        <h1>No SQL DB初探</h1>
+      </div>
+      <p>利用周末的空闲时间，了解了下Neo4J， Neo4J是一种No SQL DB，</p>
+
+
+<p>No SQL DB是一种和关系型数据库相对应的对象数据库。按照数据模型保存性质将当前NoSQL分为四种：&nbsp;</p>
+
+
+<p>1.Key-value stores键值存储, 保存keys+BLOBs&nbsp;</p>
+
+
+<p>2.Table-oriented 面向表, 主要有Google的BigTable和Cassandra.&nbsp;</p>
+
+
+<p>3.Document-oriented面向文本, 文本是一种类似XML文档，MongoDB 和 CouchDB&nbsp;</p>
+
+
+<p>4.Graph-oriented 面向图论. 如Neo4J.</p>
+
+
+<p><strong><span style="font-family: mceinline;">关系型数据库的弊端：</span></strong></p>
+
+
+<p>关系型数据库的历史已经有30余年了，因此，在某些情况下，关系型数据库的弱点就会暴露出来：</p>
+
+
+<p>1. &nbsp;&ldquo;<a href="http://www.hudong.com/wiki/%E9%98%BB%E6%8A%97%E4%B8%8D%E5%8C%B9%E9%85%8D" target="_blank">对象-关系 阻抗不匹配</a>&rdquo;。关系模型和面向对象模型在概念上存在天然的不匹配的地方，比如对象模型当中特有的&ldquo;继承&rdquo;，&ldquo;组合&rdquo;，&ldquo;聚合&rdquo;，&ldquo;依赖&rdquo;的概念在关系模型当中是不存在的。</p>
+
+
+<p>2. &ldquo;<a href="http://en.wikipedia.org/wiki/Schema_evolution" target="_blank">模式演进</a>&rdquo;。即随着时间的推移，需要对数据库模式进行调整以便适应新的需求，然而，对数据库模式的调整是的成本很高的动作，因此很多设计师在系统设计之初会设计一个兼容性很强的数据库模式，以应对将来可能出现的需求，然而在现在的web系统开发过程中，系统的变更更加频繁，几乎无法预先设计出一种&ldquo;万能&rdquo;的数据库模式以满足所有的需求，因此 模式演进的弊端就愈发凸显。</p>
+
+
+<p>3. 关系型数据库处理 稀疏表时的性能非常差。</p>
+
+
+<p>4.&nbsp;network&shy;oriented data 很适合处理 人工智能、社交网络中的一些需求。</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>所以，各种各样的No SQL DB 出现了，这里只简单介绍下Neo4J 的基本知识。</p>
+
+
+<p><strong><span style="font-family: mceinline;">Neo 数据模型</span></strong></p>
+
+
+<p>Neo4J 是一个基于图实现的No SQL DB, 其基本的数据类型有如下几种：</p>
+
+
+<p>Node, Relationship, Property.</p>
+
+
+<p>Node 对应于图中的 节点，Relationship 对应图中的边，Node 和 Relationship 都可以拥有Property，</p>
+
+
+<p>Property 的数据结构为。</p>
+
+
+<p><strong>数据遍历</strong></p>
+
+
+<p>Neo 提供了Traverser对数据中的数据进行遍历。</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>&nbsp;</p>
+
+
+<p>&nbsp;</p>
+
+
+    </div>
+  </div>
+</div>
+
+<div id="disqus_thread" style="width:100%">
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'nicholasrensblog'; 
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+
+  </body>
+</html>

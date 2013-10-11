@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+
+    <title>nicholasren.github.io by nicholasren</title>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26893631-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>nicholasren.github.io</h1>
+        <h2>ruby, scala </h2>
+      </div>
+    </header>
+
+    <div class="container">
+    <div class="content">
+  <div class="row">
+    <div class="span16">
+      <div class="page-header">
+        <h1>Getting started with chef</h1>
+      </div>
+      <h3>Set up a ubuntu node and run recipe on it</h3>
+
+<h4>Predication:</h4>
+
+<ol>
+<li>a running ubuntu node which accessiable via SSH from your labtop(workstation)</li>
+<li><b>cd</b> to chef-repo directory.</li>
+</ol>
+
+
+<br/>
+
+
+<h4>Steps:</h4>
+
+<br/>
+
+
+<h5>Bootstrap ububtu:</h5>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">knife</span> <span class="n">bootstrap</span> <span class="no">IP_ADDRESS</span> <span class="o">-</span><span class="n">x</span> <span class="no">USERNAME</span> <span class="o">-</span><span class="n">P</span> <span class="no">PASSWORD</span> <span class="o">--</span><span class="n">sudo</span>
+</code></pre></div>
+
+
+
+
+<br/>
+
+
+<h5>Verify the installation completed</h5>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">knife</span> <span class="n">client</span> <span class="n">list</span>
+</code></pre></div>
+
+
+<p>you will see your nodename in the client list</p>
+
+<br/>
+
+
+<h5>Download cookbooks from community site</h5>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">knife</span> <span class="n">cookbook</span> <span class="n">site</span> <span class="n">install</span> <span class="n">getting</span><span class="o">-</span><span class="n">started</span>
+</code></pre></div>
+
+
+<p>the cookbook named "getting-started" will be downloaded into chef-repo/cookbooks/</p>
+
+<br/>
+
+
+<h5>Upload the recipe to Hosted Chef so it is available for our nodes</h5>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">knife</span> <span class="n">cookbook</span> <span class="n">upload</span> <span class="n">getting</span><span class="o">-</span><span class="n">started</span> 
+</code></pre></div>
+
+
+
+
+<br/>
+
+
+<h5>Add this new recipe to the new nodes run list</h5>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">knife</span> <span class="n">node</span> <span class="n">run_list</span> <span class="n">add</span> <span class="no">NODENAME</span> <span class="s1">&#39;recipe[getting-started]&#39;</span>
+</code></pre></div>
+
+
+
+
+<br/>
+
+
+<h5>Run the added recipe remotely via ssh</h5>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">knife</span> <span class="n">ssh</span> <span class="nb">name</span><span class="ss">:NODENAME</span> <span class="o">-</span><span class="n">x</span> <span class="no">USERNAME</span> <span class="o">-</span><span class="n">P</span> <span class="no">PASSWORD</span> <span class="s2">&quot;sudo chef-client&quot;</span> <span class="o">-</span><span class="n">a</span> <span class="n">ipaddress</span>
+</code></pre></div>
+
+
+
+
+<br/>
+
+
+<h5>Runnig chef-client as a deamon</h5>
+
+<div class="highlight"><pre><code class="ruby"><span class="n">knife</span> <span class="n">cookbook</span> <span class="n">site</span> <span class="n">install</span> <span class="n">chef</span><span class="o">-</span><span class="n">client</span>
+<span class="n">knife</span> <span class="n">cookbook</span> <span class="n">upload</span> <span class="n">chef</span><span class="o">-</span><span class="n">client</span>
+<span class="n">knife</span> <span class="n">node</span> <span class="n">run_list</span> <span class="n">add</span> <span class="no">NODENAME</span> <span class="s1">&#39;recipe[chef-client]&#39;</span>
+<span class="n">knife</span> <span class="n">ssh</span> <span class="nb">name</span><span class="ss">:NODENAME</span> <span class="o">-</span><span class="n">x</span> <span class="no">USERNAME</span> <span class="o">-</span><span class="n">P</span> <span class="no">PASSWORD</span> <span class="s2">&quot;sudo chef-client&quot;</span> <span class="o">-</span><span class="n">a</span> <span class="n">ipaddress</span>
+</code></pre></div>
+
+
+
+
+<br/>
+
+
+<h4>Advanced tips:</h4>
+
+<ul>
+<li>add recipe when bootstrap node</li>
+</ul>
+
+
+<div class="highlight"><pre><code class="ruby"><span class="n">knife</span> <span class="n">bootstrap</span> <span class="no">IP_ADDRESS</span> <span class="o">-</span><span class="n">r</span> <span class="s1">&#39;recipe[chef-client]&#39;</span> <span class="o">-</span><span class="n">x</span> <span class="no">USERNAME</span> <span class="o">-</span><span class="n">P</span> <span class="no">PASSWORD</span> <span class="o">--</span><span class="n">sudo</span>
+</code></pre></div>
+
+
+
+
+    </div>
+  </div>
+</div>
+
+<div id="disqus_thread" style="width:100%">
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'nicholasrensblog'; 
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+
+  </body>
+</html>

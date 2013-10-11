@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+
+    <title>nicholasren.github.io by nicholasren</title>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26893631-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>nicholasren.github.io</h1>
+        <h2>ruby, scala </h2>
+      </div>
+    </header>
+
+    <div class="container">
+    <div class="content">
+  <div class="row">
+    <div class="span16">
+      <div class="page-header">
+        <h1>Deploying Rails App through Capistrano</h1>
+      </div>
+      <p>在这篇文章里，我将介绍如何使用capistrano部署rails应用。</p>
+
+<h4>准备工作：</h4>
+
+<ol>
+<li>创建一个用于部署的用户（eg. deployer）</li>
+<li>安装本地依赖:</li>
+<li>安装配置nginx: <code>yum install nginx</code>
+
+<ul>
+<li>config nginx <code>ln -s /path/to/app/config/nginx.conf /etc/nginx/nginx.conf</code></li>
+<li>restart nginx <code>service nginx restart</code></li>
+</ul>
+</li>
+</ol>
+
+
+<h4>Capify</h4>
+
+<p>在工程根目录下执行：</p>
+
+<pre><code>capify .
+</code></pre>
+
+<h4>配置ruby</h4>
+
+<p>我使用<a href="https://github.com/yyuu/capistrano-rbenv">capistrano-rbenv gem</a>管理production环境的ruby版本，在Gemfile中增加如下一行：</p>
+
+<pre><code>`gem 'capistrano-rbenv'`
+</code></pre>
+
+<p>然后在<code>config/deploy.rb</code>中增加如下两行：</p>
+
+<pre><code>require 'capistrano-rbenv'
+set :rbenv_ruby_version, '2.0.0-p0'
+</code></pre>
+
+<h4>配置用于deploy的信息</h4>
+
+<p>在<code>config/deploy.rb</code>中配置capistrano所需要的信息：</p>
+
+<pre><code>//...
+#配置目标服务器的地址，角色
+server '192.168.1.100', :web, :app, :db, :primary =&gt; true
+set 'application', "my-app"
+#代码库的地址
+set :repository, 'deployer@github.com:my-app.git'
+set :branch, 'master'
+set :scm, :git
+set :user_sudo, false
+#用于部署的用户
+set :user, 'deployer'
+#部署的目标目录
+set :deploy_to, "/home/#{user}/apps/#{application}"
+default_run_options[:pty] = true
+ssh_options[:forward_agent] = true
+//...
+</code></pre>
+
+<h5>部署:</h5>
+
+<pre><code>cap deploy
+</code></pre>
+
+    </div>
+  </div>
+</div>
+
+<div id="disqus_thread" style="width:100%">
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'nicholasrensblog'; 
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+
+  </body>
+</html>

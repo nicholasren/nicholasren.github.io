@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+
+    <title>nicholasren.github.io by nicholasren</title>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26893631-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>nicholasren.github.io</h1>
+        <h2>ruby, scala </h2>
+      </div>
+    </header>
+
+    <div class="container">
+    <div class="content">
+  <div class="row">
+    <div class="span16">
+      <div class="page-header">
+        <h1>那些BDD中用到的工具们</h1>
+      </div>
+      <p>本文发表于<a href="http://www.infoq.com/cn/articles/BDD-tools">infoq</a>。</p>
+
+<h3>什么是BDD？</h3>
+
+<p>BDD在wikipedia上定义如下：</p>
+
+<blockquote><p>BDD是第二代的、由外及内的、基于拉(pull)的、多方利益相关者的(stakeholder)、多种可扩展的、高自动化的敏捷方法。它描述了一个交互循环，可以具有带有良好定义的输出（即工作中交付的结果）：已测试过的软件。</p></blockquote>
+
+<p>简单一点地说，BDD，即行为驱动开发，是通过与产品经理沟通需求，定义出满足这些需求的软件需具备的行为(<strong>Behaviour</strong>)，再以这些行为为驱动(<strong>Driven</strong>)，编写产品代码来实现这些行为。(<strong>Development</strong>)。BDD的出现，是为了解决测试驱动开发中常遇到的问题，比如：从哪里开始测试，应该测试什么，不应该测试什么，等等。想了解更多可参见<a href="http://dannorth.net/introducing-bdd/">Dan North的introducing BDD。</a></p>
+
+<h3>BDD实践所面临的问题</h3>
+
+<p>进行BDD实践首先要解决如下几个问题：</p>
+
+<ul>
+<li>如何实现一个能够描述系统行为（业务价值）、非技术人员可读的测试？</li>
+<li>如何让这个测试变得可执行？</li>
+</ul>
+
+
+<p>业界对这些问题已经有了答案，<a href="http://jbehave.org/">JBehave</a>, <a href="http://cukes.info">Cucumber</a>，<a href="http://www.concordion.org/">Concordian</a>等BDD框架的出现，解决了这个问题。
+这些BDD框架各自提供了一套DSL（Domain-Specific-Language），开发人员可以使用DSL描述业务需求，例如，</p>
+
+<pre><code>前置条件：
+    用户A账户余额1000元
+    用户B账户余额200元
+场景：
+    用户A登录系统
+    向用户B转账500元
+    用户A账户余额应为500元
+    用户B庄户余额应为700元
+</code></pre>
+
+<p>同时，这些框架都依赖于Webdriver（如selenium-webdriver，watir-webdriver），BDD框架通过webdriver调用浏览器的接口，模拟用户输入，读取浏览器页面上显示的内容用于验证。</p>
+
+<p>下面我们通过一个完整的例子来看看如何使用这些工具进行BDD实践的。</p>
+
+<h3>Cucumber与业务价值</h3>
+
+<p>在Behaviour Driven Development中，第一步就是把需求细分为多个任务，拿最常见的用户登录功能为例，可以划分为以下几个任务：</p>
+
+<ul>
+<li>用户名密码匹配，登录成功</li>
+<li>用户名或密码不匹配，登录失败</li>
+</ul>
+
+
+<p>BDD强调“每一个测试需要体现出业务价值”，因此，可以把上述两个任务实现为两个场景：</p>
+
+<pre><code>Feature: User login
+Background: There is a user with the following login detail:
+    |    email      | password|
+    | my@example.com|   test  |
+
+Scenario: Login succeed
+Given the user login with the following detail:
+    |    email      | password|
+    | my@example.com|   test  |
+Then the user should login succeed
+
+Scenario: Login failed
+Given the user login with the following detail:
+    |    email      |     password     |
+    | my@example.com|   wrongpassword  |
+Then the user should login failed
+</code></pre>
+
+<p>实际上，上面的这段代码就是使用cucumber的DSL描述的测试场景，几乎就是遵循了一定格式的英语，即使看不懂代码的产品经理、业务分析师也能够通过此文档和开发人员顺畅地交流。用Cucumber把一个需求的不同场景描述出来，也是从不同角度阐述了这个需求的业务价值。<strong>Cucumber的目标就是书写可执行的，能够表述业务价值文档。</strong> 与之类似的框架还有Concordian，JBehave等。</p>
+
+<p> 紧接而来的问题是：如何让文档执行起来？Cucumber提供了把业务逻辑转换为可执行代码的机制——"step definition"。请看下面的例子：</p>
+
+<pre><code>Given /^the user login with the following detail:$/ do |detail|
+    #omitting code…
+end
+</code></pre>
+
+<p>这个step definition会匹配下面这个step：</p>
+
+<pre><code>Given the user login with the following detail:
+    |    email      | password|
+    | my@example.com|   test  |
+</code></pre>
+
+<p>当Cucumber feature被执行的时候，这个step definition中的代码会被执行。那么，接下来的问题就是：如何象真实用户那样打开浏览器，输入用户名密码，点击提交按钮，验证登录是否成功。这时候，该Webdriver出场了。</p>
+
+<h3>Web Driver与页面交互</h3>
+
+<p>先来看下面一段代码：</p>
+
+<pre><code>require 'watir-webdriver'
+b = Watir::Browser.new
+b.goto 'http://localhost:3000/login'
+b.text_field(:id =&gt; 'email').set 'my@example.com'
+b.text_field(:id =&gt; 'password').set 'password'
+b.button(:name =&gt; 'submit').click
+b.text.include? 'Login succeed'
+</code></pre>
+
+<p>这段代码会做如下事情：</p>
+
+<pre><code>1. 打开浏览器，访问h地址 “http://localhost:3000/login”
+2. 在邮件输入框输入 “my@example.com”
+3. 在密码输入框输入 “password”
+4. 点击 提交按钮
+5. 验证结果页面是否包含“Login succeed”字样
+</code></pre>
+
+<p>这就是webdriver所提供的能力，web driver通过调用浏览器的支持自动化的API，模拟真实用户在浏览器上的操作。把这段代码被放在上面的step definition中，当cucumber测试运行的时候，这段代码就会运行，完成登录操作。这个例子是使用<a href="http://watirwebdriver.com/">Watir webdriver</a>实现的，另外一个比较流行的webdriver是<a href="http://seleniumhq.org/projects/webdriver/">Selenium webdriver</a>。</p>
+
+<p>不同Webdriver提供的API也不尽相同，而<a href="http://jnicklas.github.com/capybara/">Capybara</a>则致力于封装多种web driver之间的差异。同时，Capybara提供了一些更聪明的特性，例如，等待页面加载完成再执行下一个步骤，这对于开发人员来说非常重要，否则，就需要自己判断写代码页面加载完成，代码丑陋，测试脆弱，那将是开发人员的噩梦。</p>
+
+<h3>Page Model与页面建模</h3>
+
+<p>至此，一个可执行的描述用户登录的测试用例就编写完毕，当我们执行这个测试用例时，就会看到：</p>
+
+<pre><code>浏览器打开
+访问登录页面
+在页面上输入用户名
+密码
+点击登录按钮
+登录成功
+测试通过
+</code></pre>
+
+<p>上述所有操作都是自动完成，一切都很完美，但前提是只在这样的一个小示例里。在一个实际的项目里，我们经常会遇到下面几个问题：</p>
+
+<pre><code>1.当越来越多的与页面交互的代码出现在step definition中时，页面交互，结果验证的代码混杂在一起，代码的可读性急剧下降。
+2.因为webdriver与浏览器交互时依赖于页面元素的id、name等属性，对页面元素的任何小的修改都可能会导致测试失败。
+3.在多个step definition与同一个页面交互时，可能会有冗余代码。
+</code></pre>
+
+<p>而<strong>page model</strong>的出现就是为了解决上述问题，通过对页面的属性，交互动作进行抽象，封装以达到功能重用，隔离变化的目的。请看下面的例子：</p>
+
+<h6>Page model定义</h6>
+
+<pre><code>class PageWithLogin
+    def url
+        #omitting code…
+    end
+
+    def login email, password
+        #omitting code…
+    end
+end
+
+class PageWithLoginResult
+    def login_succeed?
+        #omitting code…
+    end
+end
+</code></pre>
+
+<h6>Step定义</h6>
+
+<pre><code>Given /^the user login with the following detail:$/ do |detail|
+    on_page_with :login do |page|
+        visit page.url      
+        page.login(detail["email"], detail["password"]) 
+    end
+end
+
+Given /^the user should login succeed$/ do |detail|
+    on_page_with :login_result do |page|
+        page.login_succeed?.should == true
+    end
+end
+</code></pre>
+
+<p>如上，把<code>login</code>，<code>login_succeed?</code>功能封装到<code>PageWithLogin</code>, <code>PageWithLoginResult</code>这两个page model中，当"登录页面"，“登录成功页面”的页面结构发生变化时，只需要修改page model中的实现即可，step 定义无需任何变化。关于page model，<a href="http://www.infoq.com/cn/articles/domain-web-testing">我的同事徐昊曾经专门写过一篇文章</a>。</p>
+
+<h3>结论</h3>
+
+<p>BDD框架通过提供DSL，帮助业务人员，测试人员，开发人员定义需求的验收标准，共同得到一个明确的需求完成的定义。通过和webdriver集成，使这个验收标准变得可执行，大大减少了手工验证的压力，当软件通过了这个验收标准，则意味着这个需求已经开发完成。</p>
+
+<h3>注解与参考</h3>
+
+<ol>
+<li><a href="https://sites.google.com/site/unclebobconsultingllc/the-truth-about-bdd">The truth about BDD</a> Robert C Marting</li>
+<li><a href="http://dannorth.net/introducing-bdd/">introducting BDD</a> Dan North</li>
+<li><a href="http://en.wikipedia.org/wiki/Behavior-driven_development">BDD on Wikipedia</a></li>
+</ol>
+
+
+<p>感谢张凯峰对本文的审校。</p>
+
+    </div>
+  </div>
+</div>
+
+<div id="disqus_thread" style="width:100%">
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'nicholasrensblog'; 
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+
+  </body>
+</html>

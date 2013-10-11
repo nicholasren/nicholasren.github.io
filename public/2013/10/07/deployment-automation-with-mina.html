@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="/stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/stylesheets/print.css" media="print" />
+
+    <title>nicholasren.github.io by nicholasren</title>
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-26893631-1']);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+       var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+       ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+       })();
+
+     </script>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>nicholasren.github.io</h1>
+        <h2>ruby, scala </h2>
+      </div>
+    </header>
+
+    <div class="container">
+    <div class="content">
+  <div class="row">
+    <div class="span16">
+      <div class="page-header">
+        <h1>Rails application deployment automation with mina</h1>
+      </div>
+      <h3>TLDR:</h3>
+
+<p>In this post, I will introduce a really fast deployment tool - <code>Mina</code>, and show you how to deploy a rails application which runs on <code>unicorn</code> with <code>nginx</code>, also I'll show you how to organize your mina deployment tasks.</p>
+
+<h6>Note:</h6>
+
+<p>All code in this post can be find <a href="https://gist.github.com/nicholasren/6920178">here</a>.</p>
+
+<h4>About mina</h4>
+
+<p>"<a href="http://nadarei.co/mina/">Mina</a> is a readlly fast deployer and server automation tool", this how the team who built it describes it. The concept behind <code>Mina</code> is to connect to a remote server and executes a set of shell command that you define in a local deployment file(<code>config/deploy.rb</code>). One of its outstanding feature is it is really fast because all bash instructions will be performed in one SSH connection.</p>
+
+<h4>Init</h4>
+
+<p>To use mina automating deployment, you need to get the following things ready.</p>
+
+<ol>
+<li>a remote sever</li>
+<li>create a user for deployment (e.g. deployer) and add this user into sudoer list.</li>
+<li>generate a ssh key pair, add the generated public key into GitHub.</li>
+<li>create a deployment target fold on the remove server(e.g. '/var/www/example.com')</li>
+</ol>
+
+
+<p>once you got these things done, run <code>mina init</code> in your project directory, this will generate a deployment file - <code>config/deploy.rb</code>, then set the server address, deployment user, deployment target and other settings in deployment file, like the following:</p>
+
+<pre><code>set :user, 'deployer'
+set :domain, ENV['on'] == 'prod' ? '&lt;prod ip&gt;' : '&lt;qa ip&gt;'
+set :deploy_to, '/var/www/example.com'
+set :repository, 'git@github.com:your_company/sample.git'
+set :branch, 'master'
+</code></pre>
+
+<h4>Setup</h4>
+
+<p>Then run <code>mina setup</code>, this will create deployment folders, which looks like this:</p>
+
+<pre><code>/var/www/example.com/     # The deploy_to path
+|-  releases/              # Holds releases, one subdir per release
+|   |- 1/
+|   |- 2/
+|   |- 3/
+|   '- ...
+|-  shared/                # Holds files shared between releases
+|   |- logs/               # Log files are usually stored here
+|   `- ...
+'-  current/               # A symlink to the current release in releases/
+</code></pre>
+
+<h4>Provision</h4>
+
+<p>It is very common to setup a new server and deploy application on it, it will be good if we can automating this process, here comes the <strong>provision</strong> task:</p>
+
+<pre><code>task :provision do
+  # add nginx repo  
+  invoke :'nginx:add_repo'
+
+  queue  "sudo yum install -y git gcc gcc-c++* make openssl-devel mysql-devel curl-devel nginx sendmail-cf ImageMagick"
+
+  #install rbenv
+  queue  "source ~/.bash_profile"
+  queue  "#{exists('rbenv')} || git clone https://github.com/sstephenson/rbenv.git ~/.rbenv"
+  queue  "#{exists('rbenv')} || git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-build"
+  queue  "#{exists('rbenv')} || echo 'export PATH=\"$HOME/.rbenv/bin:$PATH\"' &gt;&gt; ~/.bash_profile &amp;&amp; source ~/.bash_profile"
+
+  #install ruby
+  queue  "#{ruby_exists} || RUBY_CONFIGURE_OPTS=--with-openssl-dir=/usr/bin rbenv install #{ruby_version}"
+
+  #install bundle
+  queue  "#{ruby_exists} || rbenv local 2.0.0-p247"
+  queue  "#{exists('gem')} || gem install bundle --no-ri --no-rdoc"
+
+  #set up deploy to
+  queue "sudo mkdir -p #{deploy_to}"
+  queue "sudo chown -R #{user} #{deploy_to}"
+
+end
+
+#helper method
+def ruby_exists
+"rbenv versions | grep #{ruby_version} &gt;/dev/null 2&gt;&amp;1"
+end
+
+def exists cmd
+  "command -v #{cmd}&gt;/dev/null 2&gt;&amp;1"
+end
+</code></pre>
+
+<p>to be able run this taks multi times, I create some helper method detecting whether an executable exists or not. e.g. <code>ruby_exists</code>, <code>exits('gem')</code> these helper method will return if the executable exits, otherwise, it will run next command to install the executable.</p>
+
+<p>With this task, you can get a server ready for deployment in seveural minutes.</p>
+
+<h4>Deploy</h4>
+
+<p>Once the server is provisioned, you can deploy your application with <code>mina deploy</code>, here is a typical deploy task:</p>
+
+<pre><code>desc "Deploys the current version to the server."
+task :deploy =&gt; :environment do
+  deploy do
+    invoke :'git:clone'   #clone code from github
+    invoke :'deploy:link_shared_paths' #linking shared file with latest file we just cloned
+    invoke :'bundle:install' #install bundle
+    invoke :'rails:db_migrate' #run database migration
+    invoke :'rails:assets_precompile' #compile assets
+    invoke :'unicorn_and_nginx' #setup nginx and unicorn config
+    to :launch do
+      queue '/etc/init.d/unicorn_myapp.sh reload' #reload unicorn after deployment succeed
+    end
+  end
+end
+</code></pre>
+
+<h4>Unicorn and nginx</h4>
+
+<p>to run our application on unicorn and nginx, we need to create our own unicorn and nginx configuration file and start nginx and unicorn with our configuration. here is the task:</p>
+
+<pre><code>desc "Setup unicorn and nginx config"
+task :unicorn_and_nginx do
+  queue! "#{file_exists('/etc/nginx/nginx.conf.save')} || sudo mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.save"
+
+  queue! "#{file_exists('/etc/nginx/nginx.conf')} || sudo ln -nfs #{deploy_to}/current/config/nginx.conf /etc/nginx/nginx.conf"
+
+  queue! "#{file_exists('/etc/init.d/unicorn_avalon.sh')} || sudo ln -nfs #{deploy_to}/current/scripts/unicorn.sh /etc/init.d/unicorn_myapp.sh"
+end
+</code></pre>
+
+<h4>Conclusion</h4>
+
+<p>With these tasks: <code>mina init</code>, <code>mina provision</code>, <code>mina deploy</code>, mina helps you deploying easily with less mistake, have fun with mina!</p>
+
+    </div>
+  </div>
+</div>
+
+<div id="disqus_thread" style="width:100%">
+<a href="http://disqus.com" class="dsq-brlink">blog comments powered by <span class="logo-disqus">Disqus</span></a>
+</div>
+
+<script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'nicholasrensblog'; 
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+
+    </div>
+
+  </body>
+</html>
