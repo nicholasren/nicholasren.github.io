@@ -64,7 +64,7 @@ end
 
 其次，要对对应关系进行抽象。
 
-### 改进
+###改进
 我们在来分析一下json中的值和对象值对应关系规则，还是有规律可循的，对应关系都由三部分组成：*json属性*，*对象属性名*，*转换规则（默认没有转换规则）*。其中，通过[`jsonpath`](http://goessner.net/articles/JsonPath/)来标识*json属性*，通过block来表示*转换规则*， 我们可以建立一个`MapingRule`类来对次关系进行建模。
 
 
@@ -115,7 +115,7 @@ post = buidler.build({"date" => "2013-09-10", "tags" => ["music", "IT"] })
 {% endhighlight%}
 
 ### 回顾
-与最初版本相比，我们引入了jsonpath和block来对转换规则进行建模（创建来MappingRule类），在PostBuilder#build中循环应用各个rule完成对象的创建，消除了多个`init_xxx`的重复。至此，代码已经达到一个令人满意的状态。然而，能否让我们的PostBuilder的接口更加漂亮些？
+与最初版本相比，我们引入了jsonpath和block来对转换规则进行建模（创建了MappingRule类），在PostBuilder#build中循环应用各个rule完成对象的创建，消除了多个`init_xxx`的重复。至此，代码已经达到一个令人满意的状态。然而，能否让我们的PostBuilder的接口更加漂亮些？
 
 ### 再改进，更具表达力的api
 我们再来看下PostBuilder的使用场景：
@@ -124,7 +124,7 @@ post = buidler.build({"date" => "2013-09-10", "tags" => ["music", "IT"] })
 2. 给这个对象增加一些转换规则。
 3. 使用这个对象从json创建对象。
 
-因此，可以说，在一个PostBuilder对象被添加规则之前，它是不完整的，是不可用的，即第一二步应该是一个原则操作，我们可以把`initialize`变为private方法，增加一个`config`类方法，这个方法可以接受一个block，在此block中对builder增加规则，在这个方法中创建一个builder实例，同时把这个实例传递给block完成buidler的创建。代码如下：
+因此，可以说，在一个PostBuilder对象被添加规则之前，它是不完整的，是不可用的，即第一二步应该是一个原子操作，我们可以把`initialize`变为private方法，增加一个`config`类方法，这个方法可以接受一个block，在此block中对builder增加规则，在这个方法中创建一个builder实例，同时把这个实例传递给block完成buidler的创建。代码如下：
 
 {% highlight ruby%}
 
@@ -176,10 +176,10 @@ end
 {% endhighlight%}
 在`PostBuilder.config`中使用`instance_eval`对block进行evaluate，相当于在新创建的builder上执行block中的代码，同样能达到对builder增加规则的效果。
 
-使用instance_eval能够使代码变得更加简洁。然而随之而来的风险是，你也给了你的API调用者一个在这个新建对象上执行**任意代码**的机会。因此，在简洁性和风险之间，你需要做一个权衡。
+使用instance_eval能够使代码变得更加简洁，然而随之而来的风险是，你也给了你的API调用者一个在这个新建对象上执行**任意代码**的机会。因此，在简洁性和风险之间，你需要做一个权衡。
 
 ###再抽象
-再回头看看PostBuilder，只需些许改动，我们就能从json创建**任意**类型的对象，例如：
+再回头看看PostBuilder，只需些许改动，我们就能从json创建**任意**类型的对象，于是我们得到一个`InstanceBuilder`类，如下：
 {% highlight ruby%}
 
 post_builder = InstaneBuilder.config do
@@ -194,13 +194,15 @@ end
 
 ###结语
 通观上面的例子，我们通过使用ruby的block和instance_eval，把一个复杂丑陋的代码变得干净，层次清晰，同时，更加容易扩展。
-在这里，对抛出自己对编写代码的一点想法，供各位参考：
+在这里，我抛出自己对编写代码的一点想法，供各位参考：
 
-1. 在开始编写实现代码前，先想想如何提供一套干净的，更具表达力的api。
+1. 在开始编写实现代码前，先考虑以下如何提供一套干净的，更具表达力的api，让api调用者喜欢使用你的api（[sinatra](sinatrarb.com)做了一个很好的榜样）。
 2. 恰当地使用block，instance_eval 能够很容易的构建一个internal dsl。
 
 
 ###Reference
+想了解更多关于`block`，`instance_eval`, `internal dsl`可以参考如下两篇文章：
+
 [How do I build DSLs with yield and instance_eval?](http://rubylearning.com/blog/2010/11/30/how-do-i-build-dsls-with-yield-and-instance_eval/)
 
 [Creating a ruby dsl](http://yonkeltron.com/blog/2010/05/13/creating-a-ruby-dsl/)
