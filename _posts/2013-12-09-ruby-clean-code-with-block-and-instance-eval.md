@@ -12,6 +12,7 @@ json中的值和对象值对应关系有如下几种：
 1. json属性和对象属性直接对应。
 2. json属性和对象属性直接对应，当json中没有该属性时，使用给定默认值。
 3. 对象的属性的类型不是普通类型，当json中有对应属性的值时，需要根据json中的值创建一个对应的类型对象。	
+4. 等等
 
 我们先来看下最初的实现版本：
 
@@ -24,6 +25,7 @@ class Post
     init_author_name(json)
     init_date(json)
     init_tags(json)
+    #init_xxx...
   end
   
   # omit some code here...
@@ -55,9 +57,9 @@ end
 
 在我看来，这份代码有两个问题：
 
-第一，从json到Post对象的转换职责，不应该是Post类的职责，这份代码违反类**单一职责原则**。
+第一，从json到Post对象的转换职责，不应该是Post类的职责，这份代码违反了**单一职责原则**。
 
-第二，由于无法很好地将json中的值和对象值对应关系规则建模，导致我们不得不创建多个`init_xxx`方法，然后在在`initialize`方法中调用这些方法。其实在这些`init_xxx`方法之间，存在着**结构化重复**。
+第二，由于无法很好地将json中的值和对象值对应关系规则建模，导致我们不得不创建多个`init_xxx`方法，然后在在`initialize`方法中逐一调用这些方法。然而在这些`init_xxx`方法之间，存在着**结构化重复**。
 
 ###如何改进？
 首先，要分离职责，把json到Post对象的转换职责放到一个新类`PostBuilder`中。
@@ -65,7 +67,7 @@ end
 其次，要对对应关系进行抽象。
 
 ###改进
-我们在来分析一下json中的值和对象值对应关系规则，还是有规律可循的，对应关系都由三部分组成：*json属性*，*对象属性名*，*转换规则（默认没有转换规则）*。其中，通过[`jsonpath`](http://goessner.net/articles/JsonPath/)来标识*json属性*，通过block来表示*转换规则*， 我们可以建立一个`MapingRule`类来对次关系进行建模。
+我们在来分析一下json中的值和对象值对应关系规则，还是有规律可循的，对应关系都由三部分组成：*json属性*，*对象属性名*，*转换规则（默认没有转换规则）*。其中，通过[`jsonpath`](http://goessner.net/articles/JsonPath/)来标识*json属性*，通过block来表示*转换规则*， 我们可以建立一个`MapingRule`类来对此关系进行建模。
 
 
 由此我们得到如下代码:
@@ -176,7 +178,7 @@ end
 {% endhighlight%}
 在`PostBuilder.config`中使用`instance_eval`对block进行evaluate，相当于在新创建的builder上执行block中的代码，同样能达到对builder增加规则的效果。
 
-使用instance_eval能够使代码变得更加简洁，然而随之而来的风险是，你也给了你的API调用者一个在这个新建对象上执行**任意代码**的机会。因此，在简洁性和风险之间，你需要做一个权衡。
+使用instance_eval能够使代码变得更加简洁，然而随之而来的风险是，你也给了你的api调用者一个在这个新建对象上执行**任意代码**的机会。因此，在简洁性和风险之间，你需要做一个权衡。
 
 ###再抽象
 再回头看看PostBuilder，只需些许改动，我们就能从json创建**任意**类型的对象，于是我们得到一个`InstanceBuilder`类，如下：
@@ -196,7 +198,7 @@ end
 通观上面的例子，我们通过使用ruby的block和instance_eval，把一个复杂丑陋的代码变得干净，层次清晰，同时，更加容易扩展。
 在这里，我抛出自己对编写代码的一点想法，供各位参考：
 
-1. 在开始编写实现代码前，先考虑以下如何提供一套干净的，更具表达力的api，让api调用者喜欢使用你的api（[sinatra](sinatrarb.com)做了一个很好的榜样）。
+1. 在开始编写实现代码前，先考虑一下如何提供一套干净的，更具表达力的api，让api调用者喜欢使用你的api（[sinatra](sinatrarb.com)做了一个很好的榜样）。
 2. 恰当地使用block，instance_eval 能够很容易的构建一个internal dsl。
 
 
