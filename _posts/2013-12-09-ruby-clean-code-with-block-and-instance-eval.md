@@ -198,7 +198,7 @@ end
 通观上面的例子，我们通过使用ruby的block和instance_eval，把一个复杂丑陋的代码变得干净，层次清晰，同时，更加容易扩展。
 在这里，我抛出自己对编写代码的一点想法，供各位参考：
 
-1. 在开始编写实现代码前，先考虑一下如何提供一套干净的，更具表达力的api，让api调用者喜欢使用你的api（[sinatra](sinatrarb.com)做了一个很好的榜样）。
+1. 在开始编写实现代码前，先考虑一下如何提供一套干净的，更具表达力的api，让api调用者喜欢使用你的api（[sinatra](http://sinatrarb.com)做了一个很好的榜样）。
 2. 恰当地使用block，instance_eval 能够很容易的构建一个internal dsl。
 
 
