@@ -93,6 +93,6 @@ title: "#{title}"
 ---
 EOS
     end
-    exec "mvim #{filename}"
+    exec "open #{filename}"
   end
 end
