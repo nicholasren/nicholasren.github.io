@@ -35,7 +35,7 @@ class Post
     @author_name = json['author']['name']
   end
 
-  # 对应上面的第一种情形
+  # 对应上面的第二种情形
   def init_date(json)
     @date = json['date'].blank? ? "1970-01-01" : json['date']
   end
