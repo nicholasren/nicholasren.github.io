@@ -42,7 +42,7 @@ title: "Behind AJAX"
 	xmlhttp.send();
 
 
-XMLHttpRequest是ajax技术中最重要的一个概念，它是浏览器暴露给浏览器脚本语言(例如javascript)的一个接口，浏览器脚本语言(例如javascript)就可以通过这个API发起HTTP，HTTPS请求，并获取响应。
+[XMLHttpRequest](http://en.wikipedia.org/wiki/XMLHttpRequest)是ajax技术中最重要的一个概念，它是浏览器暴露给浏览器脚本语言(例如javascript)的一个接口，浏览器脚本语言(例如javascript)就可以通过这个API发起HTTP，HTTPS请求，并获取响应。
 
 当我们需要发起一个ajax调用通常经过以下几步:
 
