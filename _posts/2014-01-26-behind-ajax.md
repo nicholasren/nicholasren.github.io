@@ -1,23 +1,22 @@
 ---
 layout: post
-title: "Behind AJAX"
+title: "Behind $.ajax"
 ---
 
 相信大家对于下面这段代码都不会太陌生：
 
+```javascript
+doSomethingBefore();
 
-	doSomethingBefore();
+$.ajax({
+  url: "test.html",
+  success: function() {
+	doSomethingWhenSucceed();
+  }
+});
 
-	$.ajax({
-	  url: "test.html",
-	  success: function() {
-		doSomethingWhenSucceed();
-	  }
-	});
-	
-	doSomethingAfter();
-	
-
+doSomethingAfter();
+```	
 
 上述代码的执行顺序是：
 
@@ -30,17 +29,18 @@ title: "Behind AJAX"
 
 被jQuery惯坏了的程序员们或许已经忘记了使用原生的javascript api发起ajax调用了，我们先通过一个简单的例子回忆一下：
 
-	var xmlhttp = new XMLHttpRequest();
-	
-	xmlhttp.onreadystatechange = function() {
-	  if (xmlhttp.readyState === 4){
-    	console.log(xmlhttp.responseText);
-	  }
-	};
+```javascript
+var xmlhttp = new XMLHttpRequest();
 
-	xmlhttp.open("GET","https://api.github.com/users/tater/events",true);
-	xmlhttp.send();
+xmlhttp.onreadystatechange = function() {
+  if (xmlhttp.readyState === 4){
+	console.log(xmlhttp.responseText);
+  }
+};
 
+xmlhttp.open("GET","https://api.github.com/users/tater/events",true);
+xmlhttp.send();
+```
 
 [XMLHttpRequest](http://en.wikipedia.org/wiki/XMLHttpRequest)是ajax技术中最重要的一个概念，它是浏览器暴露给浏览器脚本语言(例如javascript)的一个接口，浏览器脚本语言(例如javascript)就可以通过这个API发起HTTP，HTTPS请求，并获取响应。
 
