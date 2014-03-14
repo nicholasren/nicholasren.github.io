@@ -1,7 +1,6 @@
 title: Nicholas Ren's Blog
 description: happy coding
-disqus_shortname: nicholasren
-#url: http://nicholasren.github.io
+disqus_shortname: nicholasrensblog
 
 owner:
   name: Nicholas Ren
@@ -13,7 +12,7 @@ owner:
 timezone:    China/Beijing
 future:      true
 pygments:    true
-markdown:    kramdown
+markdown:    rdiscount
 paginate:    5
 
 destination: public

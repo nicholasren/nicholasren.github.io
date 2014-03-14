@@ -15,22 +15,22 @@ title: "create a scala project with sbt"
 + 创建一个工程目录
 + 在这个工程目录下新建一个名为`build.sbt`的文件，包含以下内容。 
 
-```
-	name := "<your project name>"
+{% highlight scala%}
+name := "<your project name>"
 
-	version := "0.1"
+version := "0.1"
 
-	scalaVersion := "2.11-M3"
+scalaVersion := "2.11-M3"
 
-	libraryDependencies += "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test"
-```
+libraryDependencies += "org.scalatest" % "scalatest_2.10" % "1.9.1" % "test"
+{% endhighlight%}
 
 这个文件中是scala语法，指定了项目名称，版本，依赖的scala的版本，以及项目所需要的依赖，例如我想要使用`akka`，那么就在该文件中加入以下内容
 
 
-```
+{% highlight scala%}
 libraryDependencies += "com.typesafe.akka" % "akka-actor_2.11.0-M3" % "2.2.0"
-```
+{% endhighlight%}
 
 + 在工程目录下运行`sbt update`下载项目依赖包。
 + 运行`sbt gen-idea`生成idea工程文件。

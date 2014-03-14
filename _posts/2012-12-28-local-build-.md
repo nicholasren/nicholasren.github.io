@@ -28,6 +28,7 @@ title: "Innovation，让工作更有趣——给local build增加声音反馈"
 google之，得知可以通过**退出状态码**(Exit Code)进行判断，**非零退出状态码**表示shell脚本执行失败。于是我们创建一个脚本`run_test.sh`,脚本内容如下：
 
 
+{% highlight sh%}
 	#!/bin/bash -e
 	bundle exec rake dev
 	if [ $? == 0 ]; then
@@ -35,10 +36,12 @@ google之，得知可以通过**退出状态码**(Exit Code)进行判断，**非
 	else
 		#TODO 播放失败声音
 	fi
+{% endhighlight%}
 
 接下来我们来看第二个问题，Mac OSX自带了一个命令行工具`say`,可以把单词转换为语音输出，例如执行`say "Hello World"`，你就会听到Mac 说话了。
 于是，我们的脚本就变成了：
 
+{% highlight sh%}
 	#!/bin/bash -e
 	bundle exec rake dev
 	if [ $? == 0 ]; then
@@ -46,10 +49,13 @@ google之，得知可以通过**退出状态码**(Exit Code)进行判断，**非
 	else
 		say "Boom, build failed"
 	fi
+{% endhighlight%}
+
 俩问题都解决了，该伸个懒腰休息休息了吧。“Hold on”， 你的pair又说话了，“难道这么好用的功能，你只想用它来执行local build吗？能否让所有的rake task失败都有声音提示呢？” 。真是个难缠的pair。
 
 不管怎样，第三个问题来了，如何使`run_test.sh`变得更加通用？ 把要被执行的命令做为参数传给这段脚本，然后在脚本中执行，恩，是个不错的选择。于是脚本变成如下的样子：
 	
+{% highlight sh%}
 	#!/bin/bash -e
 	$@
 	if [ $? == 0 ]; then
@@ -57,18 +63,22 @@ google之，得知可以通过**退出状态码**(Exit Code)进行判断，**非
 	else
 		say "Boom, build failed"
 	fi
+{% endhighlight%}
 
 执行`sh ./run_test.sh bundle exec rake dev`，当`bundle exec rake dev`执行成功时，你就可以听到悦耳的声音提示了。
 
 还能再改进吗？每次都要敲这么长的命令，好烦啊。加个alias吧，编辑<RAILS_TOOS>/.rvmrc，加入如下alias：
 
+{% highlight sh%}
 	alias be="sh ./script/run_test.sh bundle exec"
+{% endhighlight%}
 
 下次只要执行`be rake dev`，你就可以可以放心地看邮件了，等着听声音提示吧。
 
 ####后记
 mac也提供了另外一个命令行工具`afplay`，可以用来播放音频文件，我们选用了卡巴斯基那个惨绝人寰的杀猪声做为build失败提示音，够惊悚吧。下面是我的项目中这个脚本的最终版本。
 
+{% highlight sh%}
 	#!/bin/bash -e
 	$@
 	if [ $? == 0 ]; then
@@ -76,6 +86,7 @@ mac也提供了另外一个命令行工具`afplay`，可以用来播放音频文
 	else
 	  afplay fixture/fail.wav
 	fi
+{% endhighlight%}
 
 ####想说的话
 上面的故事是从今天我和同事pair的场景里抽象提炼出来的，从提出点子到最后实现也就用来个把小时，代码量很小，难度也不大，然而带给每个team member的好处却是显而易见的。让平日里的工作变得有趣的正是这些点子，以及实现它的过程，更大的乐趣是把它分享给更多的人。我们已经分享了，你呢？

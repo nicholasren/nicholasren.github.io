@@ -73,6 +73,7 @@ in a rails project, it is very important to keep your controllers clean, control
 
 Before, the controller was messy:
 
+{% highlight ruby%}
       #in controller
       def create
         user = User.authorize(params[:email], params[:password])
@@ -85,9 +86,11 @@ Before, the controller was messy:
           render :status => 201, :nothing => true
         end
       end
+{% endhighlight%}
 
 After, controller is much cleaner
 
+{% highlight ruby%}
       #in controller
       rescue_from InactiveUserException, with: :user_is_inactive
       rescue_from InvalidCredentialException, with: :invaild_credential
@@ -98,10 +101,12 @@ After, controller is much cleaner
         response.headers["Token"]= login_session.token
         render :status => :created, :nothing => true
       end
+{% endhighlight%}
 
 #### Error code
 It is very common to return failure reason when API call failed. Even we can return failure reason in plian english, as an API provider, we shouldn't assume that API client will use error message we provided, it's better to return a structured failure reason which can be *parsed* by API client. let's take a look at example from Github API:
 
+{% highlight javascript%}
     {
       "message": "Validation Failed",
         "errors": [
@@ -112,6 +117,7 @@ It is very common to return failure reason when API call failed. Even we can ret
         }
       ]
     }
+{% endhighlight%}
 
 failure reason was returned as an JSON object, `resource` representing what kind of resource is requested, `field` indicates which field fails api call, `code` indicating the exact faliure reason. 
 
