@@ -1,7 +1,22 @@
-markdown: rdiscount
-pygments: true
+title: Nicholas Ren's Blog
+description: happy coding
+disqus_shortname: nicholasren
+#url: http://nicholasren.github.io
+
+owner:
+  name: Nicholas Ren
+  avatar: avatar.jpg
+  email: nicholas85211@gmail.com
+  twitter: '@nicholasren'
+  github: nicholasren
+
+timezone:    China/Beijing
+future:      true
+pygments:    true
+markdown:    kramdown
+paginate:    5
+
 destination: public
-pygments: true
 exclude:
 - Rakefile
 - Gemfile

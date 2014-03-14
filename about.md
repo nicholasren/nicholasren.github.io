@@ -1,9 +1,11 @@
 ---
-layout: default
+layout: page
+permalink: /about/
 title: About me
+share: true
 ---
 <div id="about">
-  <img src="/images/me.jpeg" class="avatar pull-left" />
+  <img src="/images/avatar.jpg" class="avatar pull-left" />
   <div id="desc">
     <h3>关于我</h3>
     <div>
