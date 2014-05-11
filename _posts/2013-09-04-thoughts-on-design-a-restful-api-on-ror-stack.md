@@ -135,6 +135,9 @@ integration tests test the api from end point, it is a end to end test. we use [
 
 unit tests test different layer. hints: only stub method on the boundary of each layer.
 
+##### integration test
+Make tests less flakey by using contract-based testing instead of hitting live endpoints
+
 
 #### Versioning
 
