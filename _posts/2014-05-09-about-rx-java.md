@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "RxJava初探"
+comments: true
 ---
 
 **RxJava** 是来自于[Netflix](https://www.netflix.com/global)的[Reactive Extension](https://rx.codeplex.com/)的java版实现。

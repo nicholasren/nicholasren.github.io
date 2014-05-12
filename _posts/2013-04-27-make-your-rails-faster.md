@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "使用spring提高rails开发效率"
+comments: true
 ---
 ###声明
 目前spring只支持MRI 1.9.3, MRI 2.0.0, Rails 3.2，没有达到要求的人赶紧升级你们的ruby，rails版本吧

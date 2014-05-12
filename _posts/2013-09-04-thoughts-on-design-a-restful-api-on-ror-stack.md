@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Thoughts on design a RESTful API on RoR stack"
+comments: true
 ---
 Recently I'm working a RoR stack RESTful API project, I was involved in proposing tech stack, architecture, deployment pipeline. There was many thoughts in this progress, so I wrote down our thoughts here, in case it may help you when you met a similar question.
 

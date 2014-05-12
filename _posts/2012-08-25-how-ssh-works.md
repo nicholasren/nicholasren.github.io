@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "How SSH works?"
+comments: true
 ---
 
 ###简介：

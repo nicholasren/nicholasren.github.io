@@ -90,6 +90,7 @@ namespace :posts do
 ---
 layout: post
 title: "#{title}"
+comments: true
 ---
 EOS
     end

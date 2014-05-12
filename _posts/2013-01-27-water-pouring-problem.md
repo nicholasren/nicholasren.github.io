@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Water pouring problem的scala实现"
+comments: true
 ---
 **Note:**  本文中的程序来自Martin Ordersky在www.coursea.org上所开设课程中的样例代码，文章主要目的是讲述我对此类问题解法及scala lazy evluation的理解。
 

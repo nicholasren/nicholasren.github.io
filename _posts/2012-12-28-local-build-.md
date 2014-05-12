@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Innovation，让工作更有趣——给local build增加声音反馈"
+comments: true
 ---
 
 

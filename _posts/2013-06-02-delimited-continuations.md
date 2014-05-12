@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Delimited Continuations(WIP)"
+comments: true
 ---
 本文译自[这里。](http://jim-mcbeath.blogspot.in/2010/08/delimited-continuations.html)
 

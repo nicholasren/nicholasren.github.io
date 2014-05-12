@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "create a scala project with sbt"
+comments: true
 ---
 在ruby的世界里，习惯了使用`bundle`来管理依赖，`Rake`来实现自动化构建，那么在scala的世界里，如果遇到一个好玩的开源库，例如akka，如何很快的把玩一下呢？以前我的做法会是：
 

@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Ruby clean code之block and instance eval"
+comments: true
 ---
 ### 引子
 自从来到ruby世界，我就被ruby那自由的语法、优雅的对象模型、漂亮的dsl深深地迷住了，了解更多的ruby特性，能够帮你实现更漂亮，流畅的api。在这篇文章中，我将以一个例子来演示如何使用ruby的block和instance_eval实现更具表现力的api。

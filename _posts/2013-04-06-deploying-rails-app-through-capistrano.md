@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Deploying Rails App through Capistrano"
+comments: true
 ---
 在这篇文章里，我将介绍如何使用capistrano部署rails应用。
 

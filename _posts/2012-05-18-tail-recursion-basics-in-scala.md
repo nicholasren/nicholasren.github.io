@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Scala中的递归(译)"
+comments: true
 ---
 声明：本文翻译自<a href="http://oldfashionedsoftware.com/2008/09/27/tail-recursion-basics-in-scala/">这里</a>
 

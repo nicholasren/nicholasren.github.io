@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Setup nginx and unicorn"
+comments: true
 ---
 本文简要介绍如何使用nginx和unicorn在ubuntu上搭建rails应用部署环境。
 
