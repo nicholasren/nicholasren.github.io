@@ -10,7 +10,7 @@ Reactive Extenstion所要解决的一个问题是对多个异步任务的组合�
 ### 异步任务的依赖
 假设我们的程序需要从五个micro-service获取数据，这些micro-services之间存在依赖关系，我们来看一下第一版实现：
 
-note: 本文我使用了scala来做为RxJava的客户端代码，只是因为scala中支持lambda。
+note: 本文我使用了scala来做为RxJava的客户端代码，只是因为scala中支持lambda。关于rx-scala的更新信息，参阅[这里](http://rxscala.github.io/)
 
 {% highlight scala%}
  val fa = callToRemoteServiceA();
@@ -52,8 +52,8 @@ val oa = from(callToRemoteServiceA)
 val ob = from(callToRemoteServiceB())
 
 val oc = oa.flatMap { res => from(callToRemoteServiceC(res)) }
-val od = oa.flatMap { res => from(callToRemoteServiceD(res))}
-val oe = oa.flatMap { res => from(callToRemoteServiceE(res))}
+val od = ob.flatMap { res => from(callToRemoteServiceD(res))}
+val oe = ob.flatMap { res => from(callToRemoteServiceE(res))}
 {% endhighlight%}
 
 在这个版本的实现中，对`ServiceA`和`ServiceB`的调用被包装为一个`Observable`对象， 然后使用`flatMap`来把micro services 之间的依赖串接起来：
