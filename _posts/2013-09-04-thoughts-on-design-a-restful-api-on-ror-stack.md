@@ -25,8 +25,6 @@ In the end, we choose **Rails::API** as our tech stack for the following reason:
 + it is a subset of rails, is designed for creating a API application.
 + rails's REST conversion.
 
-If I had a chance to make this decision again, I would think **combining Grape with Rails::API**, then we can both Grape's great support on API and Rails::API's fullstack framework.
-
 ### API Design
 #### Content Type Negotiation
 
