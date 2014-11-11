@@ -46,4 +46,4 @@ SSH通讯的双方各自持有一个公钥私钥对，公钥对对方是可见�
 
 ###SSH forwarding:
 
-	ssh -f bhutchison@shell01.kp.realestate.com.au -L 1433:172.24.39.129:1433 -N
+	ssh -f user@ssh_host -L 1433:target_server:1433 -N
