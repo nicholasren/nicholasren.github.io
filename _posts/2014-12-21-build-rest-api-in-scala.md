@@ -31,7 +31,7 @@ from unfilter's document:
 
 Here is the code:
 
-```scala
+{%highlight scala%}
 object PushApi extends Plan {
   def intent = {
     case req @ POST(Path(Seg("devices" :: Nil))) => {
@@ -42,15 +42,16 @@ object PushApi extends Plan {
     }
   }
 }
-```
+{%endhighlight%}
 
 #### Server
 Unfilter can be run on top of jetty / netty, to do so, just run your plan with correponded server:
-```scala
+
+{%highlight scala%}
 unfiltered.netty.Server.http(8080).plan(PushApi).run()
 //or
 unfiltered.jetty.Server.http(8080).plan(PushApi).run()
-```
+{%endhighlight%}
 
 ####Json serialization/deserialization
 The biggest difference between spray-json and json4s is serialization/deserialization done implicitly or explicitly.
