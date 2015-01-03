@@ -14,6 +14,7 @@ you want to build a api which can accept http request and send response in json 
 
 
 to achieve this goal, we need:
+
 - a server listening on a local port, wrap received http request and pass it to the application.
 - a request mapping mechanism where you can define how http request should be handled.
 - a tool which can covert between plan scala object and json.
