@@ -7,6 +7,10 @@ share: true
 <div id="about">
   <img src="/images/avatar.png" class="avatar pull-left" />
   <div id="desc">
+    <h3>About me</h3>
+    <div>
+      I'm Ren Xiaojun(aka. @nicholasren)，a Java, Ruby, Scala developer。
+    </div>
     <h3>关于我</h3>
     <div>
       我是任晓君，一名Java, Ruby, Scala developer。
@@ -19,7 +23,7 @@ share: true
     </div>
     <h3>Email</h3>
     <div class="mail">
-      scalarly@gmail.com
+      nicholas85211@gmail.com
     </div>
   </div>
 </div>
