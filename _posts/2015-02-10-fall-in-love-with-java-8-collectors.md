@@ -16,7 +16,7 @@ Let's look at a specific example:
 Given an collection of employees, grouping these employees by age produce a map between age and list of employees.
 
 Here is the class definition of Employee:
-```java
+{%highlight java%}
 class Employee{
     private int age;
     private String name;
@@ -26,12 +26,12 @@ class Employee{
         this.name = name;
     }
 }
-```
+{%endhighlight%}
 
 ### The Solution
 a simple implementation could be:
 
-```java
+{%highlight java%}
 List<Employee> employees = Arrays.asList(new Employee("A", 18), new Employee("B", 20), new Employee("C", 18));
 Map<Integer, List<Employee>> byAge = new HashMap<>();
 for(Employee employee: employees) {
@@ -42,11 +42,11 @@ for(Employee employee: employees) {
   employeeByAge.add(employee);
   byAge.put(employee.getAge(), employeeByAge);
 }
-```
+{%endhighlight%}
 if you have been working with Java for quite a long time, you may be sick to write these code. you must have write code in this structure for quite a long time.
 to demonstrate the duplication of this structure, let's rewrite the above code to this format:
 
-```java
+{%highlight java%}
 Collection<T> collections = ...
 Collection<R> results = new SomeCollection;
 
@@ -57,15 +57,15 @@ for(T t: in collections) {
   }
   r.add(t)
 }
-```
+{%endhighlight%}
 
 all these code did is to collect some information for give collection and apply reduction on the items in this collection and produce a result container.
 
 with Java 8s collector interface, you can simply do
-```java
+{%highlight java%}
 List<Employee> employees = Arrays.asList(new Employee("A", 18), new
 Map<Integer, List<Employee>> byAge = strings.stream().collect(Collectors.groupingBy((e) -> e.age));
-```
+{%endhighlight%}
 
 so what is the magic behind it:
 
@@ -95,7 +95,7 @@ After found this useful pattern, I wonder if scala's powerful collection system 
 
 `scala.collection.mutable.Builder` play the same role with  `accumulator` (the `A`) in java Collector. Let's see the following example of how we implement the `collect` method in scala and how we use it to solve the word count problem:
 
-```scala
+{%highlight scala%}
 import scala.collection.mutable.Builder
 
 //`T` is the type of element in collection, `Builder` is the type of intermediate result container, `R` is the type of reduction result.
@@ -122,10 +122,10 @@ class CounterBuilder[String, Map[String, Int]] extends Builder[String, Map[Strin
 
   def result: Map[String, Int] = counter.toMap[String, Int].asInstanceOf[Map[String, Int]]
 }
-```
+{%endhighlight%}
 
 and here is the code to use the `CounterBuilder`
-```scala
+{%highlight scala%}
 //use case
 val xs = List("a", "a", "a", "c", "d")
 
@@ -133,7 +133,7 @@ val xs = List("a", "a", "a", "c", "d")
 val builder = new CounterBuilder
 val res = collect[String, Map[String, Int]] (xs, new CounterBuilder)
 //output: Map(d -> 1, a -> 3, c -> 1)
-```
+{%endhighlight%}
 
 
 ### Conclusion
