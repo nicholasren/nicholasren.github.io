@@ -90,6 +90,7 @@ In the previous example, the type of result of `Collector.groupingBy` is `Collec
 
 let's extend this problem a little bit: how about grouping employees by age range(e.g. 20-29 as a group, 30-39 as a group)
 this time, you can not find any buitin collector which is suitable to solve this problem, now, you will need a customised collector to do the reduction.
+
 (this blog post)[http://www.nurkiewicz.com/2014/07/introduction-to-writing-custom.html] is a fairly good guide for how to create you own Collector implementation.
 
 
