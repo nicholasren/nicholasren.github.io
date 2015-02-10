@@ -77,9 +77,10 @@ it will produce a result with type `Map<K, List<T>>`(aka, the result type `R`).
 Here is the official definition of Collector from its [api document](https://docs.oracle.com/javase/8/docs/api/java/util/stream/Collector.html):
 > A mutable reduction operation that accumulates input elements into a mutable result container, optionally transforming the accumulated result into a final representation after all input elements have been processed. Reduction operations can be performed either sequentially or in parallel.
 
-You see from the docCollector take three type parameters `T`, `A` and `R`, where `T` is the type of element inside the collection, `A` is an intermediate type which could be used to do the mutable reduction, `R` is the type of result.
+You see from the document, Collector take three type parameters `T`, `A` and `R`, where `T` is the type of element inside the collection, `A` is an intermediate type which could be used to do the mutable reduction, `R` is the type of result.
 
 There four functions in this interface which work together to accumulate entries into a mutable result container.
+
 - supplier(), with type `() -> A` - creation of a new result container.
 - accumulator(), with type`(A, T) -> A` - incorprating a new element into the result container.
 - combiner(), with type `(A, A) -> A` - combing two result container into one.
@@ -87,7 +88,9 @@ There four functions in this interface which work together to accumulate entries
 
 In the previous example, the type of result of `Collector.groupingBy` is `Collector<Employee, ?, Map<Integer, List<Employee>>`.
 
-one nice feature of `Collector` is that you can create you own Collector, this is super useful when you want to do a __mutable reduction__ on a collection with some special business logic(e.g. computing total salary of the first 1, 3, 5, 7 .. employees).` (this blog post)[http://www.nurkiewicz.com/2014/07/introduction-to-writing-custom.html] provide a fairly good example of how to create you own Collector.
+one nice feature of `Collector` is that you can create you own Collector, this is super useful when you want to do a __mutable reduction__ on a collection with some special business logic(e.g. computing total salary of the first 1, 3, 5, 7 .. employees).
+
+(this blog post)[http://www.nurkiewicz.com/2014/07/introduction-to-writing-custom.html] is a fairly good guide for how to create you own Collector implementation.
 
 
 ###Collector in Scala
@@ -139,7 +142,7 @@ val res = collect[String, Map[String, Int]] (xs, new CounterBuilder)
 ### Conclusion
 
 - Java 8s `Collector Api` provide a better way to encapsulate reduction computation - not only some built in reduction(e.g. max, min, sum, average), but also customized reduction(via customised collector), Collector is designed to be composed, which means these reduction logic are much easier to be reused.
-- Scala do not have native support for __customised mutable reduction__, but based on scala's powerfull collection system, we can create our own version.
+- Scala dose not have native support for __customised mutable reduction__, but based on scala's powerfull collection system, we can create our own version.
 
 ### References
 - [Scala's CanBuildFrom](http://blog.bruchez.name/2012/08/getting-to-know-canbuildfromwithout-phd.html)
