@@ -64,7 +64,7 @@ all these code did is to collect some information for give collection and apply 
 with Java 8s collector interface, you can simply do
 {%highlight java%}
 List<Employee> employees = Arrays.asList(new Employee("A", 18), new Employee("B", 20), new Employee("C", 18));
-Map<Integer, List<Employee>> byAge = strings.stream().collect(Collectors.groupingBy((e) -> e.age));
+Map<Integer, List<Employee>> byAge = employees.stream().collect(Collectors.groupingBy((e) -> e.age));
 {%endhighlight%}
 
 so what is the magic behind it:
@@ -88,8 +88,8 @@ There four functions in this interface which work together to accumulate entries
 
 In the previous example, the type of result of `Collector.groupingBy` is `Collector<Employee, ?, Map<Integer, List<Employee>>`.
 
-one nice feature of `Collector` is that you can create you own Collector, this is super useful when you want to do a __mutable reduction__ on a collection with some special business logic(e.g. computing total salary of the first 1, 3, 5, 7 .. employees).
-
+let's extend this problem a little bit: how about grouping employees by age range(e.g. 20-29 as a group, 30-39 as a group)
+this time, you can not find any buitin collector which is suitable to solve this problem, now, you will need a customised collector to do the reduction.
 (this blog post)[http://www.nurkiewicz.com/2014/07/introduction-to-writing-custom.html] is a fairly good guide for how to create you own Collector implementation.
 
 
