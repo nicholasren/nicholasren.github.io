@@ -63,7 +63,7 @@ all these code did is to collect some information for give collection and apply 
 
 with Java 8s collector interface, you can simply do
 {%highlight java%}
-List<Employee> employees = Arrays.asList(new Employee("A", 18), new
+List<Employee> employees = Arrays.asList(new Employee("A", 18), new Employee("B", 20), new Employee("C", 18));
 Map<Integer, List<Employee>> byAge = strings.stream().collect(Collectors.groupingBy((e) -> e.age));
 {%endhighlight%}
 
