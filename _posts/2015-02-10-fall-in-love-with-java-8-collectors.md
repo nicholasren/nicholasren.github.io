@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "fall-in-love-with-java-8-collectors"
+title: "Fall in love with java 8 collectors"
 comments: true
 ---
 
