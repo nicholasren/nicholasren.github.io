@@ -21,6 +21,7 @@ comments: true
 然而并发编程并不是银弹，做为一种基于共享内存的并发编程，多线程编程有常见的死锁，线程饥饿，race condition等问题，而且多线程bug的以其难以重现定位臭名昭著。
 
 而近年来逐渐火爆的`functional programming`以其提倡的:
+
 - `函数是编程语言的一等公民(function as first-class citizen)`
 - `不可变量(immutable variable)`
 - `无副作用的函数(no side-effect/reference transparency)`
