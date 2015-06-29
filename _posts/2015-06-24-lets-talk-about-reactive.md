@@ -11,7 +11,7 @@ comments: true
 ### 编程范式的演进
 最近几年，`reactive programming`这个词语的热度迅速提升，下面的 google trends的这个图表很能说明问题。
 
-<img src="images/rp-trends.png"/>
+<img src="/images/rp-trends.png"/>
 
 自从高级编程语言被发明以来，各种编程范式的编程语言层出不穷，命令式编程（如C）
 面向对象编程（如Java，Ruby），函数式编程（如Clojure, Scala，Haskell）都曾经或者正在软件开发领域占有一席之地，上世纪九十年代前，命令式编程仍然在软件开发领域占有主导地位。随着软件规模的不断增大，面向对象编程以其封装性，可重用性受到开发者和组织的青睐。
