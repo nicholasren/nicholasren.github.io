@@ -11,7 +11,7 @@ comments: true
 ### 编程范式的演进
 最近几年，`reactive programming`这个词语的热度迅速提升，下面的 google trends的这个图表很能说明问题。
 
-<script type="text/javascript" src="//www.google.com/trends/embed.js?hl=en-US&q=reactive+programming&tz=Etc/GMT-8&content=1&cid=TIMESERIES_GRAPH_0&export=5&w=500&h=330"></script>
+<img src="images/rp-trends.png"/>
 
 自从高级编程语言被发明以来，各种编程范式的编程语言层出不穷，命令式编程（如C）
 面向对象编程（如Java，Ruby），函数式编程（如Clojure, Scala，Haskell）都曾经或者正在软件开发领域占有一席之地，上世纪九十年代前，命令式编程仍然在软件开发领域占有主导地位。随着软件规模的不断增大，面向对象编程以其封装性，可重用性受到开发者和组织的青睐。
@@ -31,13 +31,13 @@ comments: true
 
 
 然而，`functional programming`就是现代的完美编程范式了么？远远不是。
-即使使用了`functional programming`， 程序员总会需要处理异步任务或者事件，并且总有一些IO或者计算密集型的任务，这些任务可能还会阻塞其他活动线程，而且，处理异常，失败，线程任务之间的同步都比较困难而且容易出错。程序员需要不断地询问一个线程的运算结果（在Java中以`Future<T>`表示，`T`表示运算结果的类型）是否可用。我们来考虑一下下面的例子：
+即使使用了`functional programming`， 程序员总会需要处理异步任务或者事件，并且总有一些IO或者计算密集型的任务，这些任务可能还会阻塞其他活动线程，而且，处理异常，失败，线程任务之间的同步都比较困难而且容易出错。程序员需要不断地询问一个线程的运算结果（在Java中以`Future<T>`表示，`T`表示运算结果的类型）是否可用。我们来考虑一下下面两个例子：
 
 有三个线程`t1`, `t2`, `t3`，他们的运算结果分别为`f1`, `f2`, `f3`。
 有一个线程`t4`依赖于这三个线程的运行结果，而且每个线程都有有可能执行失败。
 我们该如何编写线程`t4`的代码？
 
-我们再来看一个例子，GUI程序中一次拖动操作中光标的位置就可被表示为`Future<List<Position>>`, (使用`Future`是因为这些`Position`的值是在未来的时间点生成的)。
+GUI程序中一次拖动操作中光标的位置就可被表示为`Future<List<Position>>`, (使用`Future`是因为这些`Position`的值是在未来的时间点生成的)。
 
 如果我们希望在第一个`Position`可用时(拖动时间的开始位置)就能够在这`Position`所对应的位置画点，而不是等所有的`Position`都可用是一次性把光标的运行轨迹画出来。即我们希望程序能够尽快对输入进行响应。
 
