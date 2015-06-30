@@ -22,10 +22,10 @@ comments: true
 
 而近年来逐渐火爆的`functional programming`以其提倡的:
 
-- `函数是编程语言的一等公民(function as first-class citizen)`
-- `不可变量(immutable variable)`
-- `无副作用的函数(no side-effect/reference transparency)`
-- `可组合的函数(composable functions)`
+- 函数是编程语言的一等公民(function as first-class citizen)
+- 不可变量(immutable variable)
+- 无副作用的函数(no side-effect/reference transparency)
+- 可组合的函数(composable functions)
 
 的理念，顺利地解决了因可变量`mutabble variable`被多个线程共享，修改等而导致可能的多线程的bug。
 
