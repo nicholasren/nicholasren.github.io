@@ -14,23 +14,30 @@ comments: true
 <img src="/images/rp-trends.png"/>
 
 自从高级编程语言被发明以来，各种编程范式的编程语言层出不穷，命令式编程（如C）
-面向对象编程（如Java，Ruby），函数式编程（如Clojure, Scala，Haskell）都曾经或者正在软件开发领域占有一席之地，上世纪九十年代前，命令式编程仍然在软件开发领域占有主导地位。随着软件规模的不断增大，面向对象编程以其封装性，可重用性受到开发者和组织的青睐。
+面向对象编程（如Java，Ruby），函数式编程（如Clojure, Scala，Haskell）都曾经或者正在软件开发领域占有一席之地。
 
+
+### 面向对象编程
+上世纪九十年代前，命令式编程仍然在软件开发领域占有主导地位。随着软件规模的不断增大，面向对象编程以其封装性，可重用性受到开发者和组织的青睐。
+
+
+### 进入多核时代
 随着[摩尔定律](http://baike.baidu.com/view/17904.htm)的失效，单核CPU的计算能力几乎达到了极限，CPU进入了多核时代，程序员转而通过并发编程，分布式系统来应对越来越复杂的计算任务。
 
-然而并发编程并不是银弹，做为一种基于共享内存的并发编程，多线程编程有常见的死锁，线程饥饿，race condition等问题，而且多线程bug的以其难以重现定位臭名昭著。
+然而并发编程并不是银弹，做为一种基于共享内存的并发编程，多线程编程有常见的[死锁](https://en.wikipedia.org/wiki/Deadlock)，[线程饥饿](https://en.wikipedia.org/wiki/Starvation_(computer_science))，[race condition](https://en.wikipedia.org/wiki/Race_condition)等问题，而且多线程bug的以其难以重现定位臭名昭著。
 
-而近年来逐渐火爆的`functional programming`以其提倡的:
-
+### 函数式编程的兴起
+近年来逐渐火爆的**functional programming**以其提倡的:
 - 函数是编程语言的一等公民(function as first-class citizen)
 - 不可变量(immutable variable)
 - 无副作用的函数(no side-effect/reference transparency)
 - 可组合的函数(composable functions)
 
-的理念，顺利地解决了因可变量`mutabble variable`被多个线程共享，修改等而导致可能的多线程的bug。
+的理念，顺利地解决了因可变量**mutabble variable**被多个线程共享，修改等而导致可能的多线程的bug。
 
-
+### 并发编程的痛点仍然存在
 然而，`functional programming`就是现代的完美编程范式了么？远远不是。
+
 即使使用了`functional programming`， 程序员总会需要处理异步任务或者事件，并且总有一些IO或者计算密集型的任务，这些任务可能还会阻塞其他活动线程，而且，处理异常，失败，线程任务之间的同步都比较困难而且容易出错。程序员需要不断地询问一个线程的运算结果（在Java中以`Future<T>`表示，`T`表示运算结果的类型）是否可用。我们来考虑一下下面两个例子：
 
 有三个线程`t1`, `t2`, `t3`，他们的运算结果分别为`f1`, `f2`, `f3`。
@@ -40,6 +47,8 @@ comments: true
 GUI程序中一次拖动操作中光标的位置就可被表示为`Future<List<Position>>`, (使用`Future`是因为这些`Position`的值是在未来的时间点生成的)。
 
 如果我们希望在第一个`Position`可用时(拖动时间的开始位置)就能够在这`Position`所对应的位置画点，而不是等所有的`Position`都可用是一次性把光标的运行轨迹画出来。即我们希望程序能够尽快对输入进行响应。
+
+即程序要及时，非阻塞地对输入响应。
 
 上面的两个例子就是reactive programming尝试解决的问题，而Reactive Extension做为这个问题的答案，应运而生了。
 
@@ -55,12 +64,11 @@ Reactive Extension 这个概念最早出现在`.net`社区的[Rx.net](https://ms
 ####Reactive Manifesto
 Wikipedia上对reactive programming解释如下：
 
->reactive programming is a programming paradigm oriented around data flows and the propagation of change.
+> reactive programming is a programming paradigm oriented around data flows and the propagation of change.
 
-举个例子，在命令式编程下，表达式`a = b + c`,`a`的值在这个表达式执行完毕之后就是确定的，即使`b`，`c`的值发生变化，`a`的值也不会改变。然而在响应式编程下，`a`的值与`b`，`c`的值是绑定的，上述表达式其实建立的是`a`与`b`，`c`之间的一种依赖，`a`的值会随`b`和`c`的变化而变化。
+举个例子，在命令式编程下，表达式`a = b + c`,`a`的值在这个表达式执行完毕之后就是确定的，即使`b`，`c`的值发生变化，`a`的值也不会改变。然而在响应式编程的语境下，`a`的值与`b`，`c`的值是绑定的，上述表达式其实建立的是`a`与`b`，`c`之间的一种依赖，`a`的值会随`b`和`c`的变化而变化。
 
 我们称之为能够响应输入变化的__事件(event)__。
-
 
 然而现在来看，上述定义已经不能囊括reactive programming的含义了。随着软件系统的[非功能需求](http://www.infoq.com/cn/articles/non-functional-requirements-in-architectural-decision-making)要求越来越高，reactive已不仅局限于响应__事件(event)__的传递，也表示程序能够响应__负载(load)__，系统运行时出现的__错误(failure)__。
 
