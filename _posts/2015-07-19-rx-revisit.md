@@ -4,7 +4,8 @@ title: "Rx revisit"
 comments: true
 ---
 ### TLDR;
-本文将简要介绍Rx中的多线程实现机制，另外会对其实现中的一个重要函数`lift`函数原理进行介绍。
+本文是[rx-java](http://nicholas.ren/2014/05/09/about-rx-java.html)的后续,
+将简要介绍Rx中的多线程实现机制，另外会对其实现中的一个重要函数`lift`函数原理进行介绍。
 
 ###Rx
 Rx实际上是一种高级版本的`Observer`模式，把被观察者封装成`Observable`（可理解为一个异步地生产元素的集合），
@@ -52,10 +53,10 @@ Rx中巧妙提出一个`Operator`的这个函数类型，表述从一个`Subscr
 
 `Observable#lift`签名如下：
 
-```scala
+{% highlight scala%}
 //inside Observable[T]
 def lift[T, R](Operator[R, T]): Observable[R]
-```
+{% endhighlight%}
 
 #####lift函数简介
 有一定函数式编程基础的人相信对`lift`这个名字都不会太陌生。
@@ -70,9 +71,11 @@ lift 就是把f转换成一个新的函数 M[A] => M[B]
 ```
 
 那么lift的定义如下:
-```scala
+
+{% highlight scala%}
  def lift[A, B, M[_]](f: A => B): M[A] => M[B]
-```
+{% endhighlight%}
+
 跟上面看到的`Observable#lift`唯一不同的地方在于，这个`lift`函数的返回值是一个函数，
 不过再仔细观察一下，这个`M[A] => M[B]`应用到一个`M[A]`实例后的效果和上面的`Observable#lift`是一样的。
 
@@ -109,14 +112,15 @@ lift 就是把f转换成一个新的函数 M[A] => M[B]
 
 因此lift就是
 
-```scala
+{% highlight scala%}
 (Subscriber[R] => Subscriber[T]) => (Subscriber[T] => Unit) => (Subscriber[R] => Unit)
-```
+{% endhighlight%}
 亦即
 
-```scala
+{% highlight scala%}
 (Subscriber[R] => Subscriber[T]) => (Observable[T] => Observable[R])
-```
+{% endhighlight%}
+
 假如有个`ts: Observable[T]` 和一个函数`f: Subscriber[R] => Subscriber[T]`,通过`lift`函数，我们就能得到一个类型为 `Observable[R]`的结果。
 
 ---
