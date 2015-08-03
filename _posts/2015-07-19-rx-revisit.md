@@ -6,7 +6,7 @@ comments: true
 
 ### TLDR;
 本文是[rx-java](http://nicholas.ren/2014/05/09/about-rx-java.html)的后续,
-将简要介绍Rx中的多线程实现机制，另外会对其实现中的一个重要函数`lift`函数原理进行介绍。
+将简要介绍Rx的起源，其多线程实现机制，另外会对其实现中的一个重要函数`lift`函数原理进行介绍。
 
 ###Rx
 Rx实际上是一种高级版本的`Observer`模式，把被观察者封装成`Observable`（可理解为一个异步地生产元素的集合），
@@ -65,6 +65,7 @@ public Future<List<Bookmark>> getBookmark(Long userId)
 > Observable用于表示一个可被消费的数据集合（data provider），它的消费者无需知道数据的产生机制同步的还是异步的，它会在数据可用，出错，以及数据流结束时通知它的消费者
 
 实际上，`Observable`和`Iterable`是一组__对偶的(dual)__的概念，它们都被用来表示多个元素的集合，不同之处在于：
+
 - `Observable`中的元素可以是异步产生的，而`Iterable`中的所有元素在其被消费前必须可用。
 - `Observable`是`push- based`，其可以在元素可用，出错，所有元素都被消费完成时通知他的消费者；而`Iterable`是`pull-based`，其消费者必须主动地轮询新元素，主动地捕获异常，主动地处理所有元素都被消费完成。
 
@@ -90,15 +91,25 @@ API内部可以：
 <img src="/images/observable-thread-pool-multi-threads.png"/>
 
 如此大的变化，客户无需做任何改动，这就是Observable高超的抽象能力带来的好处。
+这就是Rx带来的巨大好处，也是Netflix把它移植到JVM上的最大动力。
 
-那么，我们不禁会问:
+
+
+
+### 原理
+
+既然`Observable`这么强大，那么我们不禁会问:
+
 - 为什么`Observable`能够做到`push-based`？
 - `Observable`是如何做到使用多种并发实现的？
+
 
 对于第一个问题，`Observable`提供了`subscribe`方法供客户程序注册回调函数，之后`Observable`会自己进行运算并调用相应的回调函数，
 这样看起来就像是`Observable`在向自己的客户程序`push`其运算结果。
 
-对于第二个问题，Rx中有个非常重要的概念—— __Scheduler__，它是Rx提供的一种并发模型抽象，你可以在创建你的Observable时指定采用哪种并发模型。
+
+对于第二个问题，Rx中有个非常重要的概念—— __Scheduler__，它是Rx提供的一种并发模型抽象，你可以在创建你的Observable时指定采用哪种并发模型，
+下面我们来看下Scheduler是如何对并发模型进行抽象的。
 
 ###Scheduler
 Rx的默认行为是单线程的，它是一个`free-threaded` <sup>t1</sup>模型，意味着你可以自由选择一个线程来执行你指定的任务。
@@ -131,6 +142,14 @@ Scheduler提供一种机制，用于指定将会执行回调的线程。
 ###Worker
 回调的实际执行者，底层由`java.util.concurrent.ExecutorService`执行实际的任务，同时扮演了`Subscription`的角色。
 
+### 总结
+
+笔者在学习Coursea上学习Principal of Reactive Programming时，注意到Erik Miller曾打趣地说，不要自己尝试去实现Observable，使用现有的库就好了。
+本着强大的好奇心，笔者还是试着阅读了Rx.java的源代码，才意识到这个模型是多么的精巧，它给多线程编程带来了革命性的体验。如果你对Rx.java有兴趣，强烈推荐阅读其源码。
+
+
+----
+这本应该重开一篇博客，然而，原谅笔者的懒惰吧
 
 #### lift函数
 在Observable的实现里，有个函数必须得提一下，`lift`。
