@@ -78,6 +78,7 @@ public Observable<Bookmark> getBookmark(Long userId)
 
 那么无论是需要同步返回，异步返回，或者异步返回多个Bookmark，这个API都无需做任何变更，
 API内部可以：
+
 - 使用调用线程进行业务逻辑计算，在运算完成后通过`onNext`将结果传递给客户端（原生的阻塞式调用）。
 
 <img src="/images/observable-blocking.png"/>
@@ -149,7 +150,7 @@ Scheduler提供一种机制，用于指定将会执行回调的线程。
 
 
 ----
-这本应该重开一篇博客，然而，原谅笔者的懒惰吧
+_Note:_ 这本应该重开一篇博客，然而，原谅笔者的懒惰吧
 
 #### lift函数
 在Observable的实现里，有个函数必须得提一下，`lift`。
