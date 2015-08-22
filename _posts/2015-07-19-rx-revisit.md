@@ -216,11 +216,13 @@ lift 就是把f转换成一个新的函数 M[A] => M[B]
 我们再来看看`lift`在`Observable`中发挥了什么样的作用？
 
 在开始之前大家需要记住这几个类型等式(`:=` 表示其左右两边的类型相等)：
+
 - `Observable[_] := Subscriber[_] => Unit`
 - `Operator[T, R] := Subscriber[R] => Subscriber[T]`
 
 
 现在我们来做类型替换:
+
 - `A: Subscriber[R]`
 - `B: Subscriber[T]`
 - `M: Observable[_]  (即 Subscriber[_] => Unit)`
