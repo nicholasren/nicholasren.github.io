@@ -81,7 +81,7 @@ newrelic提供了多种语言的api，开发人员可以通过这些api监控代
 ##### CloudWatch
 CloudWatch是Amazon提供的一种度量服务，这里我主要说下customised metric在系统关键路径收集数据并通过CloudWatch api上报，Amazon会存储这些数据并通过API暴露出来，开发人员可以选择用合适的方式将其可视化出来。
 我们系统的dashboad就是把这些度量数据展示出来。
-<image src='images/production-live-dashboard.jpg'/>
+<image src='./images/production-live-dashboard.jpg'/>
 
 ##### Splunk
 splunk主要有两种角色：splunk-forwarder和splunk-indexer
