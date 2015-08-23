@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "lets-talk-about-distributed-system-architecture"
+title: "关于分布式系统设计的一点想法"
 comments: true
 ---
 
@@ -8,7 +8,6 @@ comments: true
 然而真正在产品环境运行的系统，一般都由多个子系统组成，各个子系统承担不同的职责，子系统之间以某种通信方式进行合作。
 究其原因，不外乎[单块系统架构](http://microservices.io/patterns/monolithic.html)带来的复杂性，单机系统的不可靠性。
 本文笔者会将一个实际项目中系统设计部分的思考方式分享给大家。
-
 
 #### 背景介绍
 我们的客户希望构建一个信息发布系统，其能够提供以下功能：
