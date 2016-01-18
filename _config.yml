@@ -11,7 +11,7 @@ owner:
   twitter: '@nicholasren'
   github: nicholasren
 
-timezone:    China/Beijing
+timezone:    Australia/Melbourne
 future:      true
 pygments:    true
 markdown:    rdiscount

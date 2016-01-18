@@ -16,10 +16,14 @@ share: true
       我是任晓君，一名Java, Ruby, Scala developer。
     </div>
     <div>
-      我曾在南京的一个小软件公司工作，后来进入南京华为，参与过电信增值业务软件，电信门户网站的开发。
     </div>
     <div>
-      目前我就职于ThoughtWorks。和大多数程序员一样，我也经历过国内软件开发过程中的种种痛苦, 在这里，我会分享我对于软件开发的理解、想法，希望对你有所帮助。
+        曾就职于<a href="http://www.liandisys.com.cn">联迪恒星</a>，<a href="http://www.huawei.com">华为</a>，<a href="http://www.thoughtworks.com">ThoughtWorks</a>。
+        热衷于服务端技术，对新技术，新事物有无限热忱。
+        对于整洁代码，简单设计有着执着的追求。
+    </div>
+    <div>
+        目前我在<a href="http://www.aconex.com">Aconex</a>工作。
     </div>
     <h3>Email</h3>
     <div class="mail">
