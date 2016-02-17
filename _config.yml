@@ -14,7 +14,7 @@ owner:
 timezone:    Australia/Melbourne
 future:      true
 pygments:    true
-markdown:    rdiscount
+markdown:    kramdown
 paginate:    5
 
 destination: public
