@@ -27,7 +27,7 @@ share: true
     </div>
     <h3>Email</h3>
     <div class="mail">
-      nicholas85211@gmail.com
+      nicholas.x.ren@gmail.com
     </div>
   </div>
 </div>
