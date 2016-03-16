@@ -94,7 +94,8 @@ this time, you can not find any buitin collector which is suitable to solve this
 (this blog post)[http://www.nurkiewicz.com/2014/07/introduction-to-writing-custom.html] is a fairly good guide for how to create you own Collector implementation.
 
 
-###Collector in Scala
+### Collector in Scala
+
 After found this useful pattern, I wonder if scala's powerful collection system support this computation. Unfortunately, I can not found a similar api from any collection type. But I do found that we can easily build our own version of collector based on `scala.collection.mutable.Builder`.
 
 `scala.collection.mutable.Builder` play the same role with  `accumulator` (the `A`) in java Collector. Let's see the following example of how we implement the `collect` method in scala and how we use it to solve the word count problem:
