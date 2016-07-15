@@ -7,15 +7,16 @@ google_analytics: 'UA-26893631-1'
 owner:
   name: Nicholas Ren
   avatar: avatar.png
-  email: nicholas85211@gmail.com
+  email: nicholas.x.ren@gmail.com
   twitter: '@nicholasren'
   github: nicholasren
 
-timezone:    Australia/Melbourne
-future:      true
-pygments:    true
-markdown:    kramdown
-paginate:    5
+timezone:      Australia/Melbourne
+future:        true
+pygments:      true
+markdown:      kramdown
+highlighter: rouge
+paginate:     5
 
 destination: public
 exclude:
