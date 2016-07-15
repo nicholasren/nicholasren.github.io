@@ -4,7 +4,7 @@ title: "也谈响应式编程"
 comments: true
 ---
 
-###太长不读；
+### 太长不读；
 本文将会围绕reactive extension介绍reactive programming的起源，其要解决的问题。
 
 
@@ -62,20 +62,20 @@ Reactive Extension 这个概念最早出现在`.net`社区的[Rx.net](https://ms
 关于reactive extension的技术细节可以在[我的这篇博客](http://nicholas.ren/2014/05/09/about-rx-java.html)里找到。[这个视频](https://vimeo.com/120994663)详细地介绍了为什么需要reactive extension，以及reactive extension的是如何被发明出来的。
 
 
-####Reactive Manifesto
+#### Reactive Manifesto
 Wikipedia上对reactive programming解释如下：
 
 > reactive programming is a programming paradigm oriented around data flows and the propagation of change.
 
 举个例子，在命令式编程下，表达式`a = b + c`,`a`的值在这个表达式执行完毕之后就是确定的，即使`b`，`c`的值发生变化，`a`的值也不会改变。然而在响应式编程的语境下，`a`的值与`b`，`c`的值是绑定的，上述表达式其实建立的是`a`与`b`，`c`之间的一种依赖，`a`的值会随`b`和`c`的变化而变化。
 
-我们称之为能够响应输入变化的__事件(event)__。
+我们称之为能够响应输入变化的 __事件(event)__。
 
-然而现在来看，上述定义已经不能囊括reactive programming的含义了。随着软件系统的[非功能需求](http://www.infoq.com/cn/articles/non-functional-requirements-in-architectural-decision-making)要求越来越高，reactive已不仅局限于响应__事件(event)__的传递，也表示程序能够响应__负载(load)__，系统运行时出现的__错误(failure)__。
+然而现在来看，上述定义已经不能囊括reactive programming的含义了。随着软件系统的[非功能需求](http://www.infoq.com/cn/articles/non-functional-requirements-in-architectural-decision-making)要求越来越高，reactive已不仅局限于响应 __事件(event)__的传递，也表示程序能够响应 __负载(load)__，系统运行时出现的 __错误(failure)__。
 
 发布于2014年9月份的[Reactive Manifesto](http://www.reactivemanifesto.org/)以宣言的形式提供了能够满足这些需求的软件系统架构设计的指导原则。
 
-####Reactive Architecture
+#### Reactive Architecture
 在笔者看来，reactive programming可以从语言和架构两种层面上来理解，
-近年来层出不穷的各种语言的__reactive extention__就是语言层面的代表，而在架构层面上，也有遵循了reactive manifesto的类库（如akka）出现，笔者暂且称之为__reactive architecture__。
-在后续的文章中，笔者将会带着大家理解一个__reactive architecture__是如何做到reactive的。
+近年来层出不穷的各种语言的 __reactive extention__ 就是语言层面的代表，而在架构层面上，也有遵循了reactive manifesto的类库（如akka）出现，笔者暂且称之为 __reactive architecture__。
+在后续的文章中，笔者将会带着大家理解一个 __reactive architecture__ 是如何做到reactive的。
