@@ -8,15 +8,15 @@ comments: true
 本文是[rx-java](http://nicholas.ren/2014/05/09/about-rx-java.html)的后续,
 将简要介绍Rx的起源，其多线程实现机制，另外会对其实现中的一个重要函数`lift`函数原理进行介绍。
 
-###Rx
+### Rx
 Rx实际上是一种高级版本的`Observer`模式，把被观察者封装成`Observable`（可理解为一个异步地生产元素的集合），
-然后通过 `onNext`, `onError`, `onCompleted`注册`Observer`在相应场景下需要执行的__回调__。
+然后通过 `onNext`, `onError`, `onCompleted`注册`Observer`在相应场景下需要执行的 __回调__。
 值得一提的是，Rx为`Observable`提供了的`filter`,`map/flatMap`, `merge`, `reduce`等操作，使得对被观察者的操作就像同步集合那么便利。
 
 
-###起源
+### 起源
 
-__注：__此部分参考了[这个slides](http://www.slideshare.net/InfoQ/functional-reactive-programming-in-the-netflix-api)
+__注：__ 此部分参考了[这个slides](http://www.slideshare.net/InfoQ/functional-reactive-programming-in-the-netflix-api)
 
 Netflix做为RxJava的主要贡献者，把Rx.Net移植到了JVM上，下面我们就通过一个架构演进来了解一下RxJava的起源。
 
@@ -112,7 +112,7 @@ API内部可以：
 对于第二个问题，Rx中有个非常重要的概念—— __Scheduler__，它是Rx提供的一种并发模型抽象，你可以在创建你的Observable时指定采用哪种并发模型，
 下面我们来看下Scheduler是如何对并发模型进行抽象的。
 
-###Scheduler
+### Scheduler
 Rx的默认行为是单线程的，它是一个`free-threaded` <sup>t1</sup>模型，意味着你可以自由选择一个线程来执行你指定的任务。
 如果你创建Observable时没有引入`scheduler`,那么你注册的`onNext`, `onError`, `onCompleted`回调将被当前线程(即，创建Observable代码所在线程)上执行。
 Scheduler提供一种机制，用于指定将会执行回调的线程。
@@ -140,7 +140,7 @@ Scheduler提供一种机制，用于指定将会执行回调的线程。
 
   把任务分配给当前线程，但并不立即执行，任务会被放到一个队列中等待当前任务执行完毕。
 
-###Worker
+### Worker
 回调的实际执行者，底层由`java.util.concurrent.ExecutorService`执行实际的任务，同时扮演了`Subscription`的角色。
 
 ### 总结
