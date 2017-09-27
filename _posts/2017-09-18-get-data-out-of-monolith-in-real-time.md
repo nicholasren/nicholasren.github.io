@@ -3,10 +3,7 @@ layout: post
 title: "Exposing event stream from monolith"
 comments: true
 ---
-# TLDR
-
-
-# The Background
+# 背景
 
 随着微服务概念的流行，微服务得到到越来越多的企业的青睐，开发团队开始构建自己的微服务，笔者了解到的企业的微服务之路大致如下：
 
