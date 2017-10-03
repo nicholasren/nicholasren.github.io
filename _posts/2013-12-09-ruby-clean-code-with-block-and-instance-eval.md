@@ -67,7 +67,7 @@ end
 
 其次，要对对应关系进行抽象。
 
-###改进
+### 改进
 我们在来分析一下json中的值和对象值对应关系规则，还是有规律可循的，对应关系都由三部分组成：*json属性*，*对象属性名*，*转换规则（默认没有转换规则）*。其中，通过[`jsonpath`](http://goessner.net/articles/JsonPath/)来标识*json属性*，通过block来表示*转换规则*， 我们可以建立一个`MapingRule`类来对此关系进行建模。
 
 
@@ -105,13 +105,13 @@ class PostBuilder
   end
 end
 
-#创建builder
+# 创建builder
 builder = PostBuilder.new
 buider.rule("author name", :author_name)
 buider.rule("date", :date, -> (date) { date.nil? ? "1970-01-01" : date} )
 buider.rule("tags", :tags, -> (tags) { tags.map {|tag| Tag.new(tag)} })
 
-#使用builder从json创建对象
+# 使用builder从json创建对象
 
 post = buidler.build({"date" => "2013-09-10", "tags" => ["music", "IT"] })
 
@@ -181,7 +181,7 @@ end
 
 使用instance_eval能够使代码变得更加简洁，然而随之而来的风险是，你也给了你的api调用者一个在这个新建对象上执行**任意代码**的机会。因此，在简洁性和风险之间，你需要做一个权衡。
 
-###再抽象
+### 再抽象
 再回头看看PostBuilder，只需些许改动，我们就能从json创建**任意**类型的对象，于是我们得到一个`InstanceBuilder`类，如下：
 {% highlight ruby%}
 
@@ -195,7 +195,7 @@ end
 
 你可以试着实现一个这个`InstaneBuilder#instane_class`方法。
 
-###结语
+### 结语
 通观上面的例子，我们通过使用ruby的block和instance_eval，把一个复杂丑陋的代码变得干净，层次清晰，同时，更加容易扩展。
 在这里，我抛出自己对编写代码的一点想法，供各位参考：
 
@@ -203,7 +203,7 @@ end
 2. 恰当地使用block，instance_eval 能够很容易的构建一个internal dsl。
 
 
-###Reference
+### Reference
 想了解更多关于`block`，`instance_eval`, `internal dsl`可以参考如下两篇文章：
 
 [How do I build DSLs with yield and instance_eval?](http://rubylearning.com/blog/2010/11/30/how-do-i-build-dsls-with-yield-and-instance_eval/)
