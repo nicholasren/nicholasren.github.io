@@ -12,21 +12,9 @@ share: true
   <div id="desc">
     <h3>About me</h3>
     <div>
-      I'm Ren Xiaojun(aka. @nicholasren)，a Java, Ruby, Scala developer。
-    </div>
-    <h3>关于我</h3>
-    <div>
-      我是任晓君，一名Java, Ruby, Scala developer。
-    </div>
-    <div>
-    </div>
-    <div>
-        曾就职于<a href="http://www.liandisys.com.cn">联迪恒星</a>，<a href="http://www.huawei.com">华为</a>，<a href="http://www.thoughtworks.com">ThoughtWorks</a>。
-        热衷于服务端技术，对新技术，新事物有无限热忱。
-        对于整洁代码，简单设计有着执着的追求。
-    </div>
-    <div>
-        目前我在<a href="http://www.aconex.com">Aconex</a>工作。
+    I'm Xiaojun REN(aka. @nicholasren),
+    I'm an experienced software developer who loves building web-based and mobile applications using Agile methodologies and cutting-edge technologies.
+    I strive for elegant, well-designed and testable code while embracing collaboration and DevOps best practices.
     </div>
     <h3>Email</h3>
     <div class="mail">
