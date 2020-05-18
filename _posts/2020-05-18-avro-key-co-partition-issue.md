@@ -69,11 +69,10 @@ return Utils.toPositive(Utils.murmur2(keyBytes)) % numPartitions;
 
 
 ### Root Cause
-Three culprits contributing to this issue:
-
 - Key schema registration strategy is `TopicNameStrategy`, The same schema of `K` is registered with topic *A* and topic *B* separately; hence __different schema Id is generated for topic A topic B__.
 
-- Even the Avro serialized value of `k1` in two services are identical, when service A and service B serializing `k1` , they append different schema Id in the serialized bytes.
+- When service A and service B serializing `k1` , they append the different schema Id in the serialized bytes;
+  Even though the Avro serialized value of `k1` in two services are identical, the serialized key bytes are different.
 
 - `DefaultParitioner` calculates partition from serialized bytes, and yields different partition number in two services.
 
