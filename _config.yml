@@ -28,4 +28,5 @@ exclude:
 - wordpress.2011-02-22.xml
 - import.rb
 - config.ru
+- vendor
 - tmp

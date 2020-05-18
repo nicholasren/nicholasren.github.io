@@ -8,7 +8,7 @@ namespace :jekyll do
   desc 'Run the jekyll dev server'
   task :server do
     #system "compass watch &"
-    system "jekyll --server --auto"
+    system "jekyll server --incremental"
   end
 
   desc 'Clean temporary files and run the server'
