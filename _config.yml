@@ -13,7 +13,7 @@ owner:
 
 timezone:      Australia/Melbourne
 future:        true
-highlighter:   pygments
+highlighter:   rouge
 markdown:      kramdown
 paginate:     5
 

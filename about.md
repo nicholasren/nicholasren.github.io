@@ -5,10 +5,6 @@ title: About me
 share: true
 ---
 <div id="about">
-  <div>
-    <img src="/images/avatar.png" width="150" class="avatar" />
-  </div>
-
   <div id="desc">
     <h3>About me</h3>
     <div>
