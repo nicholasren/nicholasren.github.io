@@ -3,6 +3,8 @@ layout: post
 title: "Tracking the root cause of a topic co-partition issue"
 comments: true
 ---
+Tracking the root cause of a topic co-partition issue
+
 When joining streams in Kafka Stream application, one critical prerequisite is that topics need to be [co-partitioned](https://docs.ksqldb.io/en/latest/developer-guide/joins/partition-data/#co-partitioning-requirements).
 
 In this post, I'll share my experience of tracking down an issue of topics not fulfilling co-partition guarantee, when using  [DefaultPartitioner](https://github.com/apache/kafka/blob/trunk/clients/src/main/java/org/apache/kafka/clients/producer/internals/DefaultPartitioner.java) and confluent's [KafkaAvroSerializer](https://github.com/confluentinc/schema-registry/blob/master/avro-serializer/src/main/java/io/confluent/kafka/serializers/KafkaAvroSerializer.java) in topic key.

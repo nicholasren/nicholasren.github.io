@@ -3,6 +3,8 @@ layout: post
 title: "Things need to be consider when building microservice"
 comments: true
 ---
+Things need to be consider when building microservice
+
 ### TLDR;
 IT industry never run out of buzz words, `big data`, `SOA`, `Cloud`, `IoT`, `reactive`.
 The hostest buzz word of 2015 have to be __microservice__ and __docker__.

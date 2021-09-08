@@ -2,6 +2,9 @@
 layout: post
 title: Spring, Hibernate, Struts2项目总结
 ---
+
+Spring, Hibernate, Struts2项目总结
+
 今天做完了第一个正式的公司内部的Spring Hibernate Struts2项目，这个项目与我进入公司后的任何一个项目都不相同，有了很大的收获，值得总结一下。
 
 项目时间：3.5 week

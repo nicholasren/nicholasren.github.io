@@ -2,6 +2,7 @@
 layout: post
 title: 解决了一个死锁问题
 ---
+解决了一个死锁问题
 
 
 此问题中涉及到的对象有`Subject` , `Enclosure` , `SubjectEnclosure` 三个对象，

@@ -3,6 +3,7 @@ layout: post
 title: "也谈响应式编程"
 comments: true
 ---
+也谈响应式编程
 
 ### 太长不读；
 本文将会围绕reactive extension介绍reactive programming的起源，其要解决的问题。

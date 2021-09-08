@@ -3,21 +3,23 @@ layout: post
 title: "Deploying Rails App through Capistrano"
 comments: true
 ---
+Deploying Rails App through Capistrano
+
 在这篇文章里，我将介绍如何使用capistrano部署rails应用。
 
-####准备工作：
+#### 准备工作：
 1. 创建一个用于部署的用户（eg. deployer）
 2. 安装本地依赖:
 3. 安装配置nginx: `yum install nginx`
 	+ config nginx `ln -s /path/to/app/config/nginx.conf /etc/nginx/nginx.conf`
 	+ restart nginx `service nginx restart`
 	
-####Capify
+#### Capify
 在工程根目录下执行：
 
 	capify .
 	
-####配置ruby
+#### 配置ruby
 我使用[capistrano-rbenv gem](https://github.com/yyuu/capistrano-rbenv)管理production环境的ruby版本，在Gemfile中增加如下一行：
 
 	`gem 'capistrano-rbenv'`
@@ -28,7 +30,7 @@ comments: true
 	set :rbenv_ruby_version, '2.0.0-p0'
 
 
-####配置用于deploy的信息
+#### 配置用于deploy的信息
 在`config/deploy.rb`中配置capistrano所需要的信息：
 
 	//...
@@ -48,6 +50,6 @@ comments: true
 	ssh_options[:forward_agent] = true
 	//...
 
-#####部署:
+##### 部署:
 	
 	cap deploy

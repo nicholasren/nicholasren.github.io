@@ -3,6 +3,7 @@ layout: post
 title: "Behind $.ajax"
 comments: true
 ---
+Behind $.ajax
 
 相信大家对于下面这段代码都不会太陌生：
 

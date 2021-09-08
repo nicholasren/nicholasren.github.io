@@ -3,6 +3,8 @@ layout: post
 title: "A jounery of performance tuning KafkaStream application"
 comments: true
 ---
+A jounery of performance tuning KafkaStream application
+
 In this post, we'll discuss our journey of tuning the performance of a few Kafka and KafkaStream application.
 
 ### Principals

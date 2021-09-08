@@ -2,9 +2,11 @@
 layout: post
 title: 自动化回归测试
 ---
+自动化回归测试
+
 注：本文假设你对[Cucumber](http://cukes.info/ "cucumber")，[Selenium-WebDriver](http://seleniumhq.org/projects/webdriver/ "selenium")有一定的了解。
 
-####什么是回归测试？
+#### 什么是回归测试？
 回归测试（regression test）是QA对程序功能问题的验证，通常我们的做法是:   
 QA 手工测试 -> 报告bug -> Dev 修bug -> 提交到代码库 -> 构建程序包 -> 部署-> QA手工测试 -> 报告bug, 如此反复...
 
@@ -15,13 +17,13 @@ QA 手工测试 -> 报告bug -> Dev 修bug -> 提交到代码库 -> 构建程序
 > 回归测试的目的是，通过了回归测试的软件，至少其基本功能是可用的。   
 
 
-####回归测试应该覆盖哪些内容？
+#### 回归测试应该覆盖哪些内容？
 从上面的定义，我们就可以识别出哪些测试用例需要被包括到回归测试中：   
    1. 与外部件集成的功能。   
    2. 主干功能。   
    3. 容易被break的测试。   
 
-####自动化回归测试
+#### 自动化回归测试
 既然测试范围已经确定了，接下来就要考虑如何减少这些重复的工作。我们很自然地想到了自动化。随之而来的问题是:   
    1. 我们如何实施自动化？   
    2. 我们的项目时间很紧，如何在不影响项目进度的前提下实现自动化的回归测试？   
@@ -37,7 +39,7 @@ QA 手工测试 -> 报告bug -> Dev 修bug -> 提交到代码库 -> 构建程序
 **普通的测试用例：**   
 *预置条件*：   
 数据库中有三本书，其信息如下：   
-{% highlight cucumber %}
+{% highlight sql %}
           ISBN          书名                       作者            价格 
          111111    Head First Design Pattern      Somebody         12
          222222    Test Driven Development       Kent Beck         22
@@ -49,7 +51,7 @@ QA 手工测试 -> 报告bug -> Dev 修bug -> 提交到代码库 -> 构建程序
    进入书籍《Head First Design Pattern》详情页面，能够正确展示书籍名，价格，作者   
 
 **使用Cucumber DSL描述的测试用例：**
-{% highlight cucumber %}
+{% highlight sql %}
     Given There are books as follows : 
         | ISBN   | 书名                      | 作者          | 价格 |
         | 111111 | Head First Design Pattern | Somebody      | 12   |
@@ -63,7 +65,7 @@ QA 手工测试 -> 报告bug -> Dev 修bug -> 提交到代码库 -> 构建程序
      And I should see "somebody" as author</span>
 {% endhighlight %}
 
-####渐进式实现自动化回归测试
+#### 渐进式实现自动化回归测试
 比较这两种形式的测试用例，我们排除语言实现的差异（中文和英文，而且Cucumber也是支持中文DSL的）， 它们的共同点是，都是人类可以理解的语言，任何一个QA都能够编写上述两种形式的测试用例。不同点在于，使用Cucumber DSL描述的测试用例可以在以后的某个时间点很容易地转换成自动化测试用例.   
 
 于是，我们可以在项目中采取如下形式逐步把回归测试自动化：   

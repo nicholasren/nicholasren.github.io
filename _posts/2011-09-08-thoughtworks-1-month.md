@@ -2,6 +2,8 @@
 layout: post
 title: ThoughtWorks入职一月
 ---
+ThoughtWorks入职一月
+
 <p>
 <p class="p1">&nbsp; &nbsp; &nbsp;在最近的两周里，和一个同事一起搭建一个持续交付的demo工程，到目前为止，已经基本接近尾声。不过，&nbsp;这个demo之前是根据一个ruby应用搭建的，但是考虑到国内目前的软件行业的现状，ruby仍然是一门小众语言，因此考虑通过一个java应用搭建一个CD Demo，这就是后面一周的工作重点啦。</p>
 <p class="p2">成果：</p>

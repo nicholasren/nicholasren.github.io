@@ -2,8 +2,11 @@
 layout: post
 title: Scala实现的各种排序算法
 ---
+Scala实现的各种排序算法
+
 收到TW的offer已经一周了，已经跟现在的公司提离职了，于是整个人都松弛下来了，闲来无事，把自己在学习scala期间写的几个排序的小例子拿出来分享一下：
-##Insertion Sort:##
+
+## Insertion Sort:
 {% highlight scala%}
 def isort(xs: List[Int]): List[Int] = {
   xs match {
@@ -19,7 +22,7 @@ def insert(x: Int, xs: List[Int]): List[Int] = {
 }
 {% endhighlight %}
 
-##测试代码:##
+## 测试代码:
 {% highlight scala%}
 def main(args: Array[String])
 {
@@ -28,7 +31,7 @@ def main(args: Array[String])
 }
 {% endhighlight %}
 
-##Quick sort：##
+## Quick sort：
 {% highlight scala%}
 def quicksort[T](less: (T, T) => Boolean)(xs: List[T]):List[T]= xs match
 {
@@ -37,7 +40,7 @@ def quicksort[T](less: (T, T) => Boolean)(xs: List[T]):List[T]= xs match
     quicksort(less)(ys.filter( a => less(a, y)))::: List(y) ::: quicksort(less)(ys.filter( b => !less(b, y)))
 }
 {% endhighlight %}
-##测试代码:##
+## 测试代码:
 {% highlight scala%}
 def main(args : Array[String])
 {

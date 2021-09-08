@@ -3,6 +3,7 @@ layout: post
 title: "Rx revisit"
 comments: true
 ---
+Rx revisit
 
 ### TLDR;
 本文是[rx-java](http://nicholas.ren/2014/05/09/about-rx-java.html)的后续,
@@ -166,7 +167,7 @@ Rx中巧妙提出一个`Operator`的这个函数类型，表述从一个`Subscr
 def lift[T, R](Operator[R, T]): Observable[R]
 {% endhighlight%}
 
-#####lift函数简介
+##### lift函数简介
 有一定函数式编程基础的人相信对`lift`这个名字都不会太陌生。
 `lift`顾名思义，把一个对简单类型操作的函数提升(`lift`)到复杂类型/容器类型上去。
 

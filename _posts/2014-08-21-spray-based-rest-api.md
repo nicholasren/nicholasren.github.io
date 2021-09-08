@@ -3,10 +3,11 @@ layout: post
 title: "spray based rest api"
 comments: true
 ---
+spray based rest api
 
 > Spray is an open-source toolkit for building REST/HTTP-based integration layers on top of Scala and Akka. Being asynchronous, actor-based, fast, lightweight, modular and testable it's a great way to connect your Scala applications to the world.
 
-###TLDR;
+### TLDR;
 This post will give you a example of how to use spray to build a REST api.
 
 #### Problem
@@ -17,7 +18,7 @@ GET     /users/:id
 POST    /users
 ```
 
-###routing
+### routing
 `spray-routing` gives you a elegant DSL to build routing system, which will accept http request and respond correctly. let's see the example:
 {%highlight scala%}
 
@@ -51,7 +52,7 @@ Note that there is a field defined as `val userRepository: UserRepository` not b
 The actural business logic was deleagted into this object.
 
 
-###json support
+### json support
 I haven't find a JSON library in __Java/Scala__ world which providing as good api as __Ruby__ doses. if you konw one please let me know.
 
 [spray-json](https://github.com/spray/spray-json) is the most beautiful one I ever found!
@@ -80,7 +81,7 @@ object User {
 }
 {%endhighlight%}
 
-###Put them together
+### Put them together
 As we metioned before, `Spray` is built on top of Scala and Akka,
 to enable `MyService` to handle http request, we need to create a actor:
 
@@ -97,9 +98,9 @@ class MyServiceActor(userRepo: UserRepository) extends Actor with MyService {
 This actor mixin `MyService`, in the `receive` method,
 call `runRoute` to handle http request with pre-defined route.
 
-###A Tips:
+### A Tips:
 
-####put your business logic in plain scala object instead of actor.
+#### put your business logic in plain scala object instead of actor.
 I found that it is really hard to test logic in a actor, so I preferred to implate business logic in a pure scala class, then it is much easier to test it.
 then inject a instance of this class into a actor.
 

@@ -1,8 +1,9 @@
 ---
 layout: post
-title: "Fall in love with java 8 collectors"
+title: "Java 8 collectors"
 comments: true
 ---
+Java 8 collectors
 
 Java 8 has been released quite a long time, since I come to ruby in 2011, I haven't work with java. Even I heard that there're few __cool__ features come out with Java 8, like `lambda`, `stream collection`, `functional interface`, `new date api`. none of them can attract me, given ruby ship all these features since the date of birth.
 

@@ -3,6 +3,8 @@ layout: post
 title: "怎样写单元测试"
 comments: true
 ---
+怎样写单元测试
+
 最近和同事讨论过几次如何写单元测试之后，突然意识到，是要写点什么了。   
 什么是单元测试, 维基百科上是这么定义的： 
     unit testing is a method by which individual units of source code, sets of one or more computer program modules together with associated control data, usage procedures, and operating procedures, are tested to determine if they are fit for use.[1] Intuitively, one can view a unit as the smallest testable part of an application. 
@@ -11,7 +13,7 @@ comments: true
 
 在我看来，根据被测试对象，单元测试可以分为两大类：“对不依赖于外部资源的组件的单元测试”和“对依赖于外部资源的组件的单元测试”。由于测试的对象的不同，我们需要采用不同的测试方案：
 
-###对不依赖于外部资源的组件的单元测试
+### 对不依赖于外部资源的组件的单元测试
 对不依赖于外部资源的组件进行测试时，我们主要关注被测试对象的状态变化是否和预期的一致，而对于其内部实现，则不用关心，举个例子:
 {% highlight java%}
 Account account = new Account(20)
@@ -20,7 +22,7 @@ assertThat( account.withdraw(10).balance(),  is(10))
 开始账户里有20元，扣款10元后余额应该是10元，我们不关心扣款是现金交易还是银行转账，我们只关心扣款功能是正常的, 这就是一种[黑盒测试](http://en.wikipedia.org/wiki/Black-box_testing "黑盒测试")。
 
 
-###对依赖于外部资源的组件的单元测试
+### 对依赖于外部资源的组件的单元测试
 对依赖于第三方库、组件的接口的组件进行单元测试时，需要对依赖的库进行mock，让依赖库按照约定表现不同的行为，并且，在测试中验证被测试代码是否按照约定正确的调用了第三方接口(是否调用了正确的API, 是否传递了正确的参数), 我们再来看个例子：
 
 {% highlight java%}
@@ -37,7 +39,7 @@ verify(mockAuthService).authenticate(user.getName(), user.getPassword())
 {% endhighlight %}
 上面的例子中，对于依赖于外部资源的组件，我们需要验证的是**该组件调用了正确的第三方接口，并且传入了正确的参数**，这就是一种[白盒测试](http://en.wikipedia.org/wiki/White-box_testing "白盒测试")。
 
-###对依赖于框架的组件的单元测试
+### 对依赖于框架的组件的单元测试
 我把这种情形也归类为“依赖于外部资源的组件的单元测试”，但是特殊的是，被测试对象依赖的是框架，而这个框架代码在单元测试运行是不会被执行，我们来看个例子：
 {% highlight javascript%}
   //load.js

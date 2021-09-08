@@ -3,6 +3,7 @@ layout: post
 title: "build rest api in scala"
 comments: true
 ---
+build rest api in scala
 
 micro service getting more attractions in the past few years, more and more orgnizations is moving to this area. many framework were created to make building micro service easier,  in java world, we have DropWizard, in ruby world, we have Rails-API, Grape and Lotus. but how the scala guys solve this problem?
 
@@ -54,7 +55,7 @@ unfiltered.netty.Server.http(8080).plan(PushApi).run()
 unfiltered.jetty.Server.http(8080).plan(PushApi).run()
 {%endhighlight%}
 
-####Json serialization/deserialization
+#### Json serialization/deserialization
 The biggest difference between spray-json and json4s is serialization/deserialization done implicitly or explicitly.
 
 in spray-json, you can get serialization/deserialization(aka. [marshalling](http://spray.io/documentation/1.2.2/spray-httpx/marshalling/)) implicitly if you defined your own [JsonFormat](https://github.com/nicholasren/spray-rest-api/blob/master/src/main/scala/com/example/User.scala#L9),

@@ -3,20 +3,21 @@ layout: post
 title: "How SSH works?"
 comments: true
 ---
+How SSH works?
 
-###简介：
+### 简介：
 SSH，全名secure shell，其目的是用来从终端与远程机器交互，SSH设计之处初，遵循了如下原则：
 
   * 机器之间通讯的内容必须经过加密。
   * 加密过程中，通过 public key加密，private 解密。
 
-###密钥:
+### 密钥:
 SSH通讯的双方各自持有一个公钥私钥对，公钥对对方是可见的，私钥仅持有者可见，你可以通过"ssh-keygen"生成自己的公私钥，默认情况下，公私钥的存放路径如下：    
 
   * 公钥：$HOME/.ssh/id_rsa.pub
   * 私钥：$HOME/.ssh/id_rsa
 
-###通讯原理：
+### 通讯原理：
 
   前提条件：
 
@@ -32,7 +33,7 @@ SSH通讯的双方各自持有一个公钥私钥对，公钥对对方是可见�
   5. 客户端把PUBLIC KEY(client), 发送给服务器。
   6. 至此，通讯通道建立完毕，当客户端想服务器发送消息时，会使用PUBLIC KEY(server)加密，服务器会使用PRIVATE KEY(server)解密，当服务器向客户端发送消息时，会使用PUBLIC KEY(client)加密，客户端收到数据后，会使用PRIVATE KEY(client)解密。
 
-###免密码登录：
+### 免密码登录：
 我们的目标是: 用户已经在主机A上登录为a用户，现在需要以不输入密码的方式以用户b登录到主机B上。   
 步骤如下：
 
@@ -44,6 +45,6 @@ SSH通讯的双方各自持有一个公钥私钥对，公钥对对方是可见�
 
   		ssh b@B
 
-###SSH forwarding:
+### SSH forwarding:
 
 	ssh -f user@ssh_host -L 1433:target_server:1433 -N

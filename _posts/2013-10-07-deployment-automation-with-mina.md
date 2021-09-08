@@ -3,8 +3,7 @@ layout: post
 title: "Rails application deployment automation with mina"
 comments: true
 ---
-
-
+Rails application deployment automation with mina
 
 ### TLDR:
 

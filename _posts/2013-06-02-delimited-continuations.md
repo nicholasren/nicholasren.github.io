@@ -3,12 +3,14 @@ layout: post
 title: "Delimited Continuations(WIP)"
 comments: true
 ---
+Delimited Continuations(WIP)
+
 本文译自[这里。](http://jim-mcbeath.blogspot.in/2010/08/delimited-continuations.html)
 
 注：翻译尚未完成，标记为WIP的章节还未开始。
 
 
-####Delimited Continuations
+#### Delimited Continuations
 
 Scala 2.8中引入的Delimited Continuation，可以被用来实现一些有趣的流程控制结构。
 
@@ -16,7 +18,7 @@ Scala 2.8中引入的Delimited Continuation，可以被用来实现一些有趣�
 这是一篇很长很长的博客，我花了很长时间才理解了scala的`reset`和`shift`操作符，为了不让别人再掉进我遇到的坑里，我会从最基本概念开始介绍，如果你需要一个更短的介绍，请到文章的最后的“资源”部分查看其他的博客。
 
 
-####目录
+#### 目录
 
 + 技术实现
 + Continuation Passing Style
@@ -32,7 +34,7 @@ Scala 2.8中引入的Delimited Continuation，可以被用来实现一些有趣�
 + 资源(WIP)
 
 
-####技术实现
+#### 技术实现
 为了使用scala的*delimited continuations*，你的scala版本必须高于2.8版本（译者注：目前的scala的最新版本是2.10.2），并且你还需要使用scala的continuation编译器插件。你可以通过在命令行制定一个参数来在编译时(compiling)和运行时(runtime)启用此插件：
 
 	scalac -P:continuations:enable ${sourcefiles}
@@ -46,7 +48,7 @@ Scala 2.8中引入的Delimited Continuation，可以被用来实现一些有趣�
 	<console>:6 error:not found value reset
 			reset{		
 			^
-####Continuation Passing Style
+#### Continuation Passing Style
 为了理解scala的delimited continuations，首先你需要理解“continuation passing style”这个术语。
 
 来看一下下面这段包含了方法调用的代码：
@@ -98,7 +100,7 @@ Scala 2.8中引入的Delimited Continuation，可以被用来实现一些有趣�
 	val z: Z = sub(m, x, {y: Y => post(m, x, y)})
 CPS的要点是“不要用`return`”。不像`direct style`那样调用一个子函数，待子函数执行完毕后返回给主函数，我们传递一个子函数执行结束后要被执行的continuation给子函数。
 
-####嵌套CPS
+#### 嵌套CPS
 在上面的例子里，我们已经迈出了变换成CPS的第一步。为了能够使用CPS的一些更高级的特性，我们需要继续完成上面的变换。
 
 在方法调用的最顶层，`main`方法仍然有返回值，但是，在CPS中没有`return`，我们如何处理这种情况？答案是，最高层的方法不能有返回值，我们来再来增加一个顶级的wrapper：
@@ -143,7 +145,7 @@ CPS的要点是“不要用`return`”。不像`direct style`那样调用一个�
 
 我们可以看到，每个continuation都会包含它之前所有的caller的continuation，换句话说，每个continuation都包含了这个方法调用结束后需要被执行的所有代码。另外一个很重要的一点是，在每个调用CPS的子方法的地方，这CPS方法调用总是这个方法的最后一行。
 
-####Full versus Delimited Continuations
+#### Full versus Delimited Continuations
 在上面的讨论中，我们假设整个程序都被转换成CPS，这就是传统的CPS，我们也称之为Full Continutaitons。然而， 在原生不支持CPS的编程语言（例如scala）中使用CPS可能会使代码变得比较混乱， 因此如果能够把CPS的使用限定在特定的范围内是最好不过了。
 
 这就是delimited continuation被发明出来的原因。仅仅留存部分后续要执行的程序，而不是尝试保存整个后续执行的程序。
@@ -156,7 +158,7 @@ CPS的要点是“不要用`return`”。不像`direct style`那样调用一个�
 		})
 	}
 
-####Use
+#### Use
 
 我们已经通过很大努力把我们的代码重写成CPS并且保持功能不变。现在我们再来看看如何修改代码只能使用CPS。
 
@@ -175,7 +177,7 @@ CPS的核心能力是：它能够提供一个显式的对象（continuation）�
 
 我们不仅可以在将来执行这段代码，并且可以多次执行。我们甚至可以实现一个更加复杂的`ContinuationSaver`，能够保存多个`continuation`，并且记录哪个`continuation`应该被被执行，以什么样的顺序，执行多少次等。我们甚至可以把这些`continuation`持久化起来，或者发送到其他计算机上，如[Swarm](http://www.scala-lang.org/node/3485).
 
-####CPS with Return
+#### CPS with Return
 
 在纯粹的CPS中是没有return的，但是Scala中有return，甚至在使用CPS的时候。在上一章节中我用了“控制回到了调用者`prog`”这样的术语。这跟普通的方法调用一样 —— 所有的中间方法都返回到自己的调用者，直到方法调用栈pop到第一个CPS方法调用。我假设所有的CPS方法都不返回值（即返回`Unit`），但是没有任何规则规定我们不能从CPS方法中返回值。
 
@@ -227,7 +229,7 @@ If we add a return value to the transformed code, this is not something we can g
 
 我们来回顾一下上面转换后的CPS代码。我们可以发现，未转换的代码拥有原始的返回值类型，转换后的CPS代码有转换后（可能完全不同）的返回值。
 
-####Reset and Shift
+#### Reset and Shift
 终于，我们有了足够的背景知识来理解Scala的 `reset` 和 `shift`关键字。
 
 Scala中的delimited continuation是由EPFL的Tiark Rompf创建的。在他和Ingo Maier以及Martin Odersky合作的论文[Delimited Continuations in Scala](http://lamp.epfl.ch/~rompf/continuations-icfp09.pdf)有详细描述。下面的资源部分也有Tiark的关于Delimited Continuations的博客。

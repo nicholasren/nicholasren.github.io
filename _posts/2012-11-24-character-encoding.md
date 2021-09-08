@@ -2,7 +2,7 @@
 layout: post
 title: "Character encoding"
 ---
-###Character encoding
+### Character encoding
 
 ASCII   
 	
@@ -24,6 +24,6 @@ Unicode:
 UTF8: Every code point from 0-127 is stored in a single byte. Only code points 128 and above are stored using 2, 3, in fact, up to 6 bytes.
 
 
-###The Most Important thing:
+### The Most Important thing:
       It does not make sense to have a string without knowing what encoding it uses. 
 

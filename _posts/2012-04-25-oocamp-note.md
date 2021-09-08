@@ -2,7 +2,7 @@
 layout: post
 title: "OOCamp 笔记"
 ---
-####OOCamp Day1 
+#### OOCamp Day1 
 
   * Tasking
     做tasking的标准是，这个task具备可测试性
@@ -10,10 +10,10 @@ title: "OOCamp 笔记"
     对一个类的属性的读取，修改都在该类的上下文，那么这个类就没有封装泄露。
     tell, don't ask
 
-####OOCamp Day2 
+#### OOCamp Day2 
   使用自定义对象而不是java原生对象，更加容易适应需求变化
 
-####OOCamp Day3 
+#### OOCamp Day3 
    * 什么是重构？ 
      不改变功能的情况下改变代码的架构，重构的时候可以随时停止 
    * 如何识别bad smell？ 如果有一个子类，没有比父类更多的状态，那么这其实一个strategy模式 
@@ -23,17 +23,17 @@ title: "OOCamp 笔记"
      *class explosion* <b>Decorator</b>   
      *object creation is dependent on outside* <b>Factory</b> 
 
-####OOCamp Day4   
+#### OOCamp Day4   
   重构   
    * 重构技巧：copy & paste => extract method & inline method   
    * 代码中，什么是其组成的最小单元？ 功能   
    * 要有足够的bad smell支撑你来做重构   
   
-####OOCamp Day5
+#### OOCamp Day5
    一个很难发现的bad smell: 上下文分散, Pattern:Strategy,把业务逻辑放到更加集中的类里
  
 
-####OOCamp Day6
+#### OOCamp Day6
 架构:   
   * 什么是架构？   
    软件架构回答了以下两个问题：   

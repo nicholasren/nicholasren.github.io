@@ -2,6 +2,8 @@
 layout: post
 title: ThoughtWorks入职两周
 ---
+ThoughtWorks入职两周
+
 <p>&nbsp;</p>
 <p class="p1">从8月11日入职，到今天8月24，刚好两周时间，感觉又到了做总结的时候了。</p>
 <p class="p1">&nbsp;&nbsp; &nbsp; 本周的主要工作是和一个今年刚毕业的研究生(在ThoughtWorks很多时候都是pair干活的)一起协助北京的一个同事制作一个关于<a href="http://continuousdelivery.com/" target="_blank">Continuous&nbsp;Delivery</a>的 demo，这个demo的目标是用于演示如何在实际项目运作过程进行<a href="http://en.wikipedia.org/wiki/Continuous_integration" target="_blank">Continuous Integration</a>和<a href="http://en.wikipedia.org/wiki/DevOps" target="_blank">DevOps</a>实践，达成Delivery的目的。</p>
