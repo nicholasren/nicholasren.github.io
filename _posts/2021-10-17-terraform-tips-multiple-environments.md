@@ -71,7 +71,7 @@ stored in the same bucket. This makes it challenging to impose different levels 
 for prod and non-prod conditions.
 
 If you stay in this industry long enough, you must
-have heard stories of serve consequences of "putting all eggs in one basket."
+have heard stories of serious consequences of "putting all eggs in one basket."
 
 
 ### One backend per environment
@@ -80,7 +80,7 @@ how about configuring one backend per environment?
 
 #### parameterise backend config
 One way to configure individual backend for each environment is to parameterize 
-backend config block. Let's have a look at the following project structure:
+backend config block. Let's have a look at the backup configure of the following project structure:
 ```sh
 ├ components
 │  ├ 01-networks
@@ -93,7 +93,6 @@ backend config block. Let's have a look at the following project structure:
 
 ```
 
-Let's take a closer look at the backend config in `terraform.tf`.
 ```tf
 terraform {
   required_providers {
@@ -112,7 +111,7 @@ terraform {
   }
 }
 ```
-Everything seems OK. However, when you run `terraform init` in these components, the following error tells the brutal truth.
+Everything seems OK. However, when you run `terraform init` in the component, the following error tells the brutal truth.
 ```
 Initializing the backend...
 ╷
