@@ -3,6 +3,7 @@ layout: post
 title: "Terraform Tips: Multiple Environments"
 comments: true
 ---
+Terraform Tips: Multiple Environments
 
 In [last post](https://nicholas.ren/2021/10/02/terraform-tips-layered-infrastrucutre.html), we explored the idea of layered infrastructure and the problem
 it was trying to solve.
