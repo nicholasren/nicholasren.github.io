@@ -2,6 +2,8 @@ title: Xiaojun Ren's Blog
 description: happy coding
 disqus_shortname: nicholasrensblog
 url: https://nicholas.ren
+remote_theme: sighingnow/jekyll-gitbook
+  
 
 owner:
   name: Xiaojun Ren
