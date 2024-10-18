@@ -25,10 +25,12 @@ When this script is executed on a build agent,  the script will try to use the b
 When it is executed from a developer's machine, they would need to provide their `user id` and  prompted for password (potentially one time password) to acquire permission for deployment.  
 ## Benefits
 There're many benefits by following this principal:
-	- Improved developer experience.
-		- The feedback loop of changes are much faster comparing to testing every changes on pipeline.
-		- Enabling developer executing tasks on their local machine help them trial new ideas and trouble shooting.
-	- Knowledge are persisted.
-		- Developer are smart, they would always find some trick to improve their efficiency for trouble shooting. 
-		  It could be temporarily comment out or add few lines in the script, these knowledge tend get lost if they were not persisted as a pattern.  
-		  The principal would encourage developers to persist these knowledge into build script, this would benefit all developers worked on this project.  
+
+- Improved developer experience.
+	- The feedback loop of changes are much faster comparing to testing every changes on pipeline.
+	- Enabling developer executing tasks on their local machine help them trial new ideas and trouble shooting.
+
+- Knowledge are persisted.
+	- Developer are smart, they would always find some trick to improve their efficiency for trouble shooting. 
+	  It could be temporarily comment out or add few lines in the script, these knowledge tend get lost if they were not persisted as a pattern.  
+	  The principal would encourage developers to persist these knowledge into build script, this would benefit all developers worked on this project.  
