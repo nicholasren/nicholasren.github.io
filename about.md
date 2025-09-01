@@ -2,6 +2,7 @@
 layout: modern-post
 title: "About Me"
 date: 2025-01-27
+permalink: /about/
 tags: [about, software-engineering, distributed-systems, aws, kafka, java, ruby, scala]
 description: "Learn more about Xiaojun Ren (Nicholas), a passionate software engineer with 15+ years of experience in distributed systems and cloud technologies."
 share: true

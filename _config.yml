@@ -2,6 +2,7 @@ title: Xiaojun Ren's Blog
 description: happy coding
 disqus_shortname: nicholasrensblog
 url: https://nicholas.ren
+baseurl: ""
 remote_theme: sighingnow/jekyll-gitbook
 
 # Plugins
