@@ -119,7 +119,8 @@ fun getUserWithProfile(userId: String): Either<UserError, UserWithProfile> {
         }
 }
 
-// I usually add these extension functions to make life easier
+// Either has a `flatMap` method that works with other functions with a Either return type.
+
 fun <L, R, T> Either<L, R>.flatMap(f: (R) -> Either<L, T>): Either<L, T> = when (this) {
     is Either.Left -> Either.Left(value)
     is Either.Right -> f(value)
