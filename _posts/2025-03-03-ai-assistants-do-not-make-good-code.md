@@ -1,48 +1,112 @@
 ---
 layout: modern-post
-title: "AI Assistants Do Not Make Good Code"
+title: "Why AI Assistants Don't Write the Code You Actually Want"
 date: 2025-03-03
 tags: [ai, coding, software-engineering, best-practices, domain-modeling]
-description: "Why AI coding assistants often produce bloated, unmaintainable code and how engineers should focus on domain knowledge and meaningful abstractions instead."
+description: "AI can pump out code fast, but here's why that flashy productivity boost often leaves you with a maintenance nightmare—and what to do about it."
 comments: true
 share: true
 ---
-AI Assistants Do Not Make Good Code
 
-Introduction
+# Why AI Assistants Don't Write the Code You Actually Want
 
-AI-powered coding assistants churn out code fast, but speed isn’t everything. They lack structural depth, often leading to duplication and unclear class responsibilities. Instead of refining domain models, they generate isolated, surface-level solutions. Engineers, however, should absorb domain knowledge, create meaningful abstractions, and produce richer models with less code.
+I'll be honest: watching an AI assistant generate a complete function in seconds feels like magic. You describe what you need, hit enter, and boom—working code appears on your screen. It's tempting to think we've cracked the code (pun intended) on software development.
 
-AI’s Failure in Domain Modelling
+But here's the thing I've learned after months of working alongside these tools: speed isn't everything. In fact, it might be holding us back.
 
-Shallow Understanding of Domain Models
+## The Illusion of Productivity
 
-AI assistants predict patterns but don’t understand the context. The result? Code that works but is bloated and repetitive. They miss opportunities to introduce domain-driven concepts, instead generating scattered methods that fail to encapsulate business logic.
+AI assistants are pattern-matching machines on steroids. They've seen millions of code examples and can remix them into something that compiles and runs. But there's a massive difference between code that works and code that belongs in your system.
 
-For example, when asked to generate customer order methods, an AI might create multiple similar functions instead of abstracting common behaviors into a well-structured class. This increases redundancy and makes maintenance harder.
+I've watched teams get seduced by the rapid output, only to find themselves drowning in technical debt six months later. The AI gives you what you asked for, not what you actually need.
 
-Duplication & Overlapping Responsibilities
+### When Pattern Matching Goes Wrong
 
-AI-generated code frequently duplicates logic across multiple places, adding unnecessary complexity. A human engineer, recognising patterns, would extract shared behaviours into reusable components, making the system more coherent and maintainable.
+Let me paint you a picture. You're building an e-commerce system and ask your AI assistant to handle customer orders. It might spit out something like this:
 
-Imagine an AI assistant generating separate classes for customer validation, order processing, and payment handling. While this might seem fine at first, behaviours often overlap. A skilled engineer would unify related responsibilities to avoid unnecessary fragmentation.
+```python
+def validate_customer_email(email):
+    # validation logic here
+    
+def validate_customer_address(address):
+    # validation logic here
+    
+def process_order_payment(order_data):
+    # payment logic here
+    
+def calculate_order_total(items):
+    # calculation logic here
+    
+def send_order_confirmation(customer_email):
+    # email logic here
+```
 
-Code Without Concepts = More Maintenance
+Looks reasonable, right? The AI has given you working functions that handle all the pieces. But step back and think about what's missing.
 
-Good software design isn’t just about functionality—it’s about meaningful abstractions that reduce complexity over time. AI assistants prioritize immediate results over long-term maintainability. Without a solid domain model, logic becomes fragmented, and minor changes require modifying multiple sections of code, increasing the risk of bugs.
+Where's the `Order` concept? Where's the `Customer`? These aren't just implementation details—they're the core of your business domain. The AI has given you a collection of loosely related functions when what you really needed was a coherent model of how orders actually work in your business.
 
-How Engineers Should Approach It
+## The Hidden Cost of "Fast" Code
 
-Absorb the Domain Knowledge
+Here's what I've noticed happens when teams rely too heavily on AI-generated code:
 
-Great engineering starts with understanding the problem space. Developers should engage with domain experts, study business logic, and identify core concepts. This leads to more meaningful abstractions and intuitive code.
+**Everything becomes a special case.** Since the AI doesn't understand your domain, it treats every request as an isolated problem. Need to handle bulk orders? The AI will generate a new set of functions rather than extending your existing order model. Need to support different payment methods? More isolated functions instead of a proper abstraction.
 
-Introduce Richer Concepts & Abstractions
+**Debugging becomes a nightmare.** When your order logic is scattered across fifteen different functions in eight different files, finding the source of a bug feels like playing hide-and-seek with your own codebase.
 
-Instead of accepting AI-generated boilerplate, engineers should focus on designing models that encapsulate core behaviors.
+**Simple changes become expensive.** Want to add a new field to customer data? With AI-generated code, you might need to touch dozens of files because the logic is duplicated everywhere instead of centralized.
 
-For example, rather than separate, redundant order-handling methods, a well-designed system might introduce an "Order" domain object to encapsulate common logic. This reduces duplication and makes the system easier to extend.
+I've seen teams spend more time hunting down all the places they need to make a change than it would have taken to just design a proper abstraction in the first place.
 
-Conclusion
+## What Good Engineering Actually Looks Like
 
-AI coding assistants are useful for quick snippets, but they don’t produce maintainable software. They fail to distill domain models, leading to duplication, overlapping responsibilities, and bloated codebases. Engineers must take ownership of design, prioritising deep understanding and meaningful abstractions. The goal isn’t just working code—it’s better code.
+The best developers I know don't just write code—they think deeply about the problem they're solving. They ask questions like:
+
+- What are the core concepts in this domain?
+- How do these concepts relate to each other?
+- What behaviors naturally belong together?
+- How can I design this so future changes are easy?
+
+Take that e-commerce example again. Instead of scattered functions, a thoughtful engineer might create something like:
+
+```python
+class Order:
+    def __init__(self, customer, items):
+        self.customer = customer
+        self.items = items
+        self.status = OrderStatus.PENDING
+    
+    def calculate_total(self):
+        # centralized calculation logic
+    
+    def process_payment(self, payment_method):
+        # payment handling with proper error handling
+    
+    def confirm(self):
+        # confirmation logic that knows about the order's state
+```
+
+Now your order logic lives in one place. Adding new features means extending the `Order` class, not hunting through your codebase for scattered functions.
+
+## Finding the Sweet Spot
+
+I'm not saying AI assistants are useless—far from it. They're fantastic for generating boilerplate, exploring APIs, or handling routine tasks. But we need to be smarter about how we use them.
+
+Here's what I've found works:
+
+**Use AI for research, not architecture.** Let it show you how a library works or generate example code, but don't let it design your core abstractions.
+
+**Start with the domain, not the implementation.** Before you prompt the AI, spend time understanding the business concepts. What are the key entities? How do they interact? What are the important invariants?
+
+**Refactor ruthlessly.** If you do use AI-generated code, treat it as a first draft. Look for duplication, extract common patterns, and consolidate related behaviors.
+
+**Think in objects and behaviors, not just functions.** Your code should reflect how the business actually works, not just what the computer needs to do.
+
+## The Bottom Line
+
+AI assistants excel at writing code, but they're terrible at writing *your* code—code that fits your specific domain, follows your team's patterns, and evolves gracefully over time.
+
+The real skill isn't prompting an AI to generate more code faster. It's knowing when to step back, understand the problem deeply, and craft abstractions that make your system more robust, not just more feature-complete.
+
+We're still in the early days of AI-assisted development, and these tools will undoubtedly get better. But right now, if you want code that stands the test of time, you need to think like an engineer, not a prompt engineer.
+
+Your future self (and your teammates) will thank you for it.
