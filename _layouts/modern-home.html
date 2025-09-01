@@ -50,7 +50,8 @@
           <p class="hero-description">{{ site.description }}</p>
           <div class="hero-actions">
             <a href="{{ site.url }}/posts/" class="btn">Browse Posts</a>
-            <a href="{{ site.url }}/about/" class="btn btn-secondary">About Me</a>
+            <a href="{{ site.url }}/tags/" class="btn btn-secondary">Browse Tags</a>
+            <a href="{{ site.url }}/about/" class="btn btn-outline">About Me</a>
           </div>
         </div>
       </div>
@@ -94,6 +95,24 @@
         
         <div class="view-all-posts">
           <a href="{{ site.url }}/posts/" class="btn btn-secondary">View All Posts</a>
+        </div>
+      </div>
+    </section>
+    
+    <!-- Popular Tags Section -->
+    <section class="popular-tags">
+      <div class="container">
+        <h2 class="section-title">Popular Tags</h2>
+        <div class="tags-preview">
+          {% assign sorted_tags = site.tags | sort_by: 'size' | reverse %}
+          {% for tag in sorted_tags limit:8 %}
+          <a href="{{ site.url }}/tags/#{{ tag[0] }}" class="tag tag-medium">
+            {{ tag[0] }} <span class="tag-count">{{ tag[1].size }}</span>
+          </a>
+          {% endfor %}
+        </div>
+        <div class="view-all-tags">
+          <a href="{{ site.url }}/tags/" class="btn btn-outline">View All Tags</a>
         </div>
       </div>
     </section>
