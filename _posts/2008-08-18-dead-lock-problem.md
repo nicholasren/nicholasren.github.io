@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 解决了一个死锁问题
+layout: modern-post
+title: "Dead Lock Problem"
+date: 2008-08-18
+tags: [software-development, programming]
+description: "A blog post about dead lock problem and software development."
+share: true
+comments: true
 ---
+
 解决了一个死锁问题
 
 

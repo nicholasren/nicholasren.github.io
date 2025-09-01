@@ -1,7 +1,13 @@
 ---
-layout: post
-title: Spring, Hibernate, Struts2项目总结
+layout: modern-post
+title: "Review Of A Ssh Project"
+date: 2008-08-15
+tags: [spring, software-development, programming]
+description: "A blog post about review of a ssh project and software development."
+share: true
+comments: true
 ---
+
 
 Spring, Hibernate, Struts2项目总结
 

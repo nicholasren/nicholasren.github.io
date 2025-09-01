@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 脑残标语
+layout: modern-post
+title: "Nao Can Biao Yu"
+date: 2008-10-17
+tags: [software-development, programming]
+description: "A blog post about nao can biao yu and software development."
+share: true
+comments: true
 ---
+
 脑残标语
 
 每天上下班都要坐地铁，地铁上的电视也不间断地播放着比赛集锦，小短剧，看着都很惬意，

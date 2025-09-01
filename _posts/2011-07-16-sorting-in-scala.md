@@ -1,7 +1,13 @@
 ---
-layout: post
-title: Scala实现的各种排序算法
+layout: modern-post
+title: "Sorting In Scala"
+date: 2011-07-16
+tags: [java, scala, software-development, programming]
+description: "A blog post about sorting in scala and software development."
+share: true
+comments: true
 ---
+
 Scala实现的各种排序算法
 
 收到TW的offer已经一周了，已经跟现在的公司提离职了，于是整个人都松弛下来了，闲来无事，把自己在学习scala期间写的几个排序的小例子拿出来分享一下：

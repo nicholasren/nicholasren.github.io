@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Deploying Rails App through Capistrano"
+layout: modern-post
+title: "Deploying Rails App Through Capistrano"
+date: 2013-04-06
+tags: [ruby, rails, software-development, programming]
+description: "A blog post about deploying rails app through capistrano and software development."
+share: true
 comments: true
 ---
+
 Deploying Rails App through Capistrano
 
 在这篇文章里，我将介绍如何使用capistrano部署rails应用。

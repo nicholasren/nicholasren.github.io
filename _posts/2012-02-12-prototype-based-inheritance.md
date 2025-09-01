@@ -1,7 +1,13 @@
 ---
-layout: post
-title: prototype based 继承机制
+layout: modern-post
+title: "Prototype Based Inheritance"
+date: 2012-02-12
+tags: [java, ruby, software-development, programming]
+description: "A blog post about prototype based inheritance and software development."
+share: true
+comments: true
 ---
+
 prototype based 继承机制
 
 与Java，C#，Ruby中"class-based"继承机制不同，javascript是一种"prototype-based"的继承机制。 关于prototype-based和class-based的区别，我想通过一个例子来描述下：   

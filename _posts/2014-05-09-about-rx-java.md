@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "RxJava初探"
+layout: modern-post
+title: "About Rx Java"
+date: 2014-05-09
+tags: [java, scala, software-development, programming]
+description: "A blog post about about rx java and software development."
+share: true
 comments: true
 ---
+
 RxJava初探
 
 **RxJava** 是来自于[Netflix](https://www.netflix.com/global)的[Reactive Extension](https://rx.codeplex.com/)的java版实现。

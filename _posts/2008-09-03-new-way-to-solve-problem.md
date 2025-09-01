@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 恩，要常动脑筋
+layout: modern-post
+title: "New Way To Solve Problem"
+date: 2008-09-03
+tags: [java, software-development, programming]
+description: "A blog post about new way to solve problem and software development."
+share: true
+comments: true
 ---
+
 恩，要常动脑筋
 
 遇到这样一个需求：

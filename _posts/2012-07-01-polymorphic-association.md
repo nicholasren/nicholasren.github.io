@@ -1,7 +1,13 @@
 ---
-layout: post
+layout: modern-post
 title: "Polymorphic Association"
+date: 2012-07-01
+tags: [ruby, rails, software-development, programming]
+description: "A blog post about polymorphic association and software development."
+share: true
+comments: true
 ---
+
 Polymorphic Association
 
 有这么一个需求，一个在线音乐商店系统，我们暂且叫它'online-store'，需要记录消费者对每首歌的评论，一个有经验的rails developer会很快地写出下面的代码:   

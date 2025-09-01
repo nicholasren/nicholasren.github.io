@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 离我梦想中的公司如此之近
+layout: modern-post
+title: "Close To My Favoriate Company"
+date: 2010-08-16
+tags: [software-development, programming]
+description: "A blog post about close to my favoriate company and software development."
+share: true
+comments: true
 ---
+
 离我梦想中的公司如此之近
 
 从一开始的电话沟通，到收到homework，好不容易周日休息一天，把homework完成，发出去，直到收到回复，

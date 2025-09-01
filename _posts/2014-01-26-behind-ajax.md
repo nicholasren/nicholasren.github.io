@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Behind $.ajax"
+layout: modern-post
+title: "Behind Ajax"
+date: 2014-01-26
+tags: [java, software-development, programming]
+description: "A blog post about behind ajax and software development."
+share: true
 comments: true
 ---
+
 Behind $.ajax
 
 相信大家对于下面这段代码都不会太陌生：

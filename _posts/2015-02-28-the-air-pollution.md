@@ -1,9 +1,13 @@
 ---
-layout: post
-title: "人去做什么，是因为心底有爱惜"
+layout: modern-post
+title: "The Air Pollution"
+date: 2015-02-28
+tags: [software-development, programming]
+description: "A blog post about the air pollution and software development."
+share: true
 comments: true
-tags: "生活"
 ---
+
 人去做什么，是因为心底有爱惜
 
 回头看看最近几年写的博客，绝大部分都是技术相关的内容，然而再往前几年，

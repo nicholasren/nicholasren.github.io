@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 浏览器是怎么工作的(1)
+layout: modern-post
+title: "How The Browser Works"
+date: 2012-02-05
+tags: [java, software-development, programming]
+description: "A blog post about how the browser works and software development."
+share: true
+comments: true
 ---
+
 <p>声明：本文翻译自<a href="http://www.html5rocks.com/en/tutorials/internals/howbrowserswork/" target="_blank">How Browser Work</a>，我将会逐步发布所翻译的章节。</p>
 <p class="p1">网页浏览器可以算得上世界使用范围最广的软件了，在这篇文章中，我将介绍下浏览器的内部工作机制。你将会理解从你在地址栏输入&ldquo;google.com&rdquo; 到你看到Google网站页面的这个期间究竟发生了什么。</p>
 <p class="p2">&nbsp;</p>

@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "使用spring提高rails开发效率"
+layout: modern-post
+title: "Make Your Rails Faster"
+date: 2013-04-27
+tags: [ruby, rails, spring, software-development, programming]
+description: "A blog post about make your rails faster and software development."
+share: true
 comments: true
 ---
+
 使用spring提高rails开发效率
 
 ### 声明

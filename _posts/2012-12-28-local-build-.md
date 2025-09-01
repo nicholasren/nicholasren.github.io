@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Innovation，让工作更有趣——给local build增加声音反馈"
+layout: modern-post
+title: "Local Build "
+date: 2012-12-28
+tags: [rails, software-development, programming]
+description: "A blog post about local build  and software development."
+share: true
 comments: true
 ---
+
 
 
 注：感谢我的同事新宇想出的这个点子，没有他的这个点子，也就没有这篇文章。

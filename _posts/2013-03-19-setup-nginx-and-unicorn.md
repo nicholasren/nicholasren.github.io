@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Setup nginx and unicorn"
+layout: modern-post
+title: "Setup Nginx And Unicorn"
+date: 2013-03-19
+tags: [rails, software-development, programming]
+description: "A blog post about setup nginx and unicorn and software development."
+share: true
 comments: true
 ---
+
 Setup nginx and unicorn
 
 本文简要介绍如何使用nginx和unicorn在ubuntu上搭建rails应用部署环境。

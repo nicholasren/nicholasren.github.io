@@ -1,9 +1,13 @@
 ---
-layout: post
-title: "关于分布式系统设计的一点想法"
+layout: modern-post
+title: "Lets Talk About Distributed System Architecture"
+date: 2015-08-22
+tags: [aws, software-development, programming]
+description: "A blog post about lets talk about distributed system architecture and software development."
+share: true
 comments: true
-tags: '分布式系统'
 ---
+
 分布式系统
 
 我曾经看到过很多玩具项目，都是通过一个系统支撑所有的业务需求。

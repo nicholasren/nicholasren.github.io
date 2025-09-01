@@ -1,7 +1,13 @@
 ---
-layout: post
-title: ThoughtWorks入职两周
+layout: modern-post
+title: "Thoughtworks 2 Week"
+date: 2011-08-25
+tags: [ruby, rails, devops, software-development, programming]
+description: "A blog post about thoughtworks 2 week and software development."
+share: true
+comments: true
 ---
+
 ThoughtWorks入职两周
 
 <p>&nbsp;</p>

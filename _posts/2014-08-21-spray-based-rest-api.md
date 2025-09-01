@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "spray based rest api"
+layout: modern-post
+title: "Spray Based Rest Api"
+date: 2014-08-21
+tags: [java, scala, ruby, software-development, programming]
+description: "A blog post about spray based rest api and software development."
+share: true
 comments: true
 ---
+
 spray based rest api
 
 > Spray is an open-source toolkit for building REST/HTTP-based integration layers on top of Scala and Akka. Being asynchronous, actor-based, fast, lightweight, modular and testable it's a great way to connect your Scala applications to the world.

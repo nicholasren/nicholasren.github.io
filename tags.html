@@ -1,38 +1,58 @@
 ---
-layout: post-index
-permalink: /tags/
-title: Tag Archive
-description: "An archive of posts sorted by tag."
+layout: modern-home
+title: "Tag Archive"
+description: "Browse all blog posts organized by tags and categories."
 ---
 
-<ul class="entry-meta inline-list">
-{% assign tags_list = site.tags %}
-  {% if tags_list.first[0] == null %}
-    {% for tag in tags_list %}
-    	<li><a href="#{{ tag }}" class="tag">{{ tag }} <span>{{ site.tags[tag].size }}</span></a></li>
-    {% endfor %}
-  {% else %}
-    {% for tag in tags_list %}
-    	<li><a href="#{{ tag[0] }}" class="tag">{{ tag[0] }} <span>{{ tag[1].size }}</span></a></li>
-    {% endfor %}
-  {% endif %}
-{% assign tags_list = nil %}
-</ul>
+<div class="container">
+  <div class="tags-header">
+    <h1 class="section-title">Tag Archive</h1>
+    <p class="tags-description">Browse all blog posts organized by tags and categories. Click on any tag to see related posts.</p>
+  </div>
+  
+  <div class="tags-cloud">
+    {% assign tags_list = site.tags %}
+    {% if tags_list.first[0] == null %}
+      {% for tag in tags_list %}
+        <a href="#{{ tag }}" class="tag tag-large">{{ tag }} <span class="tag-count">{{ site.tags[tag].size }}</span></a>
+      {% endfor %}
+    {% else %}
+      {% for tag in tags_list %}
+        <a href="#{{ tag[0] }}" class="tag tag-large">{{ tag[0] }} <span class="tag-count">{{ tag[1].size }}</span></a>
+      {% endfor %}
+    {% endif %}
+    {% assign tags_list = nil %}
+  </div>
 
-{% for tag in site.tags %}
-	<article>
-	<h2 id="{{ tag[0] }}">{{ tag[0] }}</h2>
-		<ul>
-		{% assign pages_list = tag[1] %}
-		{% for post in pages_list %}
-			{% if post.title != null %}
-			{% if group == null or group == post.group %}
-				<li class="entry-title"><a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></li>
-			{% endif %}
-			{% endif %}
-		{% endfor %}
-		{% assign pages_list = nil %}
-		{% assign group = nil %}
-		</ul>
-	</article><!-- /.hentry -->
-{% endfor %}
+  <div class="tags-content">
+    {% for tag in site.tags %}
+    <section class="tag-section">
+      <h2 id="{{ tag[0] }}" class="tag-title">{{ tag[0] }} <span class="tag-count">{{ tag[1].size }} posts</span></h2>
+      <div class="tag-posts">
+        {% assign pages_list = tag[1] %}
+        {% for post in pages_list %}
+          {% if post.title != null %}
+          {% if group == null or group == post.group %}
+          <article class="tag-post">
+            <h3 class="post-title">
+              <a href="{{ site.url }}{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+            </h3>
+            <div class="post-meta">
+              <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date">
+                {{ post.date | date: "%B %d, %Y" }}
+              </time>
+              {% if post.description %}
+              <p class="post-excerpt">{{ post.description }}</p>
+              {% endif %}
+            </div>
+          </article>
+          {% endif %}
+          {% endif %}
+        {% endfor %}
+        {% assign pages_list = nil %}
+        {% assign group = nil %}
+      </div>
+    </section>
+    {% endfor %}
+  </div>
+</div>

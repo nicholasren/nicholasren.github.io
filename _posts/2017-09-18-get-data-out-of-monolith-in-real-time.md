@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Exposing event stream from monolith"
+layout: modern-post
+title: "Get Data Out Of Monolith In Real Time"
+date: 2017-09-18
+tags: [kafka, architecture, software-development, programming]
+description: "A blog post about get data out of monolith in real time and software development."
+share: true
 comments: true
 ---
+
 Exposing event stream from monolith
 
 # 背景

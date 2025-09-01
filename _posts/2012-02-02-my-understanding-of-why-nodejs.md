@@ -1,7 +1,13 @@
 ---
-layout: post
-title: My understand of why nodejs
+layout: modern-post
+title: "My Understanding Of Why Nodejs"
+date: 2012-02-02
+tags: [java, software-development, programming]
+description: "A blog post about my understanding of why nodejs and software development."
+share: true
+comments: true
 ---
+
 Thread per connection VS Event loop
 >Advantage:  
  more memory consumption 

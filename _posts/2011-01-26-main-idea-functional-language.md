@@ -1,7 +1,13 @@
 ---
-layout: post
-title: Main Idea of functional language
+layout: modern-post
+title: "Main Idea Functional Language"
+date: 2011-01-26
+tags: [scala, software-development, programming]
+description: "A blog post about main idea functional language and software development."
+share: true
+comments: true
 ---
+
 Main Idea of functional language
 
 最近开始了解一种新的函数式+对象式语言scala，以后我会分篇在这里记下自己的心得。

@@ -1,7 +1,13 @@
 ---
-layout: post
-title: "Vagrant初探"
+layout: modern-post
+title: "Getting Started With Vagrantmd"
+date: 2012-05-13
+tags: [software-development, programming]
+description: "A blog post about getting started with vagrantmd and software development."
+share: true
+comments: true
 ---
+
 
 ### 什么是vagrant?   
   看<a =href="http://vagrantup.com/docs/getting-started/index.html">这里</a>

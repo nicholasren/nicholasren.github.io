@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Things need to be consider when building microservice"
+layout: modern-post
+title: "Building Your Microservice"
+date: 2016-01-18
+tags: [ruby, aws, docker, software-development, programming]
+description: "A blog post about building your microservice and software development."
+share: true
 comments: true
 ---
+
 Things need to be consider when building microservice
 
 ### TLDR;

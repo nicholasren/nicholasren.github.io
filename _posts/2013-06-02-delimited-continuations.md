@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Delimited Continuations(WIP)"
+layout: modern-post
+title: "Delimited Continuations"
+date: 2013-06-02
+tags: [scala, software-development, programming]
+description: "A blog post about delimited continuations and software development."
+share: true
 comments: true
 ---
+
 Delimited Continuations(WIP)
 
 本文译自[这里。](http://jim-mcbeath.blogspot.in/2010/08/delimited-continuations.html)

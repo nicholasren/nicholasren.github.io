@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "怎样写单元测试"
+layout: modern-post
+title: "My Understanding On Unit Testing"
+date: 2012-10-21
+tags: [java, testing, software-development, programming]
+description: "A blog post about my understanding on unit testing and software development."
+share: true
 comments: true
 ---
+
 怎样写单元测试
 
 最近和同事讨论过几次如何写单元测试之后，突然意识到，是要写点什么了。   

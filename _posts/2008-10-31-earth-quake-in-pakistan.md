@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 巴基斯坦地震了
+layout: modern-post
+title: "Earth Quake In Pakistan"
+date: 2008-10-31
+tags: [software-development, programming]
+description: "A blog post about earth quake in pakistan and software development."
+share: true
+comments: true
 ---
+
 巴基斯坦地震了
 
 昨晚在新闻上看到一条简短的消息：巴基斯坦地震了，然后就简单介绍一下伤亡情况。

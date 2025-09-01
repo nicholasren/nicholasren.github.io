@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 九天没有动笔了，总得写点什么吧
+layout: modern-post
+title: "Havent Write For 9 Days"
+date: 2008-09-18
+tags: [java, software-development, programming]
+description: "A blog post about havent write for 9 days and software development."
+share: true
+comments: true
 ---
+
 九天没有动笔了，总得写点什么吧
 
 看了下上次博客发布的时间，9月9号，今天已经18号了。这几天一直在做一个模块，是对Ajax请求做响应的，后台的逻辑处理比较复杂，所以最近一直比较忙。

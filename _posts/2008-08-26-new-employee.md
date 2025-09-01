@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 今天又进来一批新员工
+layout: modern-post
+title: "New Employee"
+date: 2008-08-26
+tags: [software-development, programming]
+description: "A blog post about new employee and software development."
+share: true
+comments: true
 ---
+
 今天又进来一批新员工
 
 

@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 工作中的一点感悟
+layout: modern-post
+title: "Thinking In Work"
+date: 2011-08-13
+tags: [software-development, programming]
+description: "A blog post about thinking in work and software development."
+share: true
+comments: true
 ---
+
 
 在回忆昨天在和同事们讨论一个需求的情景，总结了以下几点：
 1. 要理性地说服别人，切忌带有情绪沟通，保持冷静

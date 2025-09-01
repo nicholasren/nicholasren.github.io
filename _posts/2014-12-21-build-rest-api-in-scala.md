@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "build rest api in scala"
+layout: modern-post
+title: "Build Rest Api In Scala"
+date: 2014-12-21
+tags: [java, scala, ruby, rails, software-development, programming]
+description: "A blog post about build rest api in scala and software development."
+share: true
 comments: true
 ---
+
 build rest api in scala
 
 micro service getting more attractions in the past few years, more and more orgnizations is moving to this area. many framework were created to make building micro service easier,  in java world, we have DropWizard, in ruby world, we have Rails-API, Grape and Lotus. but how the scala guys solve this problem?

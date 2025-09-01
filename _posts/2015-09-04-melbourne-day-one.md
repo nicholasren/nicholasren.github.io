@@ -1,9 +1,13 @@
 ---
-layout: post
-title: "墨尔本，新生活"
+layout: modern-post
+title: "Melbourne Day One"
+date: 2015-09-04
+tags: [software-development, programming]
+description: "A blog post about melbourne day one and software development."
+share: true
 comments: true
-tag: 生活
 ---
+
 墨尔本，新生活
 
 自从8月14日离开公司后，卖车，出租房屋，打包托运行李，和朋友聚会，几乎每天的事情都安排得特别满，相当疲惫。

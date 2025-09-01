@@ -1,7 +1,13 @@
 ---
-layout: post
-title: ThoughtWorks入职一月
+layout: modern-post
+title: "Thoughtworks 1 Month"
+date: 2011-09-08
+tags: [java, ruby, rails, software-development, programming]
+description: "A blog post about thoughtworks 1 month and software development."
+share: true
+comments: true
 ---
+
 ThoughtWorks入职一月
 
 <p>
