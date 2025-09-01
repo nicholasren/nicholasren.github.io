@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 状态奇差
+layout: modern-post
+title: "Bad Status"
+date: 2008-10-29
+tags: [software-development, programming]
+description: "A blog post about bad status and software development."
+share: true
+comments: true
 ---
+
 状态奇差
 
 到现在已经过了9天了，辞职过程就这么艰难嘛，我也不是公司的中坚力量啊，

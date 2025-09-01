@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 自动化回归测试
+layout: modern-post
+title: "Automatic Regression Test"
+date: 2011-11-09
+tags: [java, ruby, software-development, programming]
+description: "A blog post about automatic regression test and software development."
+share: true
+comments: true
 ---
+
 自动化回归测试
 
 注：本文假设你对[Cucumber](http://cukes.info/ "cucumber")，[Selenium-WebDriver](http://seleniumhq.org/projects/webdriver/ "selenium")有一定的了解。

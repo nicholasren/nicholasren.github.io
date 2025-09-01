@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 路遇城管
+layout: modern-post
+title: "Lu Yv Cheng Guan"
+date: 2008-10-23
+tags: [software-development, programming]
+description: "A blog post about lu yv cheng guan and software development."
+share: true
+comments: true
 ---
+
 路遇城管
 
 多次在各种媒体上看到对城管的种种*行的详细报道，所以对那些能够把工作服穿得像痞子一样的人比较反感，

@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 好的编程习惯
+layout: modern-post
+title: "Good Programing Practice"
+date: 2011-08-31
+tags: [spring, software-development, programming]
+description: "A blog post about good programing practice and software development."
+share: true
+comments: true
 ---
+
 好的编程习惯
 
 <p>&nbsp;</p>

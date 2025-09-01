@@ -1,7 +1,13 @@
 ---
-layout: post
-title: meta programing ruby读书笔记
+layout: modern-post
+title: "Meta Ruby Programing"
+date: 2012-03-06
+tags: [java, ruby, software-development, programming]
+description: "A blog post about meta ruby programing and software development."
+share: true
+comments: true
 ---
+
 meta programing ruby读书笔记
 
 ### Open Class

@@ -1,7 +1,13 @@
 ---
-layout: post
-title: "Getting started with chef"
+layout: modern-post
+title: "Introduction Of Chef"
+date: 2012-07-29
+tags: [ruby, software-development, programming]
+description: "A blog post about introduction of chef and software development."
+share: true
+comments: true
 ---
+
 Getting started with chef
 ### Set up a ubuntu node and run recipe on it
 #### Predication: 

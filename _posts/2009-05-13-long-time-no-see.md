@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 久未动笔
+layout: modern-post
+title: "Long Time No See"
+date: 2009-05-13
+tags: [software-development, programming]
+description: "A blog post about long time no see and software development."
+share: true
+comments: true
 ---
+
 久未动笔
 
 自从进入新公司以后，就很少更新博客了，新公司的工作时间比以前长多了，加上白天无法上网，因此这里几乎要荒芜掉了。

@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Rx revisit"
+layout: modern-post
+title: "Rx Revisit"
+date: 2015-07-19
+tags: [java, scala, architecture, software-development, programming]
+description: "A blog post about rx revisit and software development."
+share: true
 comments: true
 ---
+
 Rx revisit
 
 ### TLDR;

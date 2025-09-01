@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 跳槽小记
+layout: modern-post
+title: "Seeking A New Job"
+date: 2008-10-15
+tags: [software-development, programming]
+description: "A blog post about seeking a new job and software development."
+share: true
+comments: true
 ---
+
 跳槽小记
 
 本来一直打算等到09年初再考虑跳槽的，目前最大的需求是把助学贷款还完。

@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Rails application deployment automation with mina"
+layout: modern-post
+title: "Deployment Automation With Mina"
+date: 2013-10-07
+tags: [ruby, rails, software-development, programming]
+description: "A blog post about deployment automation with mina and software development."
+share: true
 comments: true
 ---
+
 Rails application deployment automation with mina
 
 ### TLDR:

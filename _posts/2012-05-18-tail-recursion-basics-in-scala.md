@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Scala中的递归(译)"
+layout: modern-post
+title: "Tail Recursion Basics In Scala"
+date: 2012-05-18
+tags: [java, scala, software-development, programming]
+description: "A blog post about tail recursion basics in scala and software development."
+share: true
 comments: true
 ---
+
 声明：本文翻译自<a href="http://oldfashionedsoftware.com/2008/09/27/tail-recursion-basics-in-scala/">这里</a>
 
 ### 递归101   

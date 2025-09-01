@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "readable angular tests"
+layout: modern-post
+title: "Readable Angular Tests"
+date: 2017-11-27
+tags: [java, testing, software-development, programming]
+description: "A blog post about readable angular tests and software development."
+share: true
 comments: true
 ---
+
 readable angular tests
 
 In this post, I'll provdes some tips to create readable angular test.

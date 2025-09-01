@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 如何安装exuberant ctags 并为你的工程生成tag文件
+layout: modern-post
+title: "How To Install Exuberant Ctags"
+date: 2011-12-29
+tags: [software-development, programming]
+description: "A blog post about how to install exuberant ctags and software development."
+share: true
+comments: true
 ---
+
 <p>1. 从http://ctags.sourceforge.net/ 下载最新版本的ctags文件，目前为ctags-5.9.tgz.</p>
 <p>2. 解压缩 tar -xf ctags-5.8.tgz</p>
 <p>3. 安装: cd ctags-x-x &amp;&amp; configure &amp;&amp; make &amp;&amp; make install</p>

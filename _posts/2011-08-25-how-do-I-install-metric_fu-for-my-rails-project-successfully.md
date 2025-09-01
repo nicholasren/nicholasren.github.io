@@ -1,7 +1,13 @@
 ---
-layout: post
-title: how do I install metric_fu for my rails project successfully
+layout: modern-post
+title: "How Do I Install Metric_fu For My Rails Project Successfully"
+date: 2011-08-25
+tags: [ruby, rails, software-development, programming]
+description: "A blog post about how do i install metric_fu for my rails project successfully and software development."
+share: true
+comments: true
 ---
+
 <p><span style="font-family: Comic Sans MS;"><span style="white-space: pre;">	</span>
 This blog is talking about how I install metric_fu in a rails project.</span>
 </p>

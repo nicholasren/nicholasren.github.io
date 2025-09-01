@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "Ruby clean code之block and instance eval"
+layout: modern-post
+title: "Ruby Clean Code With Block And Instance Eval"
+date: 2013-12-09
+tags: [ruby, software-development, programming]
+description: "A blog post about ruby clean code with block and instance eval and software development."
+share: true
 comments: true
 ---
+
 Ruby clean code之block and instance eval
 
 ### 引子

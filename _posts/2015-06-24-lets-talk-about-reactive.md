@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "也谈响应式编程"
+layout: modern-post
+title: "Lets Talk About Reactive"
+date: 2015-06-24
+tags: [java, scala, ruby, architecture, software-development, programming]
+description: "A blog post about lets talk about reactive and software development."
+share: true
 comments: true
 ---
+
 也谈响应式编程
 
 ### 太长不读；

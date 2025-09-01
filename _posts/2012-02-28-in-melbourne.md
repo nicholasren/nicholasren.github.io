@@ -1,7 +1,13 @@
 ---
- layout: post
- title: "In Melbourne"
+layout: modern-post
+title: "In Melbourne"
+date: 2012-02-28
+tags: [software-development, programming]
+description: "A blog post about in melbourne and software development."
+share: true
+comments: true
 ---
+
 In Melbourne
 
 第一次出国，所有的事儿都是新鲜的，难免有点忐忑，幸运的是，在机上邻座的是一个话多的澳洲土耳其裔姑娘，告诉我在澳洲如何入境，应该注意什么，该如何填写入境卡，到了墨尔本应该去哪些景点应该去。 到了墨尔本，Luke带我熟悉道路，去Yarra河旁边看风景，Tan带我去吃烤鸡，参加MelbourneJS组活动。Herry带我去吃越南餐，这里有全世界各地的食品，而我也尽量保持每天吃饭的不重样，来之前我妈对我吃不习惯的担心完全是多余的。

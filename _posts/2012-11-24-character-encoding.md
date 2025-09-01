@@ -1,7 +1,13 @@
 ---
-layout: post
-title: "Character encoding"
+layout: modern-post
+title: "Character Encoding"
+date: 2012-11-24
+tags: [software-development, programming]
+description: "A blog post about character encoding and software development."
+share: true
+comments: true
 ---
+
 ### Character encoding
 
 ASCII   

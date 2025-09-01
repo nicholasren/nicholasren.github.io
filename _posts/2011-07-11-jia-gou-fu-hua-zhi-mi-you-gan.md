@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 读架构腐化之谜有感
+layout: modern-post
+title: "Jia Gou Fu Hua Zhi Mi You Gan"
+date: 2011-07-11
+tags: [spring, architecture, software-development, programming]
+description: "A blog post about jia gou fu hua zhi mi you gan and software development."
+share: true
+comments: true
 ---
+
 <p>看了陈金洲写的≪<a href="http://www.infoq.com/cn/articles/cjz-architecture-corruption" target="_blank">架构腐化之谜</a>≫，深有感触，这篇文章几乎精确地描绘了国内软件行业大多数公司的现状，我对于目前所在的一个项目从效率方面进行了分析，主要发现有以下几点问题：</p>
 <p><span style="white-space:pre">	</span><strong>1 架构失控。</strong></p>
 <p><span style="white-space:pre">		</span>到处充斥着代码泥团。

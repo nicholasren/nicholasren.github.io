@@ -1,7 +1,13 @@
 ---
-layout: post
-title: "又进了一个稍觉郁闷的项目"
+layout: modern-post
+title: "Boring Project"
+date: 2008-08-19
+tags: [software-development, programming]
+description: "A blog post about boring project and software development."
+share: true
+comments: true
 ---
+
 又进了一个稍觉郁闷的项目
 
 还没从上一个项目成功的喜悦走中出来，马上又被拉进另一项目了，昨天下午开始接触到这个项目的代码。看到现有代码时的心情只能用一个词来形容：terrible. 丝毫看不出这是一个用面向对象的语言编写的系统，无休止的if else，混乱的类层次结构，蹩脚的变量名，无休止的重复代码，长达百行的大函数，到处充斥着bad smell。。。。 想要做重构几乎没有可能，因为没有test case。

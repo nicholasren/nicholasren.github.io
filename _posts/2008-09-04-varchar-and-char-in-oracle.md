@@ -1,7 +1,13 @@
 ---
-layout: post
-title: 解决一问题——Oracle中 Char 与 Varchar
+layout: modern-post
+title: "Varchar And Char In Oracle"
+date: 2008-09-04
+tags: [software-development, programming]
+description: "A blog post about varchar and char in oracle and software development."
+share: true
+comments: true
 ---
+
 解决一问题——Oracle中 Char 与 Varchar
 
 给一个现有的项目添加新功能，需要对数据库做更新：

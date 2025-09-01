@@ -1,7 +1,13 @@
 ---
-layout: post
-title: "OOCamp 笔记"
+layout: modern-post
+title: "Oocamp Note"
+date: 2012-04-25
+tags: [java, spring, testing, software-development, programming]
+description: "A blog post about oocamp note and software development."
+share: true
+comments: true
 ---
+
 #### OOCamp Day1 
 
   * Tasking

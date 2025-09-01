@@ -1,7 +1,13 @@
 ---
-layout: post
-title: "c3p0的helper线程数目过多导致内存溢出"
+layout: modern-post
+title: "C3p0 OOM Problem"
+date: 2008-08-22
+tags: [java, software-development, programming]
+description: "A blog post about c3p0 oom problem and software development."
+share: true
+comments: true
 ---
+
 c3p0的helper线程数目过多导致内存溢出
 
 

@@ -1,8 +1,13 @@
 ---
-layout: post
-title: "How SSH works?"
+layout: modern-post
+title: "How Ssh Works"
+date: 2012-08-25
+tags: [software-development, programming]
+description: "A blog post about how ssh works and software development."
+share: true
 comments: true
 ---
+
 How SSH works?
 
 ### 简介：
