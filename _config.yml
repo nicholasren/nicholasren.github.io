@@ -3,7 +3,22 @@ description: happy coding
 disqus_shortname: nicholasrensblog
 url: https://nicholas.ren
 remote_theme: sighingnow/jekyll-gitbook
-  
+
+# Default layouts
+defaults:
+  - scope:
+      path: "_posts"
+      type: "posts"
+    values:
+      layout: "modern-post"
+      comments: true
+      share: true
+
+# Modern features
+modern:
+  reading_time: true
+  social_sharing: true
+  related_posts: true
 
 owner:
   name: Xiaojun Ren
