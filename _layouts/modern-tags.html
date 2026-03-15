@@ -12,7 +12,7 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="{{ site.url }}/images/favicon.ico">
@@ -21,38 +21,12 @@
     {% include modern-header.html %}
 
     <main class="main-content">
-        {{ content }}
+        <div class="page-card">
+            {{ content }}
+        </div>
     </main>
 
     {% include modern-footer.html %}
 
-    <!-- JavaScript -->
-    <script>
-        // Theme toggle functionality
-        function toggleTheme() {
-            const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
-        
-        // Set initial theme
-        const savedTheme = localStorage.getItem('theme') || 'auto';
-        if (savedTheme === 'auto') {
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            document.body.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
-        } else {
-            document.body.setAttribute('data-theme', savedTheme);
-        }
-        
-        // Listen for system theme changes
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (localStorage.getItem('theme') === 'auto') {
-                document.body.setAttribute('data-theme', e.matches ? 'dark' : 'light');
-            }
-        });
-    </script>
 </body>
 </html>

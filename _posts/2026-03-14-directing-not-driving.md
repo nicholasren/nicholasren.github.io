@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: modern-post
 title: "Research on Autopilot"
 comments: true
 ---

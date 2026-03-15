@@ -32,7 +32,7 @@
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="{{ site.url }}/favicon.ico">
@@ -47,90 +47,92 @@
   {% include modern-header.html %}
   
   <main class="main-content">
-    <article class="post">
-      <header class="post-header">
-        <h1 class="post-title">{{ page.title }}</h1>
-        
-        <div class="post-meta">
-          <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">
-            {{ page.date | date: "%B %d, %Y" }}
-          </time>
-          
-          {% if page.tags %}
-          <div class="post-tags">
-            {% for tag in page.tags %}
-            <a href="{{ site.url }}/tags/#{{ tag | cgi_encode }}" class="tag">{{ tag }}</a>
-            {% endfor %}
+    <div class="page-card">
+      <article class="post">
+        <header class="post-header">
+          <h1 class="post-title">{{ page.title }}</h1>
+
+          <div class="post-meta">
+            <time class="post-date" datetime="{{ page.date | date_to_xmlschema }}">
+              {{ page.date | date: "%B %d, %Y" }}
+            </time>
+
+            {% if page.tags %}
+            <div class="post-tags">
+              {% for tag in page.tags %}
+              <a href="{{ site.url }}/tags/#{{ tag | cgi_encode }}" class="tag">{{ tag }}</a>
+              {% endfor %}
+            </div>
+            {% endif %}
+          </div>
+        </header>
+
+        <div class="post-content">
+          {{ content }}
+        </div>
+
+        <footer class="post-footer">
+          <div class="post-author">
+            <p>Written by <a href="{{ site.url }}/about/">{{ site.owner.name }}</a></p>
+          </div>
+
+          {% if page.share %}
+          <div class="post-share">
+            <h4>Share this post:</h4>
+            <div class="share-buttons">
+              <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ site.url }}{{ page.url | url_encode }}"
+                 target="_blank" rel="noopener" class="btn btn-secondary">
+                Share on Twitter
+              </a>
+              <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url | url_encode }}"
+                 target="_blank" rel="noopener" class="btn btn-secondary">
+                Share on LinkedIn
+              </a>
+            </div>
           </div>
           {% endif %}
-        </div>
-      </header>
-      
-      <div class="post-content">
-        {{ content }}
-      </div>
-      
-      <footer class="post-footer">
-        <div class="post-author">
-          <p>Written by <a href="{{ site.url }}/about/">{{ site.owner.name }}</a></p>
-        </div>
-        
-        {% if page.share %}
-        <div class="post-share">
-          <h4>Share this post:</h4>
-          <div class="share-buttons">
-            <a href="https://twitter.com/intent/tweet?text={{ page.title | url_encode }}&url={{ site.url }}{{ page.url | url_encode }}" 
-               target="_blank" rel="noopener" class="btn btn-secondary">
-              Share on Twitter
-            </a>
-            <a href="https://www.linkedin.com/sharing/share-offsite/?url={{ site.url }}{{ page.url | url_encode }}" 
-               target="_blank" rel="noopener" class="btn btn-secondary">
-              Share on LinkedIn
-            </a>
+
+          {% if site.disqus_shortname and page.comments %}
+          <div class="post-comments">
+            <h4>Comments</h4>
+            <div id="disqus_thread"></div>
+            <script>
+              var disqus_config = function () {
+                this.page.url = '{{ site.url }}{{ page.url }}';
+                this.page.identifier = '{{ page.url }}';
+              };
+              (function() {
+                var d = document, s = d.createElement('script');
+                s.src = '//{{ site.disqus_shortname }}.disqus.com/embed.js';
+                s.setAttribute('data-timestamp', +new Date());
+                (d.head || d.body).appendChild(s);
+              })();
+            </script>
+            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
           </div>
+          {% endif %}
+        </footer>
+      </article>
+
+      {% if site.related_posts.size > 0 %}
+      <section class="related-posts">
+        <h3>Related Posts</h3>
+        <div class="grid grid-3">
+          {% for post in site.related_posts limit:3 %}
+          <article class="card">
+            <h4><a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a></h4>
+            <p class="post-excerpt">
+              {% if post.description %}{{ post.description }}{% else %}{{ post.content | strip_html | truncate: 120 }}{% endif %}
+            </p>
+            <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date-small">
+              {{ post.date | date: "%B %d, %Y" }}
+            </time>
+          </article>
+          {% endfor %}
         </div>
-        {% endif %}
-        
-        {% if site.disqus_shortname and page.comments %}
-        <div class="post-comments">
-          <h4>Comments</h4>
-          <div id="disqus_thread"></div>
-          <script>
-            var disqus_config = function () {
-              this.page.url = '{{ site.url }}{{ page.url }}';
-              this.page.identifier = '{{ page.url }}';
-            };
-            (function() {
-              var d = document, s = d.createElement('script');
-              s.src = '//{{ site.disqus_shortname }}.disqus.com/embed.js';
-              s.setAttribute('data-timestamp', +new Date());
-              (d.head || d.body).appendChild(s);
-            })();
-          </script>
-          <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-        </div>
-        {% endif %}
-      </footer>
-    </article>
-    
-    {% if site.related_posts.size > 0 %}
-    <section class="related-posts">
-      <h3>Related Posts</h3>
-      <div class="grid grid-3">
-        {% for post in site.related_posts limit:3 %}
-        <article class="card">
-          <h4><a href="{{ site.url }}{{ post.url }}">{{ post.title }}</a></h4>
-          <p class="post-excerpt">
-            {% if post.description %}{{ post.description }}{% else %}{{ post.content | strip_html | truncate: 120 }}{% endif %}
-          </p>
-          <time datetime="{{ post.date | date_to_xmlschema }}" class="post-date-small">
-            {{ post.date | date: "%B %d, %Y" }}
-          </time>
-        </article>
-        {% endfor %}
-      </div>
-    </section>
-    {% endif %}
+      </section>
+      {% endif %}
+    </div>
   </main>
   
   {% include modern-footer.html %}
