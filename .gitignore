@@ -2,3 +2,4 @@ public/**/*.*
 vendor
 .bundle
 .jekyll-metadata
+.claude/
