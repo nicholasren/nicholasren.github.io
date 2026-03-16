@@ -1,17 +1,20 @@
 <!doctype html>
 <html lang="en">
 <head>
+  <!-- Anti-flash: set language before CSS renders to avoid content flicker -->
+  <script>(function(){try{var l=localStorage.getItem('preferred-lang');document.documentElement.setAttribute('data-lang',l||'en');}catch(e){document.documentElement.setAttribute('data-lang','en');}})()</script>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ site.title }}</title>
   <meta name="description" content="{{ site.description }}">
-  
+
   <!-- Open Graph -->
   <meta property="og:title" content="{{ site.title }}">
   <meta property="og:description" content="{{ site.description }}">
   <meta property="og:url" content="{{ site.url }}">
   <meta property="og:type" content="website">
-  
+
   <!-- Twitter Cards -->
   {% if site.owner.twitter %}
   <meta name="twitter:card" content="summary">
@@ -19,31 +22,34 @@
   <meta name="twitter:title" content="{{ site.title }}">
   <meta name="twitter:description" content="{{ site.description }}">
   {% endif %}
-  
+
   <!-- Canonical URL -->
   <link rel="canonical" href="{{ site.url }}">
-  
+
   <!-- RSS Feed -->
   <link rel="alternate" type="application/rss+xml" title="{{ site.title }}" href="{{ site.url }}/feed.xml">
-  
+
   <!-- Modern CSS -->
   <link rel="stylesheet" href="{{ site.url }}/assets/css/modern.css">
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Source+Sans+3:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  
+
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="{{ site.url }}/favicon.ico">
 </head>
 
 <body>
   {% include modern-header.html %}
-  
+
   <main class="main-content">
     <div class="page-card">
-      <h2 class="section-title">Latest Posts</h2>
+      <h2 class="section-title">
+        <span class="lang-en">Latest Posts</span>
+        <span class="lang-zh">最新文章</span>
+      </h2>
       {% for post in site.posts limit:15 %}
       <div class="post-card">
         <div class="post-content">
@@ -60,11 +66,17 @@
       {% endfor %}
 
       <div class="view-all-posts">
-        <a href="{{ site.url }}/posts/" class="btn">View All Posts</a>
+        <a href="{{ site.url }}/posts/" class="btn">
+          <span class="lang-en">View All Posts</span>
+          <span class="lang-zh">查看所有文章</span>
+        </a>
       </div>
     </div>
   </main>
-  
+
   {% include modern-footer.html %}
+
+  <!-- Language toggle -->
+  <script src="{{ site.url }}/assets/js/lang-toggle.js"></script>
 </body>
 </html>

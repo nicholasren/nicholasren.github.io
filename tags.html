@@ -7,10 +7,16 @@ description: "Browse all blog posts organized by tags and categories."
 
 <div class="container">
   <div class="tags-header">
-    <h1 class="section-title">Tag Archive</h1>
-    <p class="tags-description">Browse all blog posts organized by tags and categories. Click on any tag to see related posts.</p>
+    <h1 class="section-title">
+      <span class="lang-en">Tag Archive</span>
+      <span class="lang-zh">标签归档</span>
+    </h1>
+    <p class="tags-description">
+      <span class="lang-en">Browse all blog posts organized by tags and categories. Click on any tag to see related posts.</span>
+      <span class="lang-zh">按标签和分类浏览所有文章，点击任意标签查看相关文章。</span>
+    </p>
   </div>
-  
+
   <div class="tags-cloud">
     {% assign tags_list = site.tags %}
     {% if tags_list.first[0] == null %}
@@ -28,7 +34,14 @@ description: "Browse all blog posts organized by tags and categories."
   <div class="tags-content">
     {% for tag in site.tags %}
     <section class="tag-section">
-      <h2 id="{{ tag[0] }}" class="tag-title">{{ tag[0] }} <span class="tag-count">{{ tag[1].size }} posts</span></h2>
+      <h2 id="{{ tag[0] }}" class="tag-title">
+        {{ tag[0] }}
+        <span class="tag-count">
+          {{ tag[1].size }}
+          <span class="lang-en">posts</span>
+          <span class="lang-zh">篇</span>
+        </span>
+      </h2>
       <div class="tag-posts">
         {% assign pages_list = tag[1] %}
         {% for post in pages_list %}

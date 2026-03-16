@@ -7,16 +7,31 @@ description: "Browse through all my articles and thoughts on software developmen
 
 <div class="container">
   <div class="posts-header">
-    <h1 class="section-title">All Blog Posts</h1>
-    <p class="posts-description">Browse through all my articles and thoughts on software development, technology, and more.</p>
+    <h1 class="section-title">
+      <span class="lang-en">All Blog Posts</span>
+      <span class="lang-zh">所有文章</span>
+    </h1>
+    <p class="posts-description">
+      <span class="lang-en">Browse through all my articles and thoughts on software development, technology, and more.</span>
+      <span class="lang-zh">浏览所有关于软件开发、技术等方面的文章与思考。</span>
+    </p>
     <div class="posts-stats">
-      <span class="total-posts">Total: {{ site.posts.size }} posts</span>
+      <span class="total-posts">
+        <span class="lang-en">Total:</span>
+        <span class="lang-zh">共</span>
+        {{ site.posts.size }}
+        <span class="lang-en">posts</span>
+        <span class="lang-zh">篇文章</span>
+      </span>
     </div>
   </div>
-  
+
   <!-- Browse by Year -->
   <div class="browse-by-year">
-    <h3>Browse by Year</h3>
+    <h3>
+      <span class="lang-en">Browse by Year</span>
+      <span class="lang-zh">按年份浏览</span>
+    </h3>
     <div class="year-links">
       {% assign years = site.posts | group_by_exp: "post", "post.date | date: '%Y'" | sort: "name" | reverse %}
       {% for year in years %}
@@ -24,11 +39,15 @@ description: "Browse through all my articles and thoughts on software developmen
       {% endfor %}
     </div>
   </div>
-  
+
   <!-- Posts by Year -->
   {% for year in years %}
   <section class="year-section" id="{{ year.name }}">
-    <h2 class="year-title">{{ year.name }} - {{ year.items.size }} posts</h2>
+    <h2 class="year-title">
+      {{ year.name }}
+      <span class="lang-en">— {{ year.items.size }} posts</span>
+      <span class="lang-zh">— {{ year.items.size }} 篇</span>
+    </h2>
     <div class="year-posts">
       {% for post in year.items %}
       <article class="year-post">
@@ -55,10 +74,13 @@ description: "Browse through all my articles and thoughts on software developmen
     </div>
   </section>
   {% endfor %}
-  
-  <!-- Alternative: All Posts Grid -->
+
+  <!-- All Posts Grid -->
   <div class="all-posts-section">
-    <h2 class="section-title">All Posts in Chronological Order</h2>
+    <h2 class="section-title">
+      <span class="lang-en">All Posts in Chronological Order</span>
+      <span class="lang-zh">所有文章（按时间排序）</span>
+    </h2>
     <div class="posts-grid">
       {% for post in site.posts %}
       <article class="card post-card">

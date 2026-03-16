@@ -6,12 +6,24 @@
           <a href="{{ site.url }}/">{{ site.title }}</a>
         </h1>
       </div>
-      
+
       <nav class="nav-menu">
-        <a href="{{ site.url }}/">Home</a>
-        <a href="{{ site.url }}/posts/">Posts</a>
-        <a href="{{ site.url }}/tags/">Tags</a>
-        <a href="{{ site.url }}/about/">About</a>
+        <a href="{{ site.url }}/">
+          <span class="lang-en">Home</span>
+          <span class="lang-zh">首页</span>
+        </a>
+        <a href="{{ site.url }}/posts/">
+          <span class="lang-en">Posts</span>
+          <span class="lang-zh">文章</span>
+        </a>
+        <a href="{{ site.url }}/tags/">
+          <span class="lang-en">Tags</span>
+          <span class="lang-zh">标签</span>
+        </a>
+        <a href="{{ site.url }}/about/">
+          <span class="lang-en">About</span>
+          <span class="lang-zh">关于</span>
+        </a>
         {% if site.owner.github %}
         <a href="https://github.com/{{ site.owner.github }}" target="_blank" rel="noopener">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -26,6 +38,12 @@
           </svg>
         </a>
         {% endif %}
+
+        <!-- Language toggle button -->
+        <button id="lang-toggle-btn"
+                class="lang-toggle"
+                onclick="toggleLanguage()"
+                aria-label="切换到中文">中</button>
       </nav>
     </div>
   </div>
