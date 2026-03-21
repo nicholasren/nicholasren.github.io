@@ -1,12 +1,15 @@
 ---
 layout: modern-post
 title: "Rx Revisit"
+title_zh: "重温 Rx"
 date: 2015-07-19
 tags: [java, scala, architecture, software-development, programming]
 description: "A blog post about rx revisit and software development."
 share: true
 comments: true
 ---
+
+<div class="lang-zh" markdown="1">
 
 Rx revisit
 
@@ -41,23 +44,23 @@ Netflix的工程师发现是时候重新架构他们的API了，之前他们的A
 
 我们来看一个反面教材:
 
-{% highlight java%}
+{% highlight java %}
 public Bookmark getBookmark(Long userId)
-{% endhighlight%}
+{% endhighlight %}
 
 如果某天，我们的程序员说，这个接口执行时间太长了，我不想阻塞调用此方法的线程，做为API提供者，你应该会立刻想到采用如下方案：
 
-{% highlight java%}
+{% highlight java %}
 public Future<Bookmark> getBookmark(Long userId)
-{% endhighlight%}
+{% endhighlight %}
 
 把返回值类型修改为`Future<Bookmark>`，这样就不会阻塞API调用者的线程，同时在内部使用一个新的线程或者线程池执行业务逻辑。
 
 又过了一段时间，我们的产品经理说，需求变了，我们希望能给一个用户关联多个`Bookmark`，你很开心地把接口修改成如下形式：
 
-{% highlight java%}
+{% highlight java %}
 public Future<List<Bookmark>> getBookmark(Long userId)
-{% endhighlight%}
+{% endhighlight %}
 
 然后和你们对接的客户端程序员实在忍受不了三番五次的接口改动，提着刀过来找你了。
 
@@ -78,9 +81,9 @@ public Future<List<Bookmark>> getBookmark(Long userId)
 
 如果用`Observable`来改造上述API，那么我们的API就是下面这个样子：
 
-{% highlight java%}
+{% highlight java %}
 public Observable<Bookmark> getBookmark(Long userId)
-{% endhighlight%}
+{% endhighlight %}
 
 那么无论是需要同步返回，异步返回，或者异步返回多个Bookmark，这个API都无需做任何变更，
 API内部可以：
@@ -161,16 +164,16 @@ _Note:_ 这本应该重开一篇博客，然而，原谅笔者的懒惰吧
 #### lift函数
 在Observable的实现里，有个函数必须得提一下，`lift`。
 
-Rx中巧妙提出一个`Operator`的这个函数类型，表述从一个`Subscriber` 到另一个 `Subscriber`的映射。
+Rx中巧妙提出一个`Operator`的这个函数类型，表述从一个`Subscriber` 到另一个 `Subscriber`的映射。
 
 有大量对Observable的操作是通过定义`Operator` 并 `lift` 到`Observable`上实现的，如`Observable#all`, `Observable#filter`, `Observable#finallyDo`等等。
 
 `Observable#lift`签名如下：
 
-{% highlight scala%}
+{% highlight scala %}
 //inside Observable[T]
 def lift[T, R](Operator[R, T]): Observable[R]
-{% endhighlight%}
+{% endhighlight %}
 
 ##### lift函数简介
 有一定函数式编程基础的人相信对`lift`这个名字都不会太陌生。
@@ -186,9 +189,9 @@ lift 就是把f转换成一个新的函数 M[A] => M[B]
 
 那么lift的定义如下:
 
-{% highlight scala%}
+{% highlight scala %}
  def lift[A, B, M[_]](f: A => B): M[A] => M[B]
-{% endhighlight%}
+{% endhighlight %}
 
 跟上面看到的`Observable#lift`唯一不同的地方在于，这个`lift`函数的返回值是一个函数，
 不过再仔细观察一下，这个`M[A] => M[B]`应用到一个`M[A]`实例后的效果和上面的`Observable#lift`是一样的。
@@ -203,7 +206,7 @@ lift 就是把f转换成一个新的函数 M[A] => M[B]
 
 因此，`lift`的类型签名如下：
 
-`(String => Int) => (List[String => List[Int])`
+`(String => Int) => (List[String] => List[Int])`
 
 我们就暂且用 `(s: String) => s.length`做为我们的`f`吧，
 
@@ -236,16 +239,257 @@ lift 就是把f转换成一个新的函数 M[A] => M[B]
 
 因此lift就是
 
-{% highlight scala%}
+{% highlight scala %}
 (Subscriber[R] => Subscriber[T]) => (Subscriber[T] => Unit) => (Subscriber[R] => Unit)
-{% endhighlight%}
+{% endhighlight %}
 亦即
 
-{% highlight scala%}
+{% highlight scala %}
 (Subscriber[R] => Subscriber[T]) => (Observable[T] => Observable[R])
-{% endhighlight%}
+{% endhighlight %}
 
 假如有个`ts: Observable[T]` 和一个函数`f: Subscriber[R] => Subscriber[T]`,通过`lift`函数，我们就能得到一个类型为 `Observable[R]`的结果。
 
 ---
 _t1:_ 与`free-threaded`模型相对的是`single-threaded apartment`,意味着你必须通过一个指定的线程与系统交互。
+
+</div>
+
+<div class="lang-en" markdown="1">
+
+Rx revisit
+
+### TLDR;
+This post is a follow-up to my [rx-java](http://nicholas.ren/2014/05/09/about-rx-java.html) article. It briefly introduces the origins of Rx, its multi-threading implementation, and explains the important `lift` function used in its implementation.
+
+### Rx
+Rx is essentially an advanced version of the `Observer` pattern. It wraps the subject being observed as an `Observable` (think of it as a collection that asynchronously produces elements), then registers callbacks for Observers via `onNext`, `onError`, and `onCompleted` for the appropriate scenarios.
+Notably, Rx provides operations such as `filter`, `map/flatMap`, `merge`, and `reduce` on Observables, making it as convenient to work with as a synchronous collection.
+
+
+### Origins
+
+__Note:__ This section references [these slides](http://www.slideshare.net/InfoQ/functional-reactive-programming-in-the-netflix-api)
+
+Netflix, as a major contributor to RxJava, ported Rx.Net to the JVM. Let's trace the origins of RxJava through an evolution of Netflix's architecture.
+
+Netflix, as a well-known streaming media provider with 33 million subscribers, with peak downstream traffic accounting for 33% of North American internet traffic and 2 billion API requests per day, found that it was time to rethink their API architecture. Their previous architecture looked like this:
+
+<img src="/images/netflix-old-architecture.jpg"/>
+
+To reduce API call latency, engineers decided to move toward a coarse-grained API design:
+
+<img src="/images/netflix-coarse-api-architecture.jpg"/>
+
+A coarse-grained API design means business logic migrates to the server side, which inevitably results in parallel execution and nested calls on the server.
+
+At the same time, we want API providers to hide their underlying concurrency implementation from callers. What does that mean?
+
+Let's look at a counterexample:
+
+{% highlight java %}
+public Bookmark getBookmark(Long userId)
+{% endhighlight %}
+
+One day, a developer says: "This API takes too long — I don't want to block the calling thread." As the API provider, you'd naturally think of this solution:
+
+{% highlight java %}
+public Future<Bookmark> getBookmark(Long userId)
+{% endhighlight %}
+
+Changing the return type to `Future<Bookmark>` prevents blocking the caller's thread, while internally a new thread or thread pool handles the logic.
+
+Then one day, the product manager says: "Requirements changed — we want to support multiple Bookmarks per user." Happily, you update the API:
+
+{% highlight java %}
+public Future<List<Bookmark>> getBookmark(Long userId)
+{% endhighlight %}
+
+At this point, the client-side developers who integrate with your API have had enough of the constant interface changes and are ready to come after you.
+
+
+After nearly being done in, you finally ask:
+
+> Is there a data structure that can represent one or more results available in the future, delivering them to the caller only when ready, without the caller needing to know anything about the internal concurrency implementation?
+
+### Yes! Observable to the rescue
+I mentioned the definition of Observable in my [previous post](http://nicholas.ren/2014/05/09/about-rx-java.html). Let's revisit it here:
+> Observable represents a consumable data collection (data provider). Consumers need not know whether data production is synchronous or asynchronous — it notifies consumers when data is available, when an error occurs, and when the data stream has ended.
+
+In fact, `Observable` and `Iterable` are a pair of __dual__ concepts — both represent collections of multiple elements, but they differ in key ways:
+
+- Elements in an `Observable` can be produced asynchronously, whereas all elements in an `Iterable` must be available before they can be consumed.
+- `Observable` is push-based: it notifies consumers when elements are available, when an error occurs, and when all elements have been consumed. `Iterable` is pull-based: consumers must actively poll for new elements, catch exceptions themselves, and handle completion themselves.
+
+
+If we redesign the API above using `Observable`, it would look like this:
+
+{% highlight java %}
+public Observable<Bookmark> getBookmark(Long userId)
+{% endhighlight %}
+
+Now regardless of whether synchronous return, asynchronous return, or asynchronous return of multiple Bookmarks is needed, the API signature never changes. Internally, the API can:
+
+- Use the calling thread for computation, then deliver the result via `onNext` when done (native blocking call).
+
+<img src="/images/observable-blocking.png"/>
+
+- Use a new thread or thread pool for computation, then deliver the result via `onNext` when done (satisfies async return requirement).
+
+<img src="/images/observable-thread-pool.png"/>
+
+- Use multiple threads or a thread pool to fetch multiple bookmarks in parallel, calling `onNext` for each result (satisfies async multi-value return requirement).
+
+<img src="/images/observable-thread-pool-multi-threads.png"/>
+
+Despite such significant internal changes, clients need not change anything. That's the power of Observable's elegant abstraction.
+This is the enormous benefit Rx brings, and the primary motivation for Netflix to port it to the JVM.
+
+
+
+
+### How It Works
+
+Given how powerful `Observable` is, we naturally ask:
+
+- Why can `Observable` be push-based?
+- How does `Observable` support multiple concurrency implementations?
+
+
+For the first question: `Observable` provides a `subscribe` method for clients to register callback functions. `Observable` then performs its computation and invokes the appropriate callbacks, making it appear as though the Observable is pushing results to its clients.
+
+
+For the second question: Rx has an important concept called __Scheduler__ — an abstraction over concurrency models. You can specify which concurrency model to use when creating an Observable. Let's see how Scheduler abstracts over concurrency.
+
+### Scheduler
+Rx's default behavior is single-threaded. It is a `free-threaded` <sup>t1</sup> model, meaning you can freely choose which thread executes a given task.
+If no scheduler is introduced when creating an Observable, the registered `onNext`, `onError`, and `onCompleted` callbacks will execute on the current thread (i.e., the thread where the Observable was created).
+The Scheduler provides a mechanism to specify on which thread callbacks will execute.
+
+#### Scheduler Implementations:
+
+- EventLoopsScheduler
+
+  Maintains a pool of workers. When a new task is submitted via `#schedule`, a worker is selected via round-robin and the task is dispatched via `Worker#scheduleActual`.
+
+- CachedThreadScheduler
+
+  Uses a `ConcurrentLinkedQueue` to cache created threads for later reuse. Created threads have a time-to-live and are automatically removed when they expire.
+
+- ExecutorScheduler
+
+  Wraps an `Executor` instance and implements the `Scheduler` interface on top of it.
+  Note that in this implementation, `thread-hopping` is unavoidable because the Scheduler has no knowledge of the thread behavior of the underlying `Executor`.
+
+- ImmediateScheduler
+
+  Executes tasks immediately on the current thread.
+
+- TrampolineScheduler
+
+  Assigns tasks to the current thread, but does not execute them immediately. Tasks are queued and executed after the current task completes.
+
+### Worker
+The actual executor of callbacks. Internally backed by `java.util.concurrent.ExecutorService` for task execution, and also plays the role of a `Subscription`.
+
+### Summary
+
+While studying the Principles of Reactive Programming on Coursera, I noticed that Erik Meijer jokingly said: "Don't try to implement Observable yourself — just use the existing library." Out of curiosity, I went ahead and read through the RxJava source code anyway, and came to appreciate just how elegant this model is. It brings a revolutionary experience to multi-threaded programming. If you're interested in Rx.java, I strongly recommend reading through its source code.
+
+
+----
+_Note:_ This should have been a separate blog post, but please forgive my laziness.
+
+#### The lift Function
+There is one function in Observable's implementation that deserves special mention: `lift`.
+
+Rx cleverly introduces a function type called `Operator`, which represents a mapping from one `Subscriber` to another `Subscriber`.
+
+Many operations on Observable are implemented by defining an `Operator` and lifting it onto an `Observable` — for example, `Observable#all`, `Observable#filter`, `Observable#finallyDo`, and many others.
+
+The signature of `Observable#lift` is as follows:
+
+{% highlight scala %}
+//inside Observable[T]
+def lift[T, R](Operator[R, T]): Observable[R]
+{% endhighlight %}
+
+##### Introduction to the lift Function
+Anyone with a functional programming background will likely be familiar with the name `lift`.
+As the name suggests, it takes a function that operates on a simple type and lifts it to work on a complex/container type.
+
+Let's look at a definition of lift:
+```
+Given two types A and B
+and a function f: A => B
+and a container M[_]
+lift transforms f into a new function M[A] => M[B]
+```
+
+Thus, lift is defined as:
+
+{% highlight scala %}
+ def lift[A, B, M[_]](f: A => B): M[A] => M[B]
+{% endhighlight %}
+
+The only difference from the `Observable#lift` we saw above is that this `lift` returns a function.
+But on closer inspection, applying `M[A] => M[B]` to an `M[A]` instance produces the same effect as `Observable#lift`.
+
+This sounds abstract, but once we substitute the symbols with familiar types, it becomes quite recognizable. Let's apply the following substitutions step by step:
+
+- `A: String`
+- `B: Int`
+- `M: List[_]`
+- `f: String => Int`
+
+Therefore, the type signature of `lift` becomes:
+
+`(String => Int) => (List[String] => List[Int])`
+
+Let's use `(s: String) => s.length` as our `f`.
+
+Given a list of strings `xs: List[String]`,
+
+`lift(f)(xs)` would give us the length of each string in `xs`.
+
+Wait —
+
+Isn't that just `xs.map(f)`?
+
+Yes! The `map` function is a common instance of `lift`.
+
+
+##### Observable#lift
+Now let's see what role `lift` plays within `Observable`.
+
+Before we begin, keep these type equalities in mind (`:=` means the two sides are equivalent types):
+
+- `Observable[_] := Subscriber[_] => Unit`
+- `Operator[T, R] := Subscriber[R] => Subscriber[T]`
+
+
+Now let's apply the type substitutions:
+
+- `A: Subscriber[R]`
+- `B: Subscriber[T]`
+- `M: Observable[_]  (i.e. Subscriber[_] => Unit)`
+- `f: Subscriber[R] => Subscriber[T]`
+
+Therefore, lift becomes:
+
+{% highlight scala %}
+(Subscriber[R] => Subscriber[T]) => (Subscriber[T] => Unit) => (Subscriber[R] => Unit)
+{% endhighlight %}
+
+Which is equivalent to:
+
+{% highlight scala %}
+(Subscriber[R] => Subscriber[T]) => (Observable[T] => Observable[R])
+{% endhighlight %}
+
+Given a `ts: Observable[T]` and a function `f: Subscriber[R] => Subscriber[T]`, by applying `lift`, we obtain a result of type `Observable[R]`.
+
+---
+_t1:_ The opposite of the `free-threaded` model is the `single-threaded apartment` model, which means you must interact with the system through a designated thread.
+
+</div>
