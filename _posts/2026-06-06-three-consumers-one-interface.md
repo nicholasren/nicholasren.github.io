@@ -73,11 +73,17 @@ Compare this to a codebase where tasks live in bash scripts, inline pipeline YAM
 
 There's a deeper reason CLI investment pays off for AI adoption.
 
-In most teams, the real knowledge of how things work lives in people's heads. The senior engineer who knows which `--flag` to add when deploying to prod on a Friday. The workaround for the flaky integration test. The correct order of operations for a database migration.
+Knowledge about how a project works tends to accumulate in one of three places, each progressively better:
 
-Writing good `invoke` tasks forces that knowledge out of heads and into executable form. The task becomes a small, opinionated artefact — here's how *this team* does this thing.
+**In people's heads.** The senior engineer who knows which `--flag` to add when deploying to prod on a Friday. The workaround for the flaky integration test. Lost when they leave, inaccessible to anyone else in the meantime — including an agent.
 
-That's exactly the kind of knowledge an AI agent can act on. Not general knowledge about deployment, but *your team's specific way of doing it*. The CLI is the crystallisation point.
+**In UI-oriented tools.** When we were setting up API testing, the obvious choices were Postman or httpie. Postman is a GUI — an agent cannot open it. httpie commands live in someone's shell history or notes. Neither shows up in `invoke -l`. Neither can be called by CI. The knowledge exists, but it's locked away.
+
+**In versioned CLI tasks.** We went with pyinvoke instead. The API tests became `invoke smoke-test --env=staging`. That decision paid off in ways we didn't anticipate at the time.
+
+The difference isn't just discoverability. Two things work together: pyinvoke tasks live in the repo, versioned alongside the code — when the API changes, the task changes in the same commit. And because it's CLI, every consumer can reach it: the engineer, CI, and an agent. A Postman collection drifts. An invoke task co-evolves.
+
+That's exactly the kind of knowledge an AI agent can act on. Not general knowledge about API testing, but *your team's specific way of doing it*, current as of the last commit. The CLI is the crystallisation point.
 
 ---
 
@@ -242,11 +248,17 @@ invoke smoke-test --env=X      运行部署后验证
 
 CLI 投入能在 AI 落地上产生回报，还有一个更深层的原因。
 
-在大多数团队里，真正知道事情怎么运作的知识住在人的脑子里。那个知道周五部署到生产环境要加哪个 `--flag` 的资深工程师。那个绕过不稳定集成测试的方法。数据库迁移的正确操作顺序。
+项目知识往往积累在三个地方，一个比一个好：
 
-写好 `invoke` 任务，会迫使这些知识从脑子里出来，变成可执行的形式。任务变成一个小的、有主见的制品——*这个团队*就是这样做这件事的。
+**在人的脑子里。** 那个知道周五部署到生产环境要加哪个 `--flag` 的资深工程师。绕过不稳定集成测试的方法。人一走就消失，在此之前对其他人——包括 agent——也不可及。
 
-这正是 AI agent 能直接使用的那种知识。不是关于部署的通用知识，而是*你们团队的具体做法*。CLI 是知识结晶的地方。
+**在 UI 工具里。** 我们在搭建 API 测试时，显而易见的选择是 Postman 或 httpie。Postman 是 GUI——agent 无法打开它。httpie 命令活在某人的 shell 历史或笔记里。两者都不会出现在 `invoke -l` 里，都没法被 CI 调用。知识存在，但被锁住了。
+
+**在有版本的 CLI 任务里。** 我们选择了 pyinvoke。API 测试变成了 `invoke smoke-test --env=staging`。这个决定带来了当时没有预料到的回报。
+
+差别不只是可发现性。两件事同时起作用：pyinvoke 任务住在仓库里，和代码一起版本化——API 变了，任务在同一个提交里跟着变。而且因为是 CLI，每个消费者都能访问它：工程师、CI、还有 agent。Postman 集合会漂移；invoke 任务会随代码共同演进。
+
+这正是 AI agent 能直接使用的那种知识。不是关于 API 测试的通用知识，而是*你们团队的具体做法*，精确到最近一次提交。CLI 是知识结晶的地方。
 
 ---
 
